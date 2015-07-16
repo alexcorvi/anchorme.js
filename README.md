@@ -2,14 +2,17 @@
 Javascript function to convert URLs in text to clickable HTML anchor links.
 
 ## Features:
-1. Highly sensitive
-2. Least false positives
-3. Skips HTML (won't break it if it had a URL as an attribute of some element)
-4. Would make links if they have protocols or not
-5. Also works with IPs, FTPs, Emails
-6. Very small in size (6KB full, 4KB when minified)
+1. Highly sensitive.
+2. Least possible false positives with high sensitivity.
+3. Skips HTML (won't break it if it had a URL as an attribute of some element).
+4. Would make links if they have protocols (eg. http://) or not.
+5. Supports all TLDs in accordance to an up-to-date IANA list.
+5. Also works with IPs, FTPs, and Emails.
+6. Also works when ports defined (eg. mywebsite:80/page.html)
+6. Very small in size (14KB).
 7. No regex involved, very readable and maintainable
-8. High performance
+8. Higher performance than similar libraries
+9. Tested against Autolinker.js and linkifyjs on FireFox. After 10000 iterations anchorme.js scored 300ms while others where around 1200m.
 
 ## How to use:
 **A. include the anchorme.js file in your HTML:**
