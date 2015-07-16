@@ -1,4 +1,4 @@
-# anchorme.js v0.3
+# Anchorme.js v0.3
 Javascript function to convert URLs in text to clickable HTML anchor links.
 
 ## Features:
@@ -12,16 +12,16 @@ Javascript function to convert URLs in text to clickable HTML anchor links.
 8. High performance
 
 ## How to use:
-A. include the anchorme.js file in your HTML:
+**A. include the anchorme.js file in your HTML:**
 ```html
 <script type="text/javascript" src="anchorme.js"></script>
 ```
-B. call the function:
+**B. call the method:**
 ```
 var someText = "this is a text with a link www.github.com ..";
-var result = anchorme(someText);
+var result = anchorme.anchor(someText);
 ```
-C. Profit...
+**C. Profit...**
 
 ## Test it before using..
-you can test how effiecient this code is from here: <a href="somelink">somelink</a>
+You can test how effiecient this code is from <a href="http://ali-saleem.github.io/anchorme.js/">here</a>.
