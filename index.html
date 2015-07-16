@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>anchorme</title>
+        <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <script type="text/javascript" src="anchorme.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <style type="text/css">
+            body,html {
+                background: #fafafa;
+                font-family: 'Lato', sans-serif;
+                height:100%;
+                
+            }
+            
+            .container {
+                margin:0 auto;
+                width:70%;
+                top:50px;
+                padding:0px;
+            }
+            
+            #textarea {
+                width:100%;
+                margin-bottom: 10px;
+                max-width:100%;
+                background: #fcfcfc;
+                font-family:arial;
+                font-weight:bold;
+                font-size:12px;
+                box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+            }
+            
+            #result {
+                display:block;
+                width:70%;
+                margin:0 auto;
+            }
+            nav {
+                text-align:center;
+                margin-bottom: 50px;
+                margin-top: -3px;
+            }
+            nav a {
+                border-radius:2px !important;
+            }
+            header p {
+                font-size:12px;
+                background: #e3e3e3;
+                display:inline-block;
+                padding:5px;
+                border-radius:4px;
+                width:100%;
+            }
+            
+            footer {
+                position:fixed;
+                bottom:0px;
+                background: #fcfcfc;
+                width:100%;
+                border-top:1px solid #e9e9e9;
+            }
+            footer p {
+                font-size:13px;
+                padding:0px;
+                margin:0px;
+                display:block;
+            }
+            span {
+                background: rgb(233, 233, 233);
+                height:100%;
+                display:inline-block;
+                padding:10px 10px 10px 10px;
+                margin-right: 15px;
+            }
+            #features {
+                width:70%;
+                padding:10px;
+                margin-bottom: 100px;
+            }
+            
+            #features {
+                margin:0 auto;
+                display:block;
+                width:70%;
+            }
+            #features div {
+                margin:3px;
+                padding:4px 8px;
+                border-radius:3px;
+                text-align:cener;
+                display:inline-block;
+                font-size:13px;
+                background: #fcfcfc;
+                box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
+            }
+            
+            #features #heading {
+                font-size:18px;
+                display:block;
+                font-weight: bolder;
+                background: none;
+                box-shadow:none;
+                padding:0;
+            }
+            
+            hr{
+                width:70%;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <a class="btn btn-success" href="https://github.com/ali-saleem/anchorme.js">Github</a>
+            <a class="btn btn-success" href="https://github.com/ali-saleem/anchorme.js/blob/master/README.md">Documentation</a>
+            <a class="btn btn-success" href="https://github.com/ali-saleem/anchorme.js/blob/master/LICENSE">License</a>
+        </nav>
+        <hr>
+        <header class="container">
+            <p>Enter the text in the textarea and click process:<br> </p>
+        </header>
+        <div class="container">
+            <textarea id="textarea" class="form-control">this library has a github page here: (https://github.com/ali-saleem/anchorme.js). you can follo the author at twitter: twitter.com/AliArrayy or you can email a thank you message here: (ali.a.saleem@outlook.com)... You can also visit the author's website arrayy.com</textarea>
+            <button id="process" class="btn btn-danger">Process</button>
+        </div>
+        <hr>
+        <div id="result"></div>
+        <hr>
+        <div class="container" id="features">
+                <div id="heading">Features:</div>
+                <div>Highly sensitive</div>
+                <div>Least possible false positives with high sensitivity</div>
+                <div>Skips HTML (won't break it if it had a URL as an attribute of some element)</div>
+                <div>Would make links if they have protocols or not</div>
+                <div>Supports all TLDs in accordance to an up-to-date IANA list</div>
+                <div>Also works with IPs, FTPs, Emails</div>
+                <div>Also works with ports defined</div>
+                <div>Very small in size (6KB)</div>
+                <div>No regex involved, very readable and maintainable</div>
+                <div>Higher performance than similar libraries</div>
+                <div>Tested against Autolinker.js and linkifyjs on FireFox. After 10000 iterations anchorme.js scored 300ms while others where around 1200m</div>
+        </div>
+        <footer>
+            <p><span><a href="https://github.com/ali-saleem/anchorme.js">Anchorme.js</a></span> Created and maintained by <a href="">Ali Saleem</a></p>
+        </footer>
+        <script type="text/javascript">
+            document.getElementById("process").onclick = function () {
+                var text = document.getElementById("textarea").value;
+                document.getElementById("result").innerHTML = anchorme.anchor(text);
+            };
+        </script>
+    </body>
+</html>
