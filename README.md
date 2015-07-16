@@ -15,9 +15,9 @@ Javascript function to convert URLs in text to clickable HTML anchor links.
 9. Tested against Autolinker.js and linkifyjs on FireFox. After 10000 iterations anchorme.js scored 300ms while others where around 1200m.
 
 ## How to use:
-**A. include the anchorme.js file in your HTML:**
+**A. include the library file in your HTML:**
 ```html
-<script type="text/javascript" src="anchorme.js"></script>
+<script type="text/javascript" src="anchorme.min.js"></script>
 ```
 **B. call the method:**
 ```
