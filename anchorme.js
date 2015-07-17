@@ -43,7 +43,7 @@ anchorme.dontbreakHTML = function (str, tag, atributeWithURL) {
     return elemArr.join(">");
 };
 
-anchorme.order = function (str,seperator) {
+anchorme.order = function (str,seperator,addattrs) {
     var splitedArray = str.split(seperator);
     for (var i = 0; i < splitedArray.length; i++) {
         var isurl = false;
@@ -158,14 +158,24 @@ anchorme.order = function (str,seperator) {
                     }
                 }
             }
-            var url = Protocol ? Protocol+sm : sm ;
-            if (isurl) splitedArray[i] = "<a href='"+url+"'>"+sm+"</a>";
+            var url = Protocol ? Protocol+sm:sm;
+            if (isurl) {
+                if (typeof addattrs === "object") {
+                    splitedArray[i] = "<a href='"+url+"'";
+                    for (var name in addattrs) {
+                        splitedArray[i] = splitedArray[i] + " "+name+"='"+addattrs[name]+"'";
+                    }
+                    splitedArray[i] = splitedArray[i] + ">"+sm+"</a>";
+                } else {
+                    splitedArray[i] = "<a href='"+url+"'>"+sm+"</a>";   
+                }
+            }
         }
     }
     return splitedArray.join(seperator);
 };
 
-anchorme.anchor = function (str) {
+anchorme.js = function (str,addattrs) {
     if (str.indexOf("</a>") > -1) str = anchorme.dontbreakHTML(str, "a","href");
     if (str.indexOf("</img>") > -1) str = anchorme.dontbreakHTML(str, "img","src");
     if (str.indexOf("</blockquote >") > -1) str = anchorme.dontbreakHTML(str, "blockquote","cite");
@@ -196,8 +206,8 @@ anchorme.anchor = function (str) {
     str = str.split("\n").join(" \n ");
     str = str.split(" (").join(" ( ");
     str = str.split(")").join(" )");
-    var order1 = anchorme.order(str," ");
-    var order2 = anchorme.order(order1,"\n");
+    var order1 = anchorme.order(str," ",addattrs);
+    var order2 = anchorme.order(order1,"\n",addattrs);
     order2 = order2.split("( ").join("(");
     order2 = order2.split(" )").join(")");
     return order2;
