@@ -1,4 +1,4 @@
-# Anchorme.js v0.3
+# Anchorme.js v0.3.1
 Javascript library to convert URLs in text to clickable HTML anchor links.
 
 ## Features:
