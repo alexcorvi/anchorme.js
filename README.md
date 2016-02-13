@@ -1,5 +1,10 @@
-# Anchorme.js v0.4.0
+# Anchorme.js v0.4.1
 Javascript library to convert URLs in text to clickable HTML anchor links.
+
+## Creates links for
+* URLs
+* IPs
+* Emails
 
 ## Features:
 1. Highly sensitive.
@@ -10,10 +15,10 @@ Javascript library to convert URLs in text to clickable HTML anchor links.
 6. Also works with IPs, FTPs, and Emails.
 7. Also works when ports defined (eg. mywebsite:80/page.html)
 8. you can set any attribute you want for the resulting <a> elements
-9. Very small in size (14KB).
+9. Very small in size (Minified version: 14KB).
 10. No regex involved, very readable and maintainable
-11. Higher performance than similar libraries
-12. Tested against Autolinker.js and linkifyjs on FireFox. After 10000 iterations anchorme.js scored 300ms while others where around 1200m.
+11. Higher performance than similar libraries.
+12. Tested against Autolinker.js and linkifyjs on FireFox and proved competitive perforamnce. You can compare it yourself in the demo page.
 
 
 ## How to use:
@@ -33,4 +38,4 @@ var result = anchorme.js(someText,{"class":"someclassname","id":"someID","target
 ```
 
 ## Test it before using..
-Check how this libary would work for you <a href="http://ali-saleem.github.io/anchorme.js/">here</a>.
+Check how this libary would work for you (here)[http://ali-saleem.github.io/anchorme.js/]
