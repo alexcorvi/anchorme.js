@@ -38,4 +38,4 @@ var result = anchorme.js(someText,{"class":"someclassname","id":"someID","target
 ```
 
 ## Test it before using..
-Check how this libary would work for you (here)[http://ali-saleem.github.io/anchorme.js/]
+Check how this libary would work for you [here](http://ali-saleem.github.io/anchorme.js/)
