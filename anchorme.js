@@ -132,7 +132,7 @@ anchorme.order = function (str,seperator,addattrs) {
         var allAllowed = true;
         
         // here's the charecters that are allowed fo a URL
-        var URLallowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=";
+        var URLallowed = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=%";
         
         // from now on .. this small bit of the array will be called sm
         // don't ask me why, I wrote this almost a year ago
