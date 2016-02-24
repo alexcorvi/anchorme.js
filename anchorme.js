@@ -201,10 +201,10 @@ anchorme.order = function (str,seperator,addattrs) {
                             !isNaN(oc2) &&
                             !isNaN(oc3) && 
                             !isNaN(oc4) && 
-                            (oc1-1)<255 && 
-                            (oc1-1)<255 && 
-                            (oc1-1)<255 && 
-                            (oc1-1)<255) {
+                            (oc1-1)<255 &&
+                            (oc2-1)<255 &&
+                            (oc3-1)<255 &&
+                            (oc4-1)<255) {
                             isurl = true; Protocol = "http://"} else {nextCheck = "email"}
                     } else {nextCheck = "email"}
                     
