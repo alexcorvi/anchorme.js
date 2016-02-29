@@ -1,0 +1,12 @@
+{
+  "name": "anchorme.js",
+  "version": "0.4.1",
+  "homepage": "https://github.com/ali-saleem/anchorme.js",
+  "authors": [
+    "Ali Saleem <ali.saleem@gmail.com>"
+  ],
+  "description": "Javascript function to convert URLs in text to clickable HTML anchor links",
+  "main": "anchorme.js",
+  "license": "MIT"
+}
+
