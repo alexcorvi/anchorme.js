@@ -419,6 +419,23 @@
     return order2;
   };
 
-  window.anchorme = anchorme;
+  // check js environment
+  if (typeof exports !== "undefined") {
+    // nodejs env
+    if (typeof module !== "undefined" && module.exports) {
+      exports = module.exports = anchorme;
+    }
+    exports.anchorme = anchorme;
+  } else {
+    // requirejs env (optional)
+    if (typeof define === "function" && define.amd) {
+      define("anchorme", [], function () {
+        return anchorme;
+      });
+    } else {
+      // browser env
+      window.anchorme = anchorme;
+    }
+  }
 
-})(window);
+})(typeof window === 'object' ? window : this /* it runs in node */);
