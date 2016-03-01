@@ -1,4 +1,4 @@
-# Anchorme.js v0.4.1
+# Anchorme.js v0.5.0
 Javascript library to convert URLs in text to clickable HTML anchor links.
 
 ## Creates links for
@@ -39,3 +39,6 @@ var result = anchorme.js(someText,{"class":"someclassname","id":"someID","target
 
 ## Test it before using..
 Check how this libary would work for you [here](http://ali-saleem.github.io/anchorme.js/)
+
+#### Author
+Ali Saleem
