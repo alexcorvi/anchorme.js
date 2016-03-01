@@ -1,0 +1,11 @@
+{
+  "name": "anchorme",
+  "version": "0.5.0",
+  "authors": [
+    "Ali Saleem"
+  ],
+  "description": "Javascript function to convert URLs in text to clickable HTML anchor links",
+  "main": "src/anchorme.js",
+  "license": "MIT"
+}
+
