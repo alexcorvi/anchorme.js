@@ -66,7 +66,7 @@ var options = {
   defaultProtocol:"http://"
 };
 
-anchorme.js("www.google.com.com",options);
+anchorme.js("www.google.com",options);
 ```
 
 #### Explaination:
