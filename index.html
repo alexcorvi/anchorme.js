@@ -3,10 +3,9 @@
     <head>
         <title>anchorme</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <script type="text/javascript" src="anchorme.min.js"></script>
-        
+        <script type="text/javascript" src="src/anchorme.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         
         <!-- Linkify for comparision purposes -->
@@ -18,7 +17,6 @@
         <script>
             !function(e,t){"use strict";function n(e,t,n){var i=n[n.length-1];e.replaceChild(i,t);for(var r=n.length-2;r>=0;r--)e.insertBefore(n[r],i),i=n[r]}function i(e,t,n){for(var i=[],r=0;r<e.length;r++){var o=e[r],a=o.isLink&&f.resolve(t.validate,o.toString(),o.type);if(o.isLink&&a){var l=o.toHref(t.defaultProtocol),s=f.resolve(t.format,o.toString(),o.type),u=f.resolve(t.formatHref,l,o.type),d=f.resolve(t.attributes,l,o.type),m=f.resolve(t.tagName,l,o.type),c=f.resolve(t.linkClass,l,o.type),y=f.resolve(t.target,l,o.type),v=f.resolve(t.events,l,o.type),h=n.createElement(m);if(h.setAttribute("href",u),h.setAttribute("class",c),y&&h.setAttribute("target",y),d)for(var k in d)h.setAttribute(k,d[k]);if(v)for(var g in v)h.addEventListener?h.addEventListener(g,v[g]):h.attachEvent&&h.attachEvent("on"+g,v[g]);h.appendChild(n.createTextNode(s)),i.push(h)}else"nl"===o.type&&t.nl2br?i.push(n.createElement("br")):i.push(n.createTextNode(o.toString()))}return i}function r(e,t,o){if(!e||"object"!=typeof e||e.nodeType!==s)throw new Error("Cannot linkify "+e+" - Invalid DOM Node type");if("A"===e.tagName)return e;for(var a=e.firstChild;a;){switch(a.nodeType){case s:r(a,t,o);break;case u:var f=a.nodeValue,d=l(f),m=i(d,t,o);n(e,a,m),a=m[m.length-1]}a=a.nextSibling}return e}function o(e,t){var n=arguments.length<=2||void 0===arguments[2]?null:arguments[2];try{n=n||window&&window.document||global&&global.document}catch(i){}if(!n)throw new Error("Cannot find document implementation. If you are in a non-browser environment like Node.js, pass the document implementation as the third argument to linkifyElement.");return t=f.normalize(t),r(e,t,n)}function a(e){function t(e){return e=o.normalize(e),this.each(function(){o.helper(this,e,n)})}var n=arguments.length<=1||void 0===arguments[1]?null:arguments[1];e.fn=e.fn||{};try{n=n||window&&window.document||global&&global.document}catch(i){}if(!n)throw new Error("Cannot find document implementation. If you are in a non-browser environment like Node.js, pass the document implementation as the third argument to linkifyElement.");"function"!=typeof e.fn.linkify&&(e.fn.linkify=t,e(n).ready(function(){e("[data-linkify]").each(function(){var t=e(this),n=t.data(),i=n.linkify,r=n.linkifyNlbr,o={linkAttributes:n.linkifyAttributes,defaultProtocol:n.linkifyDefaultProtocol,events:n.linkifyEvents,format:n.linkifyFormat,formatHref:n.linkifyFormatHref,newLine:n.linkifyNewline,nl2br:!!r&&0!==r&&"false"!==r,tagName:n.linkifyTagname,target:n.linkifyTarget,linkClass:n.linkifyLinkclass,validate:n.linkifyValidate},a="this"===i?t:t.find(i);a.linkify(o)})}))}var l=t.tokenize,f=t.options,s=1,u=3;o.helper=r,o.normalize=f.normalize;var d=void 0;try{d=document}catch(m){d=null}"undefined"!=typeof e&&d&&a(e,d),window.linkifyElement=o}(window.jQuery,window.linkify);
         </script>
-
 
         <!-- Autolinker for comparision purposes -->
         <script>
@@ -33,147 +31,178 @@
              */
             !function(a,b){"function"==typeof define&&define.amd?define([],function(){return a.Autolinker=b()}):"object"==typeof exports?module.exports=b():a.Autolinker=b()}(this,function(){var a=function(b){a.Util.assign(this,b);var c=this.hashtag;if(c!==!1&&"twitter"!==c&&"facebook"!==c&&"instagram"!==c)throw new Error("invalid `hashtag` cfg - see docs");this.urls=this.normalizeUrlsCfg(this.urls),this.truncate=this.normalizeTruncateCfg(this.truncate)};return a.prototype={constructor:a,urls:!0,email:!0,twitter:!0,phone:!0,hashtag:!1,newWindow:!0,stripPrefix:!0,truncate:void 0,className:"",htmlParser:void 0,matchParser:void 0,tagBuilder:void 0,normalizeUrlsCfg:function(b){return"boolean"==typeof b?{schemeMatches:b,wwwMatches:b,tldMatches:b}:a.Util.defaults(b||{},{schemeMatches:!0,wwwMatches:!0,tldMatches:!0})},normalizeTruncateCfg:function(b){return"number"==typeof b?{length:b,location:"end"}:a.Util.defaults(b||{},{length:Number.POSITIVE_INFINITY,location:"end"})},link:function(a){if(!a)return"";for(var b=this.getHtmlParser(),c=b.parse(a),d=0,e=[],f=0,g=c.length;g>f;f++){var h=c[f],i=h.getType(),j=h.getText();if("element"===i)"a"===h.getTagName()&&(h.isClosing()?d=Math.max(d-1,0):d++),e.push(j);else if("entity"===i||"comment"===i)e.push(j);else if(0===d){var k=this.linkifyStr(j);e.push(k)}else e.push(j)}return e.join("")},linkifyStr:function(a){return this.getMatchParser().replace(a,this.createMatchReturnVal,this)},createMatchReturnVal:function(b){var c;if(this.replaceFn&&(c=this.replaceFn.call(this,this,b)),"string"==typeof c)return c;if(c===!1)return b.getMatchedText();if(c instanceof a.HtmlTag)return c.toAnchorString();var d=this.getTagBuilder(),e=d.build(b);return e.toAnchorString()},getHtmlParser:function(){var b=this.htmlParser;return b||(b=this.htmlParser=new a.htmlParser.HtmlParser),b},getMatchParser:function(){var b=this.matchParser;return b||(b=this.matchParser=new a.matchParser.MatchParser({urls:this.urls,email:this.email,twitter:this.twitter,phone:this.phone,hashtag:this.hashtag,stripPrefix:this.stripPrefix})),b},getTagBuilder:function(){var b=this.tagBuilder;return b||(b=this.tagBuilder=new a.AnchorTagBuilder({newWindow:this.newWindow,truncate:this.truncate,className:this.className})),b}},a.link=function(b,c){var d=new a(c);return d.link(b)},a.match={},a.htmlParser={},a.matchParser={},a.truncate={},a.Util={abstractMethod:function(){throw"abstract"},trimRegex:/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,assign:function(a,b){for(var c in b)b.hasOwnProperty(c)&&(a[c]=b[c]);return a},defaults:function(a,b){for(var c in b)b.hasOwnProperty(c)&&void 0===a[c]&&(a[c]=b[c]);return a},extend:function(b,c){var d=b.prototype,e=function(){};e.prototype=d;var f;f=c.hasOwnProperty("constructor")?c.constructor:function(){d.constructor.apply(this,arguments)};var g=f.prototype=new e;return g.constructor=f,g.superclass=d,delete c.constructor,a.Util.assign(g,c),f},ellipsis:function(a,b,c){return a.length>b&&(c=null==c?"..":c,a=a.substring(0,b-c.length)+c),a},indexOf:function(a,b){if(Array.prototype.indexOf)return a.indexOf(b);for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},splitAndCapture:function(a,b){if(!b.global)throw new Error("`splitRegex` must have the 'g' flag set");for(var c,d=[],e=0;c=b.exec(a);)d.push(a.substring(e,c.index)),d.push(c[0]),e=c.index+c[0].length;return d.push(a.substring(e)),d},trim:function(a){return a.replace(this.trimRegex,"")}},a.HtmlTag=a.Util.extend(Object,{whitespaceRegex:/\s+/,constructor:function(b){a.Util.assign(this,b),this.innerHtml=this.innerHtml||this.innerHTML},setTagName:function(a){return this.tagName=a,this},getTagName:function(){return this.tagName||""},setAttr:function(a,b){var c=this.getAttrs();return c[a]=b,this},getAttr:function(a){return this.getAttrs()[a]},setAttrs:function(b){var c=this.getAttrs();return a.Util.assign(c,b),this},getAttrs:function(){return this.attrs||(this.attrs={})},setClass:function(a){return this.setAttr("class",a)},addClass:function(b){for(var c,d=this.getClass(),e=this.whitespaceRegex,f=a.Util.indexOf,g=d?d.split(e):[],h=b.split(e);c=h.shift();)-1===f(g,c)&&g.push(c);return this.getAttrs()["class"]=g.join(" "),this},removeClass:function(b){for(var c,d=this.getClass(),e=this.whitespaceRegex,f=a.Util.indexOf,g=d?d.split(e):[],h=b.split(e);g.length&&(c=h.shift());){var i=f(g,c);-1!==i&&g.splice(i,1)}return this.getAttrs()["class"]=g.join(" "),this},getClass:function(){return this.getAttrs()["class"]||""},hasClass:function(a){return-1!==(" "+this.getClass()+" ").indexOf(" "+a+" ")},setInnerHtml:function(a){return this.innerHtml=a,this},getInnerHtml:function(){return this.innerHtml||""},toAnchorString:function(){var a=this.getTagName(),b=this.buildAttrsStr();return b=b?" "+b:"",["<",a,b,">",this.getInnerHtml(),"</",a,">"].join("")},buildAttrsStr:function(){if(!this.attrs)return"";var a=this.getAttrs(),b=[];for(var c in a)a.hasOwnProperty(c)&&b.push(c+'="'+a[c]+'"');return b.join(" ")}}),a.AnchorTagBuilder=a.Util.extend(Object,{constructor:function(b){a.Util.assign(this,b)},build:function(b){return new a.HtmlTag({tagName:"a",attrs:this.createAttrs(b.getType(),b.getAnchorHref()),innerHtml:this.processAnchorText(b.getAnchorText())})},createAttrs:function(a,b){var c={href:b},d=this.createCssClass(a);return d&&(c["class"]=d),this.newWindow&&(c.target="_blank"),c},createCssClass:function(a){var b=this.className;return b?b+" "+b+"-"+a:""},processAnchorText:function(a){return a=this.doTruncate(a)},doTruncate:function(b){var c=this.truncate;if(!c)return b;var d=c.length,e=c.location;return"smart"===e?a.truncate.TruncateSmart(b,d,".."):"middle"===e?a.truncate.TruncateMiddle(b,d,".."):a.truncate.TruncateEnd(b,d,"..")}}),a.htmlParser.HtmlParser=a.Util.extend(Object,{htmlRegex:function(){var a=/!--([\s\S]+?)--/,b=/[0-9a-zA-Z][0-9a-zA-Z:]*/,c=/[^\s\0"'>\/=\x01-\x1F\x7F]+/,d=/(?:"[^"]*?"|'[^']*?'|[^'"=<>`\s]+)/,e=c.source+"(?:\\s*=\\s*"+d.source+")?";return new RegExp(["(?:","<(!DOCTYPE)","(?:","\\s+","(?:",e,"|",d.source+")",")*",">",")","|","(?:","<(/)?","(?:",a.source,"|","(?:","("+b.source+")","(?:","\\s+",e,")*","\\s*/?",")",")",">",")"].join(""),"gi")}(),htmlCharacterEntitiesRegex:/(&nbsp;|&#160;|&lt;|&#60;|&gt;|&#62;|&quot;|&#34;|&#39;)/gi,parse:function(a){for(var b,c,d=this.htmlRegex,e=0,f=[];null!==(b=d.exec(a));){var g=b[0],h=b[3],i=b[1]||b[4],j=!!b[2],k=a.substring(e,b.index);k&&(c=this.parseTextAndEntityNodes(k),f.push.apply(f,c)),f.push(h?this.createCommentNode(g,h):this.createElementNode(g,i,j)),e=b.index+g.length}if(e<a.length){var l=a.substring(e);l&&(c=this.parseTextAndEntityNodes(l),f.push.apply(f,c))}return f},parseTextAndEntityNodes:function(b){for(var c=[],d=a.Util.splitAndCapture(b,this.htmlCharacterEntitiesRegex),e=0,f=d.length;f>e;e+=2){var g=d[e],h=d[e+1];g&&c.push(this.createTextNode(g)),h&&c.push(this.createEntityNode(h))}return c},createCommentNode:function(b,c){return new a.htmlParser.CommentNode({text:b,comment:a.Util.trim(c)})},createElementNode:function(b,c,d){return new a.htmlParser.ElementNode({text:b,tagName:c.toLowerCase(),closing:d})},createEntityNode:function(b){return new a.htmlParser.EntityNode({text:b})},createTextNode:function(b){return new a.htmlParser.TextNode({text:b})}}),a.htmlParser.HtmlNode=a.Util.extend(Object,{text:"",constructor:function(b){a.Util.assign(this,b)},getType:a.Util.abstractMethod,getText:function(){return this.text}}),a.htmlParser.CommentNode=a.Util.extend(a.htmlParser.HtmlNode,{comment:"",getType:function(){return"comment"},getComment:function(){return this.comment}}),a.htmlParser.ElementNode=a.Util.extend(a.htmlParser.HtmlNode,{tagName:"",closing:!1,getType:function(){return"element"},getTagName:function(){return this.tagName},isClosing:function(){return this.closing}}),a.htmlParser.EntityNode=a.Util.extend(a.htmlParser.HtmlNode,{getType:function(){return"entity"}}),a.htmlParser.TextNode=a.Util.extend(a.htmlParser.HtmlNode,{getType:function(){return"text"}}),a.matchParser.MatchParser=a.Util.extend(Object,{urls:!0,email:!0,twitter:!0,phone:!0,hashtag:!1,stripPrefix:!0,matcherRegex:function(){var a=/(^|[^\w])@(\w{1,15})/,b=/(^|[^\w])#(\w{1,139})/,c=/(?:[\-;:&=\+\$,\w\.]+@)/,d=/(?:(\+)?\d{1,3}[-\040.])?\(?\d{3}\)?[-\040.]?\d{3}[-\040.]\d{4}/,e=/(?:[A-Za-z][-.+A-Za-z0-9]*:(?![A-Za-z][-.+A-Za-z0-9]*:\/\/)(?!\d+\/?)(?:\/\/)?)/,f=/(?:www\.)/,g=/[A-Za-z0-9\.\-]*[A-Za-z0-9\-]/,h=/\.(?:international|construction|contractors|enterprises|photography|productions|foundation|immobilien|industries|management|properties|technology|christmas|community|directory|education|equipment|institute|marketing|solutions|vacations|bargains|boutique|builders|catering|cleaning|clothing|computer|democrat|diamonds|graphics|holdings|lighting|partners|plumbing|supplies|training|ventures|academy|careers|company|cruises|domains|exposed|flights|florist|gallery|guitars|holiday|kitchen|neustar|okinawa|recipes|rentals|reviews|shiksha|singles|support|systems|agency|berlin|camera|center|coffee|condos|dating|estate|events|expert|futbol|kaufen|luxury|maison|monash|museum|nagoya|photos|repair|report|social|supply|tattoo|tienda|travel|viajes|villas|vision|voting|voyage|actor|build|cards|cheap|codes|dance|email|glass|house|mango|ninja|parts|photo|press|shoes|solar|today|tokyo|tools|watch|works|aero|arpa|asia|best|bike|blue|buzz|camp|club|cool|coop|farm|fish|gift|guru|info|jobs|kiwi|kred|land|limo|link|menu|mobi|moda|name|pics|pink|post|qpon|rich|ruhr|sexy|tips|vote|voto|wang|wien|wiki|zone|bar|bid|biz|cab|cat|ceo|com|edu|gov|int|kim|mil|net|onl|org|pro|pub|red|tel|uno|wed|xxx|xyz|ac|ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bv|bw|by|bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cw|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|fk|fm|fo|fr|ga|gb|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|md|me|mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|pg|ph|pk|pl|pm|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sj|sk|sl|sm|sn|so|sr|st|su|sv|sx|sy|sz|tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tp|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|yt|za|zm|zw)\b/,i=/[\-A-Za-z0-9+&@#\/%=~_()|'$*\[\]?!:,.;]*[\-A-Za-z0-9+&@#\/%=~_()|'$*\[\]]/;return new RegExp(["(",a.source,")","|","(",c.source,g.source,h.source,")","|","(","(?:","(",e.source,g.source,")","|","(","(.?//)?",f.source,g.source,")","|","(","(.?//)?",g.source,h.source,")",")","(?:"+i.source+")?",")","|","(",d.source,")","|","(",b.source,")"].join(""),"gi")}(),charBeforeProtocolRelMatchRegex:/^(.)?\/\//,constructor:function(b){a.Util.assign(this,b),this.matchValidator=new a.MatchValidator},replace:function(a,b,c){var d=this;return a.replace(this.matcherRegex,function(a){var e=d.processCandidateMatch.apply(d,arguments);if(e){var f=b.call(c,e.match);return e.prefixStr+f+e.suffixStr}return a})},processCandidateMatch:function(b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q){var r,s=j||l,t="",u="",v=this.urls;if(h&&!v.schemeMatches||i&&!v.wwwMatches||k&&!v.tldMatches||f&&!this.email||m&&!this.phone||c&&!this.twitter||o&&!this.hashtag||!this.matchValidator.isValidMatch(g,h,s))return null;if(this.matchHasUnbalancedClosingParen(b))b=b.substr(0,b.length-1),u=")";else{var w=this.matchHasInvalidCharAfterTld(g,h);w>-1&&(u=b.substr(w),b=b.substr(0,w))}if(f)r=new a.match.Email({matchedText:b,email:f});else if(c)d&&(t=d,b=b.slice(1)),r=new a.match.Twitter({matchedText:b,twitterHandle:e});else if(m){var x=b.replace(/\D/g,"");r=new a.match.Phone({matchedText:b,number:x,plusSign:!!n})}else if(o)p&&(t=p,b=b.slice(1)),r=new a.match.Hashtag({matchedText:b,serviceName:this.hashtag,hashtag:q});else{if(s){var y=s.match(this.charBeforeProtocolRelMatchRegex)[1]||"";y&&(t=y,b=b.slice(1))}r=new a.match.Url({matchedText:b,url:b,protocolUrlMatch:!!h,protocolRelativeMatch:!!s,stripPrefix:this.stripPrefix})}return{prefixStr:t,suffixStr:u,match:r}},matchHasUnbalancedClosingParen:function(a){var b=a.charAt(a.length-1);if(")"===b){var c=a.match(/\(/g),d=a.match(/\)/g),e=c&&c.length||0,f=d&&d.length||0;if(f>e)return!0}return!1},matchHasInvalidCharAfterTld:function(a,b){if(!a)return-1;var c=0;b&&(c=a.indexOf(":"),a=a.slice(c));var d=/^((.?\/\/)?[A-Za-z0-9\.\-]*[A-Za-z0-9\-]\.[A-Za-z]+)/,e=d.exec(a);return null===e?-1:(c+=e[1].length,a=a.slice(e[1].length),/^[^.A-Za-z:\/?#]/.test(a)?c:-1)}}),a.MatchValidator=a.Util.extend(Object,{invalidProtocolRelMatchRegex:/^[\w]\/\//,hasFullProtocolRegex:/^[A-Za-z][-.+A-Za-z0-9]*:\/\//,uriSchemeRegex:/^[A-Za-z][-.+A-Za-z0-9]*:/,hasWordCharAfterProtocolRegex:/:[^\s]*?[A-Za-z]/,isValidMatch:function(a,b,c){return b&&!this.isValidUriScheme(b)||this.urlMatchDoesNotHaveProtocolOrDot(a,b)||this.urlMatchDoesNotHaveAtLeastOneWordChar(a,b)||this.isInvalidProtocolRelativeMatch(c)?!1:!0},isValidUriScheme:function(a){var b=a.match(this.uriSchemeRegex)[0].toLowerCase();return"javascript:"!==b&&"vbscript:"!==b},urlMatchDoesNotHaveProtocolOrDot:function(a,b){return!(!a||b&&this.hasFullProtocolRegex.test(b)||-1!==a.indexOf("."))},urlMatchDoesNotHaveAtLeastOneWordChar:function(a,b){return a&&b?!this.hasWordCharAfterProtocolRegex.test(a):!1},isInvalidProtocolRelativeMatch:function(a){return!!a&&this.invalidProtocolRelMatchRegex.test(a)}}),a.match.Match=a.Util.extend(Object,{constructor:function(b){a.Util.assign(this,b)},getType:a.Util.abstractMethod,getMatchedText:function(){return this.matchedText},getAnchorHref:a.Util.abstractMethod,getAnchorText:a.Util.abstractMethod}),a.match.Email=a.Util.extend(a.match.Match,{getType:function(){return"email"},getEmail:function(){return this.email},getAnchorHref:function(){return"mailto:"+this.email},getAnchorText:function(){return this.email}}),a.match.Hashtag=a.Util.extend(a.match.Match,{getType:function(){return"hashtag"},getHashtag:function(){return this.hashtag},getAnchorHref:function(){var a=this.serviceName,b=this.hashtag;switch(a){case"twitter":return"https://twitter.com/hashtag/"+b;case"facebook":return"https://www.facebook.com/hashtag/"+b;case"instagram":return"https://instagram.com/explore/tags/"+b;default:throw new Error("Unknown service name to point hashtag to: ",a)}},getAnchorText:function(){return"#"+this.hashtag}}),a.match.Phone=a.Util.extend(a.match.Match,{getType:function(){return"phone"},getNumber:function(){return this.number},getAnchorHref:function(){return"tel:"+(this.plusSign?"+":"")+this.number},getAnchorText:function(){return this.matchedText}}),a.match.Twitter=a.Util.extend(a.match.Match,{getType:function(){return"twitter"},getTwitterHandle:function(){return this.twitterHandle},getAnchorHref:function(){return"https://twitter.com/"+this.twitterHandle},getAnchorText:function(){return"@"+this.twitterHandle}}),a.match.Url=a.Util.extend(a.match.Match,{urlPrefixRegex:/^(https?:\/\/)?(www\.)?/i,protocolRelativeRegex:/^\/\//,protocolPrepended:!1,getType:function(){return"url"},getUrl:function(){var a=this.url;return this.protocolRelativeMatch||this.protocolUrlMatch||this.protocolPrepended||(a=this.url="http://"+a,this.protocolPrepended=!0),a},getAnchorHref:function(){var a=this.getUrl();return a.replace(/&amp;/g,"&")},getAnchorText:function(){var a=this.getMatchedText();return this.protocolRelativeMatch&&(a=this.stripProtocolRelativePrefix(a)),this.stripPrefix&&(a=this.stripUrlPrefix(a)),a=this.removeTrailingSlash(a)},stripUrlPrefix:function(a){return a.replace(this.urlPrefixRegex,"")},stripProtocolRelativePrefix:function(a){return a.replace(this.protocolRelativeRegex,"")},removeTrailingSlash:function(a){return"/"===a.charAt(a.length-1)&&(a=a.slice(0,-1)),a}}),a.truncate.TruncateEnd=function(b,c,d){return a.Util.ellipsis(b,c,d)},a.truncate.TruncateMiddle=function(a,b,c){if(a.length<=b)return a;var d=b-c.length,e="";return d>0&&(e=a.substr(-1*Math.floor(d/2))),(a.substr(0,Math.ceil(d/2))+c+e).substr(0,b)},a.truncate.TruncateSmart=function(a,b,c){var d=function(a){var b={},c=a,d=c.match(/^([a-z]+):\/\//i);return d&&(b.scheme=d[1],c=c.substr(d[0].length)),d=c.match(/^(.*?)(?=(\?|#|\/|$))/i),d&&(b.host=d[1],c=c.substr(d[0].length)),d=c.match(/^\/(.*?)(?=(\?|#|$))/i),d&&(b.path=d[1],c=c.substr(d[0].length)),d=c.match(/^\?(.*?)(?=(#|$))/i),d&&(b.query=d[1],c=c.substr(d[0].length)),d=c.match(/^#(.*?)$/i),d&&(b.fragment=d[1]),b},e=function(a){var b="";return a.scheme&&a.host&&(b+=a.scheme+"://"),a.host&&(b+=a.host),a.path&&(b+="/"+a.path),a.query&&(b+="?"+a.query),a.fragment&&(b+="#"+a.fragment),b},f=function(a,b){var d=b/2,e=Math.ceil(d),f=-1*Math.floor(d),g="";return 0>f&&(g=a.substr(f)),a.substr(0,e)+c+g};if(a.length<=b)return a;var g=b-c.length,h=d(a);if(h.query){var i=h.query.match(/^(.*?)(?=(\?|\#))(.*?)$/i);i&&(h.query=h.query.substr(0,i[1].length),a=e(h))}if(a.length<=b)return a;if(h.host&&(h.host=h.host.replace(/^www\./,""),a=e(h)),a.length<=b)return a;var j="";if(h.host&&(j+=h.host),j.length>=g)return h.host.length==b?(h.host.substr(0,b-c.length)+c).substr(0,b):f(j,g).substr(0,b);var k="";if(h.path&&(k+="/"+h.path),h.query&&(k+="?"+h.query),k){if((j+k).length>=g){if((j+k).length==b)return(j+k).substr(0,b);var l=g-j.length;return(j+f(k,l)).substr(0,b)}j+=k}if(h.fragment){var m="#"+h.fragment;if((j+m).length>=g){if((j+m).length==b)return(j+m).substr(0,b);var n=g-j.length;return(j+f(m,n)).substr(0,b)}j+=m}if(h.scheme&&h.host){var o=h.scheme+"://";if((j+o).length<g)return(o+j).substr(0,b)}if(j.length<=b)return j;var p="";return g>0&&(p=j.substr(-1*Math.floor(g/2))),(j.substr(0,Math.ceil(g/2))+c+p).substr(0,b)},a});
         </script>
-        
-        <style type="text/css">
-            body,html {
-                background: #fafafa;
-                font-family: 'Lato', sans-serif;
-                height:100%;
-            }
-            .container {
-                margin:0 auto;
-                width:70%;
-                top:50px;
-                padding:0px;
-            }
-            #textarea {
-                width:100%;
-                margin-bottom: 10px;
-                max-width:100%;
-                background: #fcfcfc;
-                font-family:arial;
-                font-weight:bold;
-                font-size:12px;
-                box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
-            }
-            #result {
-                display:block;
-                width:70%;
-                margin:0 auto;
-            }
-            nav {
-                text-align:center;
-                margin-bottom: 50px;
-                margin-top: -3px;
-            }
-            nav a {
-                border-radius:2px !important;
-            }
-            header p {
-                font-size:12px;
-                background: #e3e3e3;
-                display:inline-block;
-                padding:5px;
-                border-radius:4px;
-                width:100%;
-            }
-            footer {
-                position:fixed;
-                bottom:0px;
-                background: #fcfcfc;
-                width:100%;
-                border-top:1px solid #e9e9e9;
-            }
-            footer p {
-                font-size:13px;
-                padding:0px;
-                margin:0px;
-                display:block;
-            }
-            span {
-                background: rgb(233, 233, 233);
-                height:100%;
-                display:inline-block;
-                padding:10px 10px 10px 10px;
-                margin-right: 15px;
-            }
-            #features {
-                width:70%;
-                padding:10px;
-                margin-bottom: 100px;
-            }
-            #features {
-                margin:0 auto;
-                display:block;
-                width:70%;
-            }
-            #features div {
-                margin:3px;
-                padding:4px 8px;
-                border-radius:3px;
-                text-align:cener;
-                display:inline-block;
-                font-size:13px;
-                background: #fcfcfc;
-                box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.3);
-            }
-            #features #heading {
-                font-size:18px;
-                display:block;
-                font-weight: bolder;
-                background: none;
-                box-shadow:none;
-                padding:0;
-            }
-            hr{
-                width:70%;
-            }
+        <style>
+            body{font-family: 'Raleway', sans-serif;background: #fafafa;}
+            h1,h2,h3,h4,h5,h6 {font-weight:bold;}
+            h1 {font-size:26px;}
+            h2 {font-size:22px;}
+            h3 {font-size:20px;}
+            #textarea {height:300px;max-height:300px;max-width:100%;font-family:monospace;}
+            #resultPlace{font-family:monospace;white-space:pre-wrap}
+            .nav a {margin-right:15px;}
+            footer {margin: 50px 0;}
         </style>
     </head>
-    <body>
-        <nav>
-            <a class="btn btn-success" href="https://github.com/ali-saleem/anchorme.js">Github</a>
-            <a class="btn btn-success" href="https://github.com/ali-saleem/anchorme.js/blob/gh-pages/README.md">How to</a>
-            <a class="btn btn-success" href="http://www.opensource.org/licenses/mit-license.php">License</a>
-        </nav>
-        <hr>
-        <header class="container">
-            <p>Enter the text in the textarea and click process:<br> </p>
-        </header>
-        <div class="container">
-            <textarea id="textarea" class="form-control">this library has a github page here: (https://github.com/ali-saleem/anchorme.js). you can follo the author at twitter: twitter.com/AliArrayy or you can email a thank you message here: (ali.a.saleem@outlook.com)... You can also visit the author's website arrayy.com</textarea>
-            <button id="process" class="btn btn-danger">Process</button>
-            <button id="compare" class="btn btn-primary">Compare with Autolinker.js and Linkify (open console)</button>
-        </div>
-        <hr>
-        <div id="result"></div>
-        <hr>
-        <div class="container" id="features">
-                <div id="heading">Features:</div>
-                <div>Highly sensitive</div>
-                <div>Least possible false positives with high sensitivity</div>
-                <div>Skips HTML (won't break it if it had a URL as an attribute of some element)</div>
-                <div>Would make links if they have protocols or not</div>
-                <div>Supports all TLDs in accordance to an up-to-date IANA list</div>
-                <div>Also works with IPs, FTPs, Emails</div>
-                <div>Also works with ports defined</div>
-                <div>Very small in size (6KB)</div>
-                <div>No regex involved, very readable and maintainable</div>
-                <div>Higher performance than similar libraries</div>
-                <div>Tested against Autolinker.js and linkifyjs on FireFox and proved competitive perforamnce. You can compare it yourself, just open the console and click the blue button above.</div>
-        </div>
+    <body class="container">
         
-        <textarea id="testarea"  style="display:none">www.google.com ali.a.saleem@outlook.com 192.168.0.1 http://www.google.com</textarea>
+        <header>
+            <h1>Anchorme.js</h1>
+            <p class="tagline">A library to convert URLs to a clickable HTML anchor elements</p>
+            <p class="nav">
+                <a href="#page-features">Features</a>
+                <a href="#page-download">Getting started</a>
+                <a href="#page-options">Option</a>
+                <a href="#page-otheruses">Other uses</a>
+                <a href="#page-test">Test</a>
+                <a href="#page-benchmark">Benchmark</a>
+                <a href="https://github.com/ali-saleem/anchorme.js/">Github</a>
+                <a href="#page-contributers">Contributers</a>
+            </p>
+        </header>
+        <hr>
+        <article id="page-features">
+            <h2>Features</h2>
+            <ul>
+                <li>Highly sensitive.</li>
+                <li>produces the least possible false positives if any.</li>
+                <li>Skips HTML, so it doesn't break your HTML if it had a URL as an attribute for an element.</li>
+                <li>Links with or without protocols.</li>
+                <li>Preserve upper and lower case, altough when detecting, it's basically case insensitive.</li>
+                <li>Supports checking against an almost full IANA list.</li>
+                <li>Works with IPs, FTPs, Emails and files.</li>
+                <li>Also works when ports are defined.</li>
+                <li>Small in size.</li>
+                <li>No regex involved, very readable and maintainable.</li>
+                <li>High performance.</li>
+                <li>Supports setting custom attributes with any values.</li>
+                <li>Supports checking for only IPs or for only Emails, or for only URLs</li>
+                <li>Helper methods can be used for other purposes.</li>
+            </ul>
+        </article>
+        <hr>
+        <article id="page-download">
+            <h2>Getting Started</h2>
+            <p>To use this library, you can download the source code from github: <a href="https://github.com/ali-saleem/anchorme.js">Download</a></p>
+            <h5>1. Include the library file in your HTML</h5>
+            <code>
+                &lt;script type=&quot;text/javascript&quot; src=&quot;anchorme.min.js&quot;&gt;&lt;/script&gt;
+            </code>
+            <h5>2. Call the method</h5>
+            <code>
+            var someText = "this is a text with a link www.github.com ..";
+            <br>var result = anchorme.js(someText);
+            </code>
+            
+        </article>
+        <hr>
+        <article id="page-options">
+            <h2>Options</h2>
+            <p>Optionally, you can pass an object to the method on which you define some options</p>
+            <pre>
+var options = {
+  "attributes":{
+    "class":"someClassHere",
+    "id":"someIdHere",
+    "anyAttribute":"anyValue",
+  },
+  "html":true,
+  ips:true,
+  emails:true,
+  urls:true,
+  TLDs:20,
+  defaultProtocol:"http://"
+};
+
+anchorme.js("www.google.com.com",options);
+            </pre>
+            <br>
+            <h4>Explaination:</h4>
+            <ul>
+                <li><code>attributes</code> - Default: <code>false</code>, if you want your anchors links to have attributes just like the example above.</li>
+                <li><code>html</code> - Default: <code>true</code>, set this to true if you'll be passing HTML elements that has URLs i their attrivute to avoid breaking them. set this to false if you're not passing HTML to have better performance.</li>
+                <li><code>ips</code> - Default: <code>true</code>, whether or not to detect IPs.</li>
+                <li><code>emails</code> - Default: <code>true</code>, whether or not to detect emails.</li>
+                <li><code>urls</code> - Default: <code>true</code>, whether or not to detect URLs other than emails and IPs.</li>
+                <li><code>TLDs</code> - Default: <code>20</code>, the number of the TLDs to check. although the library has a large iana list of TLDs, but due to performance issues you might want to limit the number of TLDs that are checked, to the first most popular 20 TLDs for example. Enter <code>901</code> to check the full list, but be warned that checking against the full list of TLDs have adverse perforamance effects. However, if you want 100% sensitivity with the least possible false positives and you have a decent computing power, then go for it.</li>
+                <li><code>defaultProtocol</code> - Default: <code>"http://"</code>, for links that doesn't have protocol defined.</li>
+            </ul>
+        </article>
+        <hr>
+        <article id="page-otheruses">
+            <h2>Other uses</h2>
+            <p>Although the main purpose of this library is to convert unclickable text strings into an HTML anchor links, you can surely use it's methods for other purposes.</p>
+            <p>The source code is very readable, don't be afraid to check it.</p>
+            <p>An example of "other uses", is checking if a string is a valid email or not:</p>
+            <p><code>anchorme.checks.email("ali.a.saleem@outlooks.com",50)</code></p>
+            <p>Where <code>50</code> is the number of TLDs to check.</p>
+        </article>
+        <hr>    
+        <article id="page-test">
+            <h2>Test it before using</h2>
+            <div class="row">
+            <section class="container col-xs-6">
+                <h3>Input</h3>
+<textarea id="textarea" class="form-control">
+Examples:
+Simply a domain: www.google.com
+Domain with port: www.google.com:8000
+URL with query: www.google.com/?key=value
+Domain with international TLD: github.io
+Email address: ali.a.saleem@outlook.com
+IP address: 127.0.0.1:8000/somethinghere
+HTML elements won't break: <img src="http://dummyimage.com/50">
+Capital case: FTP://GOOGLE.COM
+mixed case: https://www.youtube.com/watch?v=d7ez-gIt08I
+</textarea>
+            </section>
+            <section class="col-xs-6">
+                <h3>Result</h3>
+                <p id="resultPlace">Click process</p>
+            </section>
+            </div>
+            <br>
+            <p><button class="btn" id="process">Process</button></p>
+            <p>Not getting a result that satisfies you? please, do open an issue on github: <a class="github-button" href="https://github.com/ali-saleem/anchorme.js/issues" data-icon="octicon-issue-opened" data-count-api="/repos/ali-saleem/anchorme.js#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue ali-saleem/anchorme.js on GitHub">Issue</a></p>
+        </article>
+        <hr>
+        <article id="page-benchmark">
+            <h2>Performance and benchmark</h2>
+            <p>I've chosen autolinker.js and linkify for comparision. on all browsers, anchorme.js scored competitive perforamance, and very well faster than both other libraries when tested on FireFox.</p>
+            <p>The current page you're in right now include a benchmarking process to compare the three libraries perforamance-wise. click the button below to run the three libraries with the same arguments on 600 iterations.</p>
+            <p><button class="btn" id="benchmark">Compare</button></p>
+            <p id="banchorme"></p>
+            <p id="bautolinker"></p>
+            <p id="blinkify"></p>
+        </article>
+        <hr>
+        <article id="page-contributers">
+            <h2>Contributers</h2>
+            <p>This library is authored and currently maintained by <a href="https://twitter.com/AliArrayy">Ali Saleem</a></p>
+            <p>It also has been empowered by the following contributers on github:</p>
+            <ul>
+                <li><a href="https://github.com/ChrisOelmueller">Chris Oelmueller</a></li>
+                <li><a href="https://github.com/davidschlachter">David Schlachter</a></li>
+                <li><a href="https://github.com/azagniotov">Alexander Zagniotov</a></li>
+            </ul>
+        </article>
+        <hr>
         
         <footer>
-            <p><span><a href="https://github.com/ali-saleem/anchorme.js">Anchorme.js</a></span> Created and maintained by <a href="https://twitter.com/AliArrayy">Ali Saleem</a></p>
+            <p>License: The MIT License (MIT) - Copyright (c) 2015 Ali Saleem</p>
+            <a class="github-button" href="https://github.com/ali-saleem" data-count-href="/ali-saleem/followers" data-count-api="/users/ali-saleem#followers" data-count-aria-label="# followers on GitHub" aria-label="Follow @ali-saleem on GitHub">Follow @ali-saleem</a>
+            <a class="github-button" href="https://github.com/ali-saleem/anchorme.js" data-icon="octicon-star" data-count-href="/ali-saleem/anchorme.js/stargazers" data-count-api="/repos/ali-saleem/anchorme.js#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star ali-saleem/anchorme.js on GitHub">Star</a>
+            <a class="github-button" href="https://github.com/ali-saleem/anchorme.js" data-icon="octicon-eye" data-count-href="/ali-saleem/anchorme.js/watchers" data-count-api="/repos/ali-saleem/anchorme.js#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch ali-saleem/anchorme.js on GitHub">Watch</a>
+            <a class="github-button" href="https://github.com/ali-saleem/anchorme.js/fork" data-icon="octicon-repo-forked" data-count-href="/ali-saleem/anchorme.js/network" data-count-api="/repos/ali-saleem/anchorme.js#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork ali-saleem/anchorme.js on GitHub">Fork</a>
+            <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
         </footer>
+        
+        <textarea id="testarea"  style="display:none">http://www.google.com http://www.yahoo.com http://www.github.com</textarea>
         <script type="text/javascript">
             
-            var bench = function (title, method, iterations, args, context) {
+            var bench = function (title, method, iterations, args, context,elId) {
                 var time = 0;
                 var timer = function (action) {
-                    var d = Date.now();
+                    var d = (new Date).getTime();
                     if (time < 1 || action === 'start') {
                         time = d;
                         return 0;
@@ -185,7 +214,6 @@
                         return d - time;    
                     }
                 };
-            
                 var result = [];
                 var i = 0;
                 timer('start');
@@ -194,23 +222,19 @@
                     i++;
                 }
                 var execTime = timer('stop');
-                if ( typeof console === "object") {
-                    console.log(title + ": Mean execution time was: ", execTime / iterations);
-                    console.log(title + ": Sum execution time was: ", execTime);
-                    console.log("--------------------------------");
-                }
+                document.getElementById(elId).innerHTML = title + ": Mean execution time was: " + (execTime / iterations) + " second <br>" + title + ": Sum execution time was: " + execTime + " miliseconds";
                 return execTime;  
             };
             
             document.getElementById("process").onclick = function () {
                 var text = document.getElementById("textarea").value;
-                document.getElementById("result").innerHTML = anchorme.js(text,{"class":"someclassname","id":"someID","target":"_blank"}); /*global anchorme*/
+                document.getElementById("resultPlace").innerHTML = anchorme.js(text); /*global anchorme*/
             };
             
-            document.getElementById("compare").onclick = function () {
-                bench("Anchorme",anchorme.js,100,[document.getElementById("testarea").value],this);
-                bench("Autolinker",Autolinker.link,100,[document.getElementById("testarea").value],this); /*global Autolinker*/
-                bench("Linkify",linkifyElement,100,[document.getElementById("testarea")],this); /*global linkifyElement*/
+            document.getElementById("benchmark").onclick = function () {
+                bench("Anchorme",anchorme.js,600,[document.getElementById("testarea").value],this,"banchorme");
+                bench("Autolinker",Autolinker.link,600,[document.getElementById("testarea").value],this,"bautolinker"); /*global Autolinker*/
+                bench("Linkify",linkifyElement,600,[document.getElementById("testarea")],this,"blinkify"); /*global linkifyElement*/
             };
         </script>
     </body>
