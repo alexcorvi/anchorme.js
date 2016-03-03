@@ -56,8 +56,8 @@ var options = {
   "attributes":{
     "class":"someClassHere",
     "id":"someIdHere",
-    "anyAttribute":"anyValue",
-    "target":"_blank"
+    "target":"_blank",
+    "anyAttribute":"anyValue"
   },
   "html":true,
   ips:true,
