@@ -292,15 +292,17 @@
 						url = anchorme.removeCharifItEndsWithIt(url,",");
 						url = anchorme.removeCharifItEndsWithIt(url,";");
 						
+						var nice = (options.truncate <= 1) ? fragment : fragment.substring(0,options.truncate) + "...";
+						
 						if (options.attributes) {
 							splitedArray[i] = "<a href='" + url + "'";
 							for (var name in options.attributes) {
 								splitedArray[i] = splitedArray[i] + " " + name + "='" + options.attributes[name] + "' ";
 							}
-							splitedArray[i] = splitedArray[i] + ">" + fragment + "</a>";
+							splitedArray[i] = splitedArray[i] + ">" + nice + "</a>";
 						}
 						else {
-							splitedArray[i] = "<a href='" + url + "'>" + fragment + "</a>";
+							splitedArray[i] = "<a href='" + url + "'>" + nice + "</a>";
 						}
 					}
 				}
@@ -322,6 +324,7 @@
 				emails:true,
 				urls:true,
 				TLDs:20,
+				truncate:0,
 				defaultProtocol:"http://"
 			};
 		}
@@ -335,7 +338,10 @@
 			if(typeof options.urls 				!= "boolean") 	options.urls = true;
 			if(typeof options.TLDs 				!= "number") 	options.TLDs = 20;
 			if(typeof options.defaultProtocol 	!= "string") 	options.defaultProtocol = "http://";
+			if(typeof options.truncate		 	!= "number") 	options.truncate = 0;
 		}
+		
+		console.log(options.truncate);
 		
 		if(options.html){
 			if(

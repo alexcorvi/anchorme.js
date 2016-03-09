@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <script type="text/javascript" src="src/anchorme.min.js"></script>
+        <script type="text/javascript" src="src/anchorme.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         
         <!-- Linkify for comparision purposes -->
@@ -52,7 +52,7 @@
             
             $scope.$watch("input", function(newValue, oldValue) {
                 $scope.linkedInput = anchorme.js($scope.input, {
-                    TLDs: 901
+                    TLDs: 901,
                 });
             });
             $scope.renderHtml = function(html_code) {
@@ -142,6 +142,7 @@ var options = {
   emails:true,
   urls:true,
   TLDs:20,
+  truncate:25,
   defaultProtocol:"http://"
 };
 
@@ -156,6 +157,7 @@ anchorme.js("www.google.com.com",options);
                 <li><code>emails</code> - Default: <code>true</code>, whether or not to detect emails.</li>
                 <li><code>urls</code> - Default: <code>true</code>, whether or not to detect URLs other than emails and IPs.</li>
                 <li><code>TLDs</code> - Default: <code>20</code>, the number of the TLDs to check. although the library has a large iana list of TLDs, but due to performance issues you might want to limit the number of TLDs that are checked, to the first most popular 20 TLDs for example. Enter <code>901</code> to check the full list, but be warned that checking against the full list of TLDs have adverse perforamance effects. However, if you want 100% sensitivity with the least possible false positives and you have a decent computing power, then go for it.</li>
+                <li><code>truncate</code> - Default: <code>0</code>, the number of charecters to keep from the input after truncate. If you don't want any truncation put it as <code>0</code>, however if you set this to say <code>15</code> it would take `www.google.com/somequeryhere` and return `<a href="http://www.google.com/somequeryhere">www.google.com/...</a>`. It's advisable to set this to a number greater than 25.</li>
                 <li><code>defaultProtocol</code> - Default: <code>"http://"</code>, for links that doesn't have protocol defined.</li>
             </ul>
         </article>
@@ -182,7 +184,7 @@ anchorme.js("www.google.com.com",options);
             </section>
             </div>
             <br>
-            <p>Not getting a result that satisfies you? please, do open an issue on github: <a class="github-button" href="https://github.com/ali-saleem/anchorme.js/issues" data-icon="octicon-issue-opened" data-count-api="/repos/ali-saleem/anchorme.js#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue ali-saleem/anchorme.js on GitHub">Issue</a></p>
+            <p>Not getting a result that satisfies you? please, do open an issue on github: <a class="github-button" href="https://github.com/ali-saleem/anchorme.min.js/issues" data-icon="octicon-issue-opened" data-count-api="/repos/ali-saleem/anchorme.js#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue ali-saleem/anchorme.js on GitHub">Issue</a></p>
         </article>
         <hr>
         <article id="page-benchmark">

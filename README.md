@@ -64,6 +64,7 @@ var options = {
   emails:true,
   urls:true,
   TLDs:20,
+  truncate:25,
   defaultProtocol:"http://"
 };
 
@@ -78,6 +79,7 @@ anchorme.js("www.google.com",options);
 *   `emails` - Default: `true`, whether or not to detect emails.
 *   `urls` - Default: `true`, whether or not to detect URLs other than emails and IPs.
 *   `TLDs` - Default: `20`, the number of the TLDs to check. although the library has a large iana list of TLDs, but due to performance issues you might want to limit the number of TLDs that are checked, to the first most popular 20 TLDs for example. Enter `901` to check the full list, but be warned that checking against the full list of TLDs have adverse perforamance effects. However, if you want 100% sensitivity with the least possible false positives and you have a decent computing power, then go for it.
+*   `truncate` - Default: `0` the number of charecters to keep from the input after truncate. If you don't want any truncation put it as `0`, however if you set this to say `15` it would take `www.google.com/somequeryhere` and return `<a href="http://www.google.com/somequeryhere">www.google.com/...</a>`. It's advisable to set this to a number greater than 25.
 *   `defaultProtocol` - Default: `"http://"`, for links that doesn't have protocol defined.
 
 
