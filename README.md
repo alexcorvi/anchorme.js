@@ -93,16 +93,16 @@ The source code is very readable, don't be afraid to check it.
 
 An example of "other uses", is checking if a string is a valid email or not:
 
-`anchorme.checks.email("ali.a.saleem@outlooks.com",50)`
+`anchorme.checks.email("alex@arrayy.com",50)`
 
 Where `50` is the number of TLDs to check.
 
 * * *
 
 
-## Test it before using
+## Demo
 
-To test how this library would work for you, head over to [here](http://ali-saleem.github.io/anchorme.js/) to test it.
+To test how this library would work for you, head over to [here](http://alexcorvi.github.io/anchorme.js/) to test it.
 
 * * *
 
@@ -113,4 +113,4 @@ I've tested it against autolinker.js and linkify for performance comparision. On
 
 * * *
 
-License: The MIT License (MIT) - Copyright (c) 2015 Ali Saleem
+License: The MIT License (MIT) - Copyright (c) 2016 Alex Corvi

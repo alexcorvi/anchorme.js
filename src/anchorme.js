@@ -3,8 +3,8 @@
  *
  * Anchorme.js
  * 0.6.0
- * @auth: Ali Saleem <ali.a.saleem@outlook.com>
- * @repo: https://github.com/ali-saleem/anchorme.js
+ * @auth: Alex Corvi <alex@arrayy.com>
+ * @repo: https://github.com/alexcorvi/anchorme.js
  * 
  *
  *
@@ -340,8 +340,6 @@
 			if(typeof options.defaultProtocol 	!= "string") 	options.defaultProtocol = "http://";
 			if(typeof options.truncate		 	!= "number") 	options.truncate = 0;
 		}
-		
-		console.log(options.truncate);
 		
 		if(options.html){
 			if(
