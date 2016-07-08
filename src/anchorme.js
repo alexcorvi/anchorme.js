@@ -208,6 +208,29 @@
 		// and do checks on each item of this array
 		var splitedArray = input.split(" ");
 		for (var i = 0; i < splitedArray.length; i++) {
+			
+			/**
+			 * skip this fragment if it's inside an <a> tag already
+			 * We'll check this by creating a for loop that checks the previous
+			 * fragments, if a fragment is something like </a> then this check
+			 * will stop.
+			 * 
+			 * if it's like <a then it's inside <a> tag already
+			 * so we'll skip it.
+			**/
+			var skipThisFragment = false;
+			for(var b = i; b > 0; b--){
+				if(splitedArray[b] === ">" && splitedArray[b-1] === "/a" && splitedArray[b-2] === "<") {
+					break;
+				}
+				if((splitedArray[b] === "a" && splitedArray[b-1] === "<")) {
+					skipThisFragment = true;
+					break;
+				}
+			}
+			if(skipThisFragment) continue;
+			
+			
 			var fragment = splitedArray[i];
 			var isurl = false;
 			var protocol = false;
