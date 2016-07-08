@@ -1,0 +1,25 @@
+{
+  "name": "anchorme.js",
+  "version": "0.6.0",
+  "description": "A library to convert URLs to a clickable HTML anchor elements",
+  "main": "anchorme.js\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D/\u001b[Dsrc/\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Canchorme.js",
+  "scripts": {
+    "test": "anchorme.js(\"www.google.com\",options\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b["
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexcorvi/anchorme.js.git"
+  },
+  "keywords": [
+    "text",
+    "to",
+    "anchor",
+    "tags"
+  ],
+  "author": "Alex Corvi <alex@arrayy.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexcorvi/anchorme.js/issues"
+  },
+  "homepage": "http://alexcorvi.github.io/anchorme.js/"
+}
