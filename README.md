@@ -34,6 +34,8 @@ A library to convert URLs to a clickable HTML anchor elements
 
 ## Getting Started
 
+### Download
+
 To use this library, first download the source code located in the `src` folder.
 
 ##### 1\. Include the library file in your HTML
@@ -46,6 +48,12 @@ To use this library, first download the source code located in the `src` folder.
 var result = anchorme.js(someText);`
 
 * * *
+
+### NPM
+
+You can also install it via NPM: `npm install anchorme.js`
+
+--------
 
 ## Options
 
