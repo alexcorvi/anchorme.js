@@ -24,7 +24,10 @@
             "\nIP address: 127.0.0.1:8000/somethinghere"+
             "\nHTML elements won't break: <img src='http://dummyimage.com/50'>"+
             "\nCapital case: FTP://GOOGLE.COM"+
-            "\nmixed case: https://www.youtube.com/watch?v=d7ez-gIt08I";
+            "\nmixed case: https://www.youtube.com/watch?v=d7ez-gIt08I"+
+            "\nLinks with parenthesis: en.c.org/a_(b)"+
+            "\nLinks inside parenthesis: (www.google.com)"+
+            "\nLinks with paranethisis AND inside paranthesis: (en.c.org/a_(x)_(y))";
             
             $scope.$watch("input", function(newValue, oldValue) {
                 $scope.linkedInput = anchorme.js($scope.input, {
