@@ -207,9 +207,56 @@
 		// split the input (the text we will work on) into an array
 		// and do checks on each item of this array
 		var splitedArray = input.split(" ");
+        
+        /**
+         *
+         * SPECIAL CASE:
+         * We're seperating the string by some charectetrs, we think are seperators
+         * like " ", "\n", "(", ")", "[" and "]" The last two however, may actually be part of the URL
+        **/
+        var fixParenthesis = function (arr) {
+            for(var x = 0; x < arr.length; x++){
+               if(
+                    (arr[x].indexOf(".") > -1) &&
+                    (arr[x] !== "") &&
+                    (!(arr[x-1] === "(" && arr[x+1] === ")" )) &&
+                    ((arr[x+1] === "(") || ((arr[x+1] === ")")))
+                ) {
+                    arr[x] = arr[x]+arr[x+1];
+                    if (typeof arr[x+2] === "string") arr[x] = arr[x] + arr[x+2];
+                    if (typeof arr[x+3] === "string") arr[x] = arr[x] + arr[x+3];
+                    if (typeof arr[x+4] === "string") arr[x] = arr[x] + arr[x+4];
+                    arr.splice(x+1,4);
+                    fixParenthesis(arr);
+                }
+            }
+        };
+        
+        var fixSquareBraces = function (arr) {
+            for(var x = 0; x < arr.length; x++){
+                if(
+                    (arr[x].indexOf(".") > -1) &&
+                    (arr[x] !== "") &&
+                    (!(arr[x-1] === "[" && arr[x+1] === "]" )) &&
+                    ((arr[x+1] === "[") || ((arr[x+1] === "]")))
+                ) {
+                    arr[x] = arr[x]+arr[x+1];
+                    if (typeof arr[x+2] === "string") arr[x] = arr[x] + arr[x+2];
+                    if (typeof arr[x+3] === "string") arr[x] = arr[x] + arr[x+3];
+                    if (typeof arr[x+4] === "string") arr[x] = arr[x] + arr[x+4];
+                    arr.splice(x+1,4);
+                    fixParenthesis(arr);
+                }
+            }
+        };
+        
+        fixParenthesis(splitedArray);
+        fixSquareBraces(splitedArray);
+        
 		for (var i = 0; i < splitedArray.length; i++) {
 			
 			/**
+			 * SPECIAL CASE:
 			 * skip this fragment if it's inside an <a> tag already
 			 * We'll check this by creating a for loop that checks the previous
 			 * fragments, if a fragment is something like </a> then this check
@@ -230,7 +277,9 @@
 			}
 			if(skipThisFragment) continue;
 			
-			
+            
+            
+            
 			var fragment = splitedArray[i];
 			var isurl = false;
 			var protocol = false;
@@ -238,9 +287,9 @@
 			/**
 			 * 
 			 * First check is to check the number of dots
-			 * if there are more than 0 (i.e one or more)
+			 * if there are more than 0 (i.e 1 or more)
 			 * then this might by a URL
-			 * else, this is surely not a URL
+			 * else, this is surely not a URL.
 			 * 
 			 **/
 			if(fragment.indexOf(".") > -1) {
@@ -331,7 +380,7 @@
 				}
 			}
 		}
-		return splitedArray.join(" ");
+        return splitedArray.join(" ");
 	};
 	
 	// function to be called by user
@@ -404,6 +453,8 @@
 		str = str.split("\n").join(" \n ");
 		str = str.split("(").join(" ( ");
 		str = str.split(")").join(" ) ");
+        str = str.split("[").join(" [ ");
+        str = str.split("]").join(" ] ");
 		str = str.split("<").join(" < ");
 		str = str.split(">").join(" > ");
 		
@@ -426,6 +477,8 @@
 		result = result.split(" \n ").join("\n");
 		result = result.split(" ( ").join("(");
 		result = result.split(" ) ").join(")");
+        result = result.split(" [ ").join("[");
+        result = result.split(" ] ").join("]");
 		result = result.split(" < ").join("<");
 		result = result.split(" > ").join(">");
 		
