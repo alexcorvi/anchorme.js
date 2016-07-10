@@ -6,7 +6,10 @@
  * @auth: Alex Corvi <alex@arrayy.com>
  * @repo: https://github.com/alexcorvi/anchorme.js
  * 
- *
+ * 
+ * TODO: add truncate option "start" and "end".
+ * TODO: bower installation
+ * TODO: DOM element inner text
  *
  **/
 
