@@ -53,6 +53,10 @@ var result = anchorme.js(someText);`
 
 You can also install it via NPM: `npm install anchorme.js`
 
+### Bower
+
+You can also install it via Bower: `bower install anchorme.js --save`
+
 --------
 
 ## Options
