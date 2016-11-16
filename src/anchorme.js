@@ -367,7 +367,7 @@
 						url = anchorme.removeCharifItEndsWithIt(url,",");
 						url = anchorme.removeCharifItEndsWithIt(url,";");
 						
-						var nice = (options.truncate <= 1) ? fragment : fragment.substring(0,options.truncate) + "...";
+						var nice = (options.truncate <= 1 || fragment.length <= options.truncate) ? fragment : fragment.substring(0,options.truncate) + "...";
 						
 						if (options.attributes) {
 							splitedArray[i] = "<a href='" + url + "'";
