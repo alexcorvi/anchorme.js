@@ -52,7 +52,6 @@ function defaultOptions(options){
 	if(typeof options.ips 				!== "boolean") 	options.ips = true;
 	if(typeof options.emails 			!== "boolean") 	options.emails = true;
 	if(typeof options.urls 				!== "boolean") 	options.urls = true;
-	if(typeof options.TLDs 				!== "number") 	options.TLDs = 20;
 	if(typeof options.defaultProtocol 	!== "string") 	options.defaultProtocol = "http://";
 	if(typeof options.truncate		 	!== "number") 	options.truncate = 0;
 	return options;
