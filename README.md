@@ -75,7 +75,7 @@ anchorme.validate.url("google.co.uk"); // returns true
 
 ## Demo
 
-To test how this library would work for you, head over to [here](http://alexcorvi.github.io) to test it.
+To test how this library would work for you, head over to [here](http://alexcorvi.github.io/anchorme.js/) to test it.
 
 * * *
 
