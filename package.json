@@ -2,9 +2,10 @@
   "name": "anchorme.js",
   "version": "0.6.0",
   "description": "A library to convert URLs to a clickable HTML anchor elements",
-  "main": "anchorme.js\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D/\u001b[Dsrc/\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[Canchorme.js",
+  "main": "index.js",
   "scripts": {
-    "test": "anchorme.js(\"www.google.com\",options\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b["
+    "test": "mocha test/run.js",
+    "bench":"node test/bench.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,18 @@
   "bugs": {
     "url": "https://github.com/alexcorvi/anchorme.js/issues"
   },
-  "homepage": "http://alexcorvi.github.io/anchorme.js/"
+  "homepage": "http://alexcorvi.github.io/anchorme.js/",
+  "devDependencies": {
+    "babel-plugin-external-helpers": "^6.8.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "babel-preset-es3": "^1.0.1",
+    "rollup": "^0.36.3",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^5.0.4",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "uglify-js": "^2.7.3"
+  },
+  "dependencies": {}
 }
