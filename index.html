@@ -3,10 +3,7 @@
     <head>
         <title>Anchorme.js</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script type="text/javascript" src="dist/anchorme.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         
         <!-- Angular code for auto updating the test section -->
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
@@ -42,156 +39,31 @@
         </script>
         
         <style>
-            body{font-family: 'Raleway', sans-serif;background: #fafafa;}
-            h1,h2,h3,h4,h5,h6 {font-weight:bold;}
-            h1 {font-size:26px;}
-            h2 {font-size:22px;}
-            h3 {font-size:20px;}
-            #textarea {height:300px;max-height:300px;max-width:100%;font-family:monospace;}
+            #textarea {font-family:monospace;}
             #resultPlace{font-family:monospace;white-space:pre-wrap;line-height: 25px;}
-            .nav a {margin-right:15px;}
-            footer {margin: 50px 0;}
             #resultPlace a {background: gold;color: #000;padding: 2px 12px;border-radius: 4px;}
         </style>
     </head>
     <body class="container">
         
         <header>
-            <h1>Anchorme.js</h1>
-            <p class="tagline">A library to convert URLs to a clickable HTML anchor elements</p>
-            <p class="nav">
-                <a href="#page-features">Features</a>
-                <a href="#page-download">Getting started</a>
-                <a href="#page-options">Option</a>
-                <a href="#page-otheruses">Other uses</a>
-                <a href="#page-test">Test</a>
-                <a href="https://github.com/alexcorvi/anchorme.js/">Github</a>
-                <a href="#page-contributers">Contributers</a>
-            </p>
+            <h1>Anchorme.js Demo</h1>
         </header>
-        <hr>
-        <article id="page-features">
-            <h2>Features</h2>
-            <ul>
-                <li>Highly sensitive.</li>
-                <li>produces the least possible false positives if any.</li>
-                <li>Skips HTML, so it doesn't break your HTML if it had a URL as an attribute for an element.</li>
-                <li>Links with or without protocols.</li>
-                <li>Preserve upper and lower case, altough when detecting, it's basically case insensitive.</li>
-                <li>Supports checking against an almost full IANA list.</li>
-                <li>Works with IPs, FTPs, Emails and files.</li>
-                <li>Also works when ports are defined.</li>
-                <li>Small in size.</li>
-                <li>No regex involved, very readable and maintainable.</li>
-                <li>High performance.</li>
-                <li>Supports setting custom attributes with any values.</li>
-                <li>Supports checking for only IPs or for only Emails, or for only URLs</li>
-                <li>Helper methods can be used for other purposes.</li>
-            </ul>
-        </article>
-        <hr>
-        <article id="page-download">
-            <h2>Getting Started</h2>
-            <h3>Download</h3>
-            <p>To use this library, you can download the source code from github: <a href="https://github.com/alexcorvi/anchorme.js">Download</a></p>
-            <h5>1. Include the library file in your HTML</h5>
-            <code>
-                &lt;script type=&quot;text/javascript&quot; src=&quot;anchorme.min.js&quot;&gt;&lt;/script&gt;
-            </code>
-            <h5>2. Call the method</h5>
-            <code>
-            var someText = "this is a text with a link www.github.com ..";
-            <br>var result = anchorme(someText);
-            </code>
-            
-            <h3>NPM</h3>
-            <p>To install via NPM <code>npm install anchorme.js</code></p>
-            
-            <h3>Bower</h3>
-            <p>To install via bower <code>bower install anchorme.js --save</code></p>
-            
-        </article>
-        <hr>
-        <article id="page-options">
-            <h2>Options</h2>
-            <p>Optionally, you can pass an object to the method on which you define some options</p>
-            <pre>
-var options = {
-  "attributes":{
-    "class":"someClassHere",
-    "id":"someIdHere",
-    "anyAttribute":"anyValue",
-  },
-  "html":true,
-  ips:true,
-  emails:true,
-  urls:true,
-  TLDs:20,
-  truncate:25,
-  defaultProtocol:"http://"
-};
-
-anchorme.js("www.google.com.com",options);
-            </pre>
-            <br>
-            <h4>Explaination:</h4>
-            <ul>
-                <li><code>attributes</code> - Default: <code>false</code>, if you want your anchors links to have attributes just like the example above.</li>
-                <li><code>html</code> - Default: <code>true</code>, set this to true if you'll be passing HTML elements that has URLs i their attrivute to avoid breaking them. set this to false if you're not passing HTML to have better performance.</li>
-                <li><code>ips</code> - Default: <code>true</code>, whether or not to detect IPs.</li>
-                <li><code>emails</code> - Default: <code>true</code>, whether or not to detect emails.</li>
-                <li><code>urls</code> - Default: <code>true</code>, whether or not to detect URLs other than emails and IPs.</li>
-                <li><code>TLDs</code> - Default: <code>20</code>, the number of the TLDs to check. although the library has a large iana list of TLDs, but due to performance issues you might want to limit the number of TLDs that are checked, to the first most popular 20 TLDs for example. Enter <code>901</code> to check the full list, but be warned that checking against the full list of TLDs have adverse perforamance effects. However, if you want 100% sensitivity with the least possible false positives and you have a decent computing power, then go for it.</li>
-                <li><code>truncate</code> - Default: <code>0</code>, the number of charecters to keep from the input after truncate. If you don't want any truncation put it as <code>0</code>, however if you set this to say <code>15</code> it would take `www.google.com/somequeryhere` and return `<a href="http://www.google.com/somequeryhere">www.google.com/...</a>`. It's advisable to set this to a number greater than 25.</li>
-                <li><code>defaultProtocol</code> - Default: <code>"http://"</code>, for links that doesn't have protocol defined.</li>
-            </ul>
-        </article>
-        <hr>
-        <article id="page-otheruses">
-            <h2>Other uses</h2>
-            <p>Although the main purpose of this library is to convert unclickable text strings into an HTML anchor links, you can surely use it's methods for other purposes.</p>
-            <p>The source code is very readable, don't be afraid to check it.</p>
-            <p>An example of "other uses", is checking if a string is a valid email or not:</p>
-            <p><code>anchorme.checks.email("alex@arrayy.com",50)</code></p>
-            <p>Where <code>50</code> is the number of TLDs to check.</p>
-        </article>
-        <hr>    
         <article id="page-test" ng-app="myApp">
-            <h2>Test it before using</h2>
-            <div class="row" ng-controller="myCtrl">
-            <section class="container col-xs-6">
-                <h3>Input</h3>
-                <textarea id="textarea" class="form-control" ng-model="input"></textarea>
-            </section>
-            <section class="col-xs-6">
-                <h3>Result</h3>
-                <p id="resultPlace" ng-bind-html="renderHtml(linkedInput)"></p>
-            </section>
+            <div ng-controller="myCtrl">
+                <section class="container col-xs-6">
+                    <h3>Input</h3>
+                    <textarea id="textarea" class="form-control" ng-model="input" style="height:500px;width:700px"></textarea>
+                </section>
+                <section class="col-xs-6">
+                    <h3>Result</h3>
+                    <p id="resultPlace" ng-bind-html="renderHtml(linkedInput)"></p>
+                </section>
             </div>
             <br>
             <p>Not getting a result that satisfies you? please, do open an issue on github: <a class="github-button" href="https://github.com/alexcorvi/anchorme.min.js/issues" data-icon="octicon-issue-opened" data-count-api="/repos/alexcorvi/anchorme.js#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue alexcorvi/anchorme.js on GitHub">Issue</a></p>
         </article>
-        <hr>
-        <hr>
-        <article id="page-contributers">
-            <h2>Contributers</h2>
-            <p>This library is authored and currently maintained by <a href="https://twitter.com/alex_corvi">Alex Corvi</a></p>
-            <p>It also has been empowered by the following contributers on github:</p>
-            <ul>
-                <li><a href="https://github.com/ChrisOelmueller">Chris Oelmueller</a></li>
-                <li><a href="https://github.com/davidschlachter">David Schlachter</a></li>
-                <li><a href="https://github.com/azagniotov">Alexander Zagniotov</a></li>
-            </ul>
-        </article>
-        <hr>
         
-        <footer>
-            <p>License: The MIT License (MIT) - Copyright (c) 2016 Alex Corvi</p>
-            <a class="github-button" href="https://github.com/alexcorvi" data-count-href="/alexcorvi/followers" data-count-api="/users/alexcorvi#followers" data-count-aria-label="# followers on GitHub" aria-label="Follow @alexcorvi on GitHub">Follow @alexcorvi</a>
-            <a class="github-button" href="https://github.com/alexcorvi/anchorme.js" data-icon="octicon-star" data-count-href="/alexcorvi/anchorme.js/stargazers" data-count-api="/repos/alexcorvi/anchorme.js#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star alexcorvi/anchorme.js on GitHub">Star</a>
-            <a class="github-button" href="https://github.com/alexcorvi/anchorme.js" data-icon="octicon-eye" data-count-href="/alexcorvi/anchorme.js/watchers" data-count-api="/repos/alexcorvi/anchorme.js#subscribers_count" data-count-aria-label="# watchers on GitHub" aria-label="Watch alexcorvi/anchorme.js on GitHub">Watch</a>
-            <a class="github-button" href="https://github.com/alexcorvi/anchorme.js/fork" data-icon="octicon-repo-forked" data-count-href="/alexcorvi/anchorme.js/network" data-count-api="/repos/alexcorvi/anchorme.js#forks_count" data-count-aria-label="# forks on GitHub" aria-label="Fork alexcorvi/anchorme.js on GitHub">Fork</a>
-            <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
-        </footer>
+        <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
     </body>
 </html>
