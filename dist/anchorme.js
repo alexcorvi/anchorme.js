@@ -42,7 +42,6 @@ function defaultOptions(options) {
 	if (typeof options.ips !== "boolean") options.ips = true;
 	if (typeof options.emails !== "boolean") options.emails = true;
 	if (typeof options.urls !== "boolean") options.urls = true;
-	if (typeof options.TLDs !== "number") options.TLDs = 20;
 	if (typeof options.defaultProtocol !== "string") options.defaultProtocol = "http://";
 	if (typeof options.truncate !== "number") options.truncate = 0;
 	return options;
@@ -259,7 +258,7 @@ var identify = function (inputArr, options) {
 	return inputArr.map(function (fragment, index) {
 		// quick validations
 		// 1
-		if (fragment.indexOf(".") < 1) return fragment;
+		if (fragment.indexOf(".") < 1 && !hasProtocol(fragment)) return fragment;
 		// 2
 		if (fragment.split("").filter(function (c) {
 			return ~urlAllowed.indexOf(c);

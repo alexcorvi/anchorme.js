@@ -11,7 +11,7 @@ export default function (inputArr, options) {
 	return inputArr.map((fragment,index)=>{
 		// quick validations
 		// 1
-		if(fragment.indexOf(".")<1) return fragment; 
+		if(fragment.indexOf(".")<1 && (!hasProtocol(fragment))) return fragment; 
 		// 2
 		if (fragment.split("").filter((c)=>~urlAllowed.indexOf(c)).length !== fragment.length) return fragment;
 
