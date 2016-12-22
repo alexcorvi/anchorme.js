@@ -42,7 +42,7 @@ var result = anchorme(someText);
 // You can also pass few options
 
 anchorme(someText,{
-  attribute:{
+  attributes:{
     "target":"_blank"
   }
 })
