@@ -60,3 +60,34 @@ describe('Basic Tests', function () {
 		});
 	});
 });
+
+describe('options', function () {
+	it('add attributes', function () {
+		var result = anchorme("www.google.com",{
+			attributes:{
+				"target":"_blank"
+			}
+		});
+		assert.equal(result.split("_blank").length,2);
+	});
+
+	it('truncate', function () {
+		var result = anchorme("https://github.com/alexcorvi/anchorme.js",{
+			truncate:20
+		});
+		assert.equal(result.substring(result.indexOf(">https")+1,result.indexOf("...")).length,20);
+
+		var result2 = anchorme("https://github.com/alexcorvi/anchorme.js/blob/gh-pages/test/bench.js",{
+			truncate:20
+		});
+		assert.equal(result2.substring(result2.indexOf(">https")+1,result2.indexOf("...")).length,20);
+	});
+
+
+	it('set default protocol', function () {
+		var result = anchorme("www.google.com",{
+			defaultProtocol:"ftp://"
+		});
+		assert.equal(result.split("ftp://").length,3);
+	});
+});
