@@ -119,6 +119,8 @@ var ipChecker = function (str) {
 	    port,
 	    route;
 
+	if (!lastBit) return false;
+
 	// one: route
 	if (~lastBit.indexOf("/")) {
 		var ocAndRoute = lastBit.split("/");

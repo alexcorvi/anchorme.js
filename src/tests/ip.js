@@ -32,6 +32,8 @@ export default function (str) {
 	var lastBit = IPArray[3],
 	oc4,port,route;
 
+	if(!lastBit) return false;
+
 	// one: route
 	if(~lastBit.indexOf("/")) {
 		var ocAndRoute = lastBit.split("/");
