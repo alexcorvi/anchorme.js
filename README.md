@@ -57,7 +57,7 @@ Option key | Default value | Description
 `html` | `true` | If you're expecting HTML input, this will make sure that your HTML won't break
 `ips` | `true` | Detect IPs
 `urls` | `true` | Detect URLs
-`email` | `true` | Detect Emails
+`emails` | `true` | Detect Emails
 `truncate` | `0` | Truncate long links
 `defaultProtocol` | `"http://"` | Default protocol to be added when no protocol has been defined in the input
 
