@@ -62,11 +62,27 @@ describe('Basic Tests', function () {
 });
 
 describe('options', function () {
+
 	it('add attributes', function () {
 		var result = anchorme("www.google.com",{
-			attributes:{
-				"target":"_blank"
-			}
+			attributes:[
+				{
+					name:"target",
+					value:"_blank"
+				}
+			]
+		});
+		assert.equal(result.split("_blank").length,2);
+	});
+	
+	it('attributes with filters', function () {
+		var result = anchorme("www.google.com www.yahoo.com",{
+			attributes:[
+				function(fragment){
+					if(fragment.raw.indexOf("google")===-1) return {name:"target",value:"_blank"};
+					else return {name:"target",value:"self"}; 
+				}
+			]
 		});
 		assert.equal(result.split("_blank").length,2);
 	});
@@ -88,6 +104,32 @@ describe('options', function () {
 		var result = anchorme("www.google.com",{
 			defaultProtocol:"ftp://"
 		});
-		assert.equal(result.split("ftp://").length,3);
+		assert.equal(result.split("ftp://").length,2);
 	});
+
+	it('set default protocol as a function', function () {
+		var result = anchorme("www.google.com www.yahoo.com",{
+			defaultProtocol:function(raw){
+				if(raw.indexOf("google") === -1) return "ftp://";
+				else return "https://";
+			}
+		});
+		assert.equal(result.split("ftp://").length,2);
+	});
+
+});
+
+describe('Additional functionalities', function () {
+	it('return a list of valid URLs', function () {
+		var result = anchorme("www.google.com mail@gmail.com",{
+			list:true
+		});
+		assert.equal(typeof result,"object");
+		assert.equal(result.length,2);
+	});
+
+	it('URLs validator works with emojis', function () {
+		assert.equal(anchorme.validate.url("http://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws"),true);
+	});
+
 });
