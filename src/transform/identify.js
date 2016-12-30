@@ -7,6 +7,7 @@ import emailChecker from "../tests/email.js";
 import ipChecker from "../tests/ip.js";
 import urlChecker from "../tests/url.js";
 
+
 export default function (inputArr, options) {
 	return inputArr.map((fragment,index)=>{
 		
@@ -20,9 +21,6 @@ export default function (inputArr, options) {
 		if(encoded.split("").filter((c)=>~urlAllowed.indexOf(c)).length !== encoded.length) return fragment;
 		var urlObj = false;
 
-		// starting tests that might render a positive result
-		// test 1: it begins with a protocol
-		var protocol = hasProtocol(fragment);
 
 		var protocol = hasProtocol(encoded) || "";
 
@@ -36,30 +34,43 @@ export default function (inputArr, options) {
 				noProtocol:encoded.substr(protocol.length)
 			};
 		}
+
+		// remove the protocol before proceeding to any other test
+		else if(protocol)encoded = encoded.substr(protocol.length);
+
 		// test 2: it's a URL
-		if((!urlObj) && options.urls && urlChecker(fragment)) {
+		if((!urlObj) && options.urls && urlChecker(encoded)) {
 			urlObj = {
 				reason:"url",
-				protocol:options.defaultProtocol,
-				url:fragment
+				protocol:protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
+				raw:fragment,
+				encoded:encoded,
+				noProtocol:encoded.substr(protocol.length)
 			};
 		}
+
 		// test 3: it's an email
-		if((!urlObj) && options.emails && emailChecker(fragment)) {
+		if((!urlObj) && options.emails && emailChecker(encoded)) {
 			urlObj = {
 				reason:"email",
 				protocol:"mailto:",
-				url:fragment
+				raw:fragment,
+				encoded:encoded,
+				noProtocol:encoded.substr(protocol.length)
 			};
 		}
+
 		// test 4: it's an IP
-		if((!urlObj) && options.ips && ipChecker(fragment)) {
+		if((!urlObj) && options.ips && ipChecker(encoded)) {
 			urlObj = {
 				reason:"ip",
-				protocol:options.defaultProtocol,
-				url:fragment
+				protocol:protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
+				raw:fragment,
+				encoded:encoded,
+				noProtocol:encoded.substr(protocol.length)
 			};
 		}
+
 		if(!urlObj) return fragment;
 		else {
 			var past = index-1;
