@@ -9,24 +9,23 @@ const babel = require("rollup-plugin-babel");
 require("./watcher/index.js");
 
 var count = 0;
-
 function build(){
 	rollup.rollup({
 		entry: srcPath,
-		plugins:[
-			babel({exclude: 'node_modules/**'}),
-	    ]
+		plugins:[babel()]
 	}).then((bundle) => {
-		
+		console.log("- Generating UMD bundle...");		
 		// Universal
 		var umd = bundle.generate({
 			format:"umd",
 			moduleName:"anchorme"
 		});
+		console.log("- Writing file...");		
 		fs.writeFileSync(distDir+"anchorme.js",umd.code);
-
-		var minified = uglifyjs.minify(umd.code,{fromString:true}).code;
-		fs.writeFileSync(distDir+"anchorme.min.js",minified);
+		console.log("- Minifying...");		
+		// var minified = uglifyjs.minify(umd.code,{fromString:true}).code;
+		console.log("- Writing minified file...");	
+		// fs.writeFileSync(distDir+"anchorme.min.js",minified);
 		count++;
 		console.log("files rebuilt for the",count,"time");
 	}).catch((err)=>{
