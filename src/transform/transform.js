@@ -1,17 +1,24 @@
 "use strict";
 import {separate as separate} from "../separate/separate.js";
 import {deSeparate as deSeparate} from "../separate/separate.js";
+import {removeNotationEnds as removeNotationEnds} from "../util.js";
 import identify from "./identify.js";
-import url2tag from "./url2tag.js";
-
 
 export default function(str,options){
+
 	var arr = separate(str);
-	arr = identify(arr,options).map((fragment)=>{
+	arr = identify(arr,options);
+
+	// return the current list (with words being filtered out)
+	if(options.list) return arr.filter((fragment)=>typeof fragment !== "string");
+
+	// transform objects to HTML tags
+	arr = arr.map((fragment)=>{
 		if(typeof fragment === "string") return fragment;
-		url2tag(fragment.url,options);
-		return url2tag(fragment.protocol+fragment.url,options);
+		return url2tag(fragment,options);
 	});
+
+	// join and return
 	return deSeparate(arr);
 }
 
