@@ -28,8 +28,8 @@ function url2tag (fragment,options){
 	original = (options.truncate > 0 && original.length > options.truncate) ?  original.substring(0,options.truncate) + "..." : original;
 	return `<a href="${href}" ${options.attributes.map((attribute)=>{
 		if(typeof attribute === 'function') {
-			var name = attribute(fragment).name;
-			var value = attribute(fragment).value;
+			var name = (attribute(fragment) || {}).name;
+			var value = (attribute(fragment) || {}).value;
 			if(name && !value) return " name ";
 			if(name && value) return ` ${name}="${value}" `;
 		}
