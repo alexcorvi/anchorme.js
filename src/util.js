@@ -36,7 +36,7 @@ function removeNotationEnds (str) {
 function defaultOptions(options){
 	if(!options) {
 		options = {
-			"attributes":false,
+			"attributes":[],
 			"html":true,
 			ips:true,
 			emails:true,
@@ -46,7 +46,7 @@ function defaultOptions(options){
 		};
 	}
 
-	if(typeof options.attributes 		!== "object") 	options.attributes = false;
+	if(typeof options.attributes 		!== "object") 	options.attributes = [];
 	if(typeof options.html 				!== "boolean") 	options.html = true;
 	if(typeof options.ips 				!== "boolean") 	options.ips = true;
 	if(typeof options.emails 			!== "boolean") 	options.emails = true;
