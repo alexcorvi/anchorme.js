@@ -7,7 +7,6 @@ import emailChecker from "../tests/email.js";
 import ipChecker from "../tests/ip.js";
 import urlChecker from "../tests/url.js";
 
-
 export default function (inputArr, options) {
 	return inputArr.map((fragment,index)=>{
 		
@@ -25,13 +24,12 @@ export default function (inputArr, options) {
 		var protocol = hasProtocol(encoded) || "";
 
 		// test 1: it's a file
-		if(protocol === "file:///" && encoded.substr(protocol.length).split(/\/|\\/).length - 1) {
+		if(options.files && protocol === "file:///" && encoded.substr(protocol.length).split(/\/|\\/).length - 1) {
 			urlObj = {
 				reason:"file",
 				protocol:protocol,
 				raw:fragment,
 				encoded:encoded,
-				noProtocol:encoded.substr(protocol.length)
 			};
 		}
 
@@ -45,7 +43,6 @@ export default function (inputArr, options) {
 				protocol:protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
 				raw:fragment,
 				encoded:encoded,
-				noProtocol:encoded.substr(protocol.length)
 			};
 		}
 
@@ -56,7 +53,6 @@ export default function (inputArr, options) {
 				protocol:"mailto:",
 				raw:fragment,
 				encoded:encoded,
-				noProtocol:encoded.substr(protocol.length)
 			};
 		}
 
@@ -67,7 +63,6 @@ export default function (inputArr, options) {
 				protocol:protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
 				raw:fragment,
 				encoded:encoded,
-				noProtocol:encoded.substr(protocol.length)
 			};
 		}
 
