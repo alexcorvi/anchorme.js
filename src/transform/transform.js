@@ -14,3 +14,18 @@ export default function(str,options){
 	});
 	return deSeparate(arr);
 }
+
+function url2tag (fragment,options){
+	var href = fragment.protocol + removeNotationEnds(fragment.encoded);
+	var original = fragment.raw;
+	original = (options.truncate > 0 && original.length > options.truncate) ?  original.substring(0,options.truncate) + "..." : original;
+	return `<a href="${href}" ${options.attributes.map((attribute)=>{
+		if(typeof attribute === 'function') {
+			var name = attribute(fragment).name;
+			var value = attribute(fragment).value;
+			if(name && !value) return " name ";
+			if(name && value) return ` ${name}="${value}" `;
+		}
+		else return ` ${attribute.name}="${attribute.value}" `;
+	}).join("")}>${original}</a>`;
+}
