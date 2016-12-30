@@ -14,21 +14,26 @@ export default function (inputArr, options) {
 
 		// quick validations
 		// 1
-		if(fragment.indexOf(".")<1 && (!hasProtocol(fragment))) return fragment; 
-		// 2
-		if (fragment.split("").filter((c)=>~urlAllowed.indexOf(c)).length !== fragment.length) return fragment;
+		if(encoded.indexOf(".")<1 && (!hasProtocol(encoded))) return fragment;
 
+		// 2
+		if(encoded.split("").filter((c)=>~urlAllowed.indexOf(c)).length !== encoded.length) return fragment;
 		var urlObj = false;
 
 		// starting tests that might render a positive result
 		// test 1: it begins with a protocol
 		var protocol = hasProtocol(fragment);
 
-		if(protocol) {
+		var protocol = hasProtocol(encoded) || "";
+
+		// test 1: it's a file
+		if(protocol === "file:///" && encoded.substr(protocol.length).split(/\/|\\/).length - 1) {
 			urlObj = {
-				reason:"protocol",
+				reason:"file",
 				protocol:protocol,
-				url:fragment.substr(protocol.length)
+				raw:fragment,
+				encoded:encoded,
+				noProtocol:encoded.substr(protocol.length)
 			};
 		}
 		// test 2: it's a URL
