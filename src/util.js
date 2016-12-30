@@ -41,7 +41,6 @@ function defaultOptions(options){
 			ips:true,
 			emails:true,
 			urls:true,
-			TLDs:20,
 			truncate:0,
 			defaultProtocol:"http://"
 		};
