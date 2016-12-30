@@ -1,5 +1,4 @@
 "use strict";
-
 import {countOccurrences as countOccurrences, removeNotationEnds as removeNotationEnds, isInt as isInt, isPort as isPort} from "../util.js";
 
 export default function (str) {

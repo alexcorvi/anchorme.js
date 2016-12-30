@@ -5,7 +5,6 @@ import {allowedInHost as allowedInHost, allowedInEmailName as allowedInEmailName
 export default function (str) {
 	if (countOccurrences(str, "@") < 1) return false;
 
-
 	// normalize
 	str = str.toLowerCase();
 	str = removeNotationEnds(str);
