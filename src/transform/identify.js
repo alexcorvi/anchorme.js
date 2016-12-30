@@ -9,6 +9,9 @@ import urlChecker from "../tests/url.js";
 
 export default function (inputArr, options) {
 	return inputArr.map((fragment,index)=>{
+		
+		var encoded = encodeURI(fragment);
+
 		// quick validations
 		// 1
 		if(fragment.indexOf(".")<1 && (!hasProtocol(fragment))) return fragment; 
