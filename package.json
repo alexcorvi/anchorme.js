@@ -1,12 +1,12 @@
 {
   "name": "anchorme",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "description": "A library to convert URLs to a clickable HTML anchor elements",
   "main": "./dist/anchorme.js",
   "scripts": {
     "test": "mocha test/run.js",
-    "bench":"node test/bench.js",
-    "build":"node build/build"
+    "bench": "node test/bench.js",
+    "build": "node build/build"
   },
   "repository": {
     "type": "git",
