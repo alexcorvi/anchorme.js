@@ -6,7 +6,7 @@ function countOccurrences(string, subString, allowOverlapping) {
 }
 
 function skipHtml(str) {
-	["src","href","cite","formaction","icon","manifest","poster","codebase","background","profile","usemap"]
+	["src","href","ref","cite","formaction","icon","manifest","poster","codebase","background","profile","usemap"]
 	.forEach((atr)=>{
 		str = str.split(`${atr}=" `).join(`${atr}="`);
 		str = str.split(`${atr}=' `).join(`${atr}='`);
