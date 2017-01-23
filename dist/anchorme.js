@@ -352,13 +352,9 @@ function url2tag(fragment, options) {
 
 	if (options.truncate > 0 || options.truncate.push) {
 		if (options.truncate.toPrecision) {
-			if (original.length > options.truncate) {
-				original = original.substring(0, options.truncate) + "...";
-			}
+			if (original.length > options.truncate) original = original.substring(0, options.truncate) + "...";
 		} else if (options.truncate[0].toPrecision && options.truncate[1].toPrecision) {
-			if (original.length > options.truncate[0] + options.truncate[1]) {
-				original = original.substr(0, options.truncate[0]) + "..." + original.substr(original.length - options.truncate[1]);
-			}
+			if (original.length > options.truncate[0] + options.truncate[1]) original = original.substr(0, options.truncate[0]) + "..." + original.substr(original.length - options.truncate[1]);
 		}
 	}
 
