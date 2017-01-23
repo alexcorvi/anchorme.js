@@ -23,9 +23,9 @@ function build(){
 		console.log("- Writing file...");		
 		fs.writeFileSync(distDir+"anchorme.js",umd.code);
 		console.log("- Minifying...");		
-		// var minified = uglifyjs.minify(umd.code,{fromString:true}).code;
+		var minified = uglifyjs.minify(umd.code,{fromString:true}).code;
 		console.log("- Writing minified file...");	
-		// fs.writeFileSync(distDir+"anchorme.min.js",minified);
+		fs.writeFileSync(distDir+"anchorme.min.js",minified);
 		count++;
 		console.log("files rebuilt for the",count,"time");
 	}).catch((err)=>{
