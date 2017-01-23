@@ -32,6 +32,7 @@ function defaultOptions(options) {
 			urls: true,
 			files: true,
 			truncate: 0,
+			middleTruncate: false,
 			defaultProtocol: "http://",
 			list: false
 		};
@@ -349,7 +350,7 @@ var transform = function (str, options) {
 function url2tag(fragment, options) {
 	var href = fragment.protocol + removeNotationEnds(fragment.encoded);
 	var original = fragment.raw;
-	original = options.truncate > 0 && original.length > options.truncate ? original.substring(0, options.truncate) + "..." : original;
+	original = options.truncate > 0 && original.length > options.truncate ? options.middleTruncate ? truncateFromMiddle(original) : truncateFromEnd(original) : original;
 	return "<a href=\"" + href + "\" " + options.attributes.map(function (attribute) {
 		if (typeof attribute === 'function') {
 			var name = (attribute(fragment) || {}).name;
@@ -358,6 +359,16 @@ function url2tag(fragment, options) {
 			if (name && value) return " " + name + "=\"" + value + "\" ";
 		} else return " " + attribute.name + "=\"" + attribute.value + "\" ";
 	}).join("") + ">" + original + "</a>";
+
+	function truncateFromEnd(str) {
+		return str.substring(0, options.truncate) + "...";
+	}
+
+	function truncateFromMiddle(str) {
+		var frontChars = Math.ceil(options.truncate / 2);
+		var backChars = Math.floor(options.truncate / 2);
+		return str.substr(0, frontChars) + "..." + str.substr(str.length - backChars);
+	}
 }
 
 var anchorme = function anchorme(str, options) {
