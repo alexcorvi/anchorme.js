@@ -95,6 +95,7 @@ This will make the truncation (as seen above) removing charecters from the middl
 ```javascript
 
 	anchorme(string,{
+		truncate:40,
 		middleTruncate:true
 	})
 
