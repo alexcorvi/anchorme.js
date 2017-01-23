@@ -88,7 +88,17 @@ to this:
 
 ```
 
+### Truncate from the middle
 
+This will make the truncation (as seen above) removing charecters from the middle instead of the end. So it will produce a link like this one: [raw.githubuserconten...tests/hasprotocol.js](https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/src/tests/hasprotocol.js)
+
+```javascript
+
+	anchorme(string,{
+		middleTruncate:true
+	})
+
+```
 
 ### Excluding 
 
