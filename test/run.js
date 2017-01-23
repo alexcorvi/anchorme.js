@@ -101,10 +101,9 @@ describe('options', function () {
 
 	it('truncate from the middle', function () {
 		var result = anchorme("github.com/alexcorvi/anchorme.js",{
-			truncate:22,
-			middleTruncate:true,
+			truncate:[6,11],
 		});
-		assert.equal(!!~result.indexOf(">github.com/"),true);
+		assert.equal(!!~result.indexOf(">github..."),true);
 		assert.equal(!!~result.indexOf("...anchorme.js<"),true);
 	});
 
