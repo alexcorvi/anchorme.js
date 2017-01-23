@@ -32,7 +32,6 @@ function defaultOptions(options) {
 			urls: true,
 			files: true,
 			truncate: 0,
-			middleTruncate: false,
 			defaultProtocol: "http://",
 			list: false
 		};
@@ -43,9 +42,9 @@ function defaultOptions(options) {
 	if (typeof options.emails !== "boolean") options.emails = true;
 	if (typeof options.urls !== "boolean") options.urls = true;
 	if (typeof options.files !== "boolean") options.files = true;
-	if (typeof options.truncate !== "number") options.truncate = 0;
 	if (typeof options.list !== "boolean") options.list = false;
 	if (typeof options.defaultProtocol !== "string" && typeof options.defaultProtocol !== "function") options.defaultProtocol = "http://";
+	if (typeof options.truncate !== "number" && (_typeof(options.truncate) !== "object" || options.truncate === null)) options.truncate = 0;
 	return options;
 }
 
@@ -350,7 +349,19 @@ var transform = function (str, options) {
 function url2tag(fragment, options) {
 	var href = fragment.protocol + removeNotationEnds(fragment.encoded);
 	var original = fragment.raw;
-	original = options.truncate > 0 && original.length > options.truncate ? options.middleTruncate ? truncateFromMiddle(original) : truncateFromEnd(original) : original;
+
+	if (options.truncate > 0 || options.truncate.push) {
+		if (options.truncate.toPrecision) {
+			if (original.length > options.truncate) {
+				original = original.substring(0, options.truncate) + "...";
+			}
+		} else if (options.truncate[0].toPrecision && options.truncate[1].toPrecision) {
+			if (original.length > options.truncate[0] + options.truncate[1]) {
+				original = original.substr(0, options.truncate[0]) + "..." + original.substr(original.length - options.truncate[1]);
+			}
+		}
+	}
+
 	return "<a href=\"" + href + "\" " + options.attributes.map(function (attribute) {
 		if (typeof attribute === 'function') {
 			var name = (attribute(fragment) || {}).name;
@@ -359,16 +370,6 @@ function url2tag(fragment, options) {
 			if (name && value) return " " + name + "=\"" + value + "\" ";
 		} else return " " + attribute.name + "=\"" + attribute.value + "\" ";
 	}).join("") + ">" + original + "</a>";
-
-	function truncateFromEnd(str) {
-		return str.substring(0, options.truncate) + "...";
-	}
-
-	function truncateFromMiddle(str) {
-		var frontChars = Math.ceil(options.truncate / 2);
-		var backChars = Math.floor(options.truncate / 2);
-		return str.substr(0, frontChars) + "..." + str.substr(str.length - backChars);
-	}
 }
 
 var anchorme = function anchorme(str, options) {
