@@ -99,6 +99,14 @@ describe('options', function () {
 		assert.equal(result2.substring(result2.indexOf(">https")+1,result2.indexOf("...")).length,20);
 	});
 
+	it('truncate from the middle', function () {
+		var result = anchorme("github.com/alexcorvi/anchorme.js",{
+			truncate:22,
+			middleTruncate:true,
+		});
+		assert.equal(!!~result.indexOf(">github.com/"),true);
+		assert.equal(!!~result.indexOf("...anchorme.js<"),true);
+	});
 
 	it('set default protocol', function () {
 		var result = anchorme("www.google.com",{
