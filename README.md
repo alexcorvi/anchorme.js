@@ -95,7 +95,7 @@ This will make the truncation (as seen above) removing characters from the middl
 ```javascript
 
 	anchorme(string,{
-		truncate:[25,15],
+		truncate:[26,15],
 		// means 26 characters from the beginning
 		// and 15 characters from the end
 	})
