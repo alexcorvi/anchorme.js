@@ -90,13 +90,14 @@ to this:
 
 ### Truncate from the middle
 
-This will make the truncation (as seen above) removing charecters from the middle instead of the end. So it will produce a link like this one: [raw.githubuserconten...tests/hasprotocol.js](https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/src/tests/hasprotocol.js)
+This will make the truncation (as seen above) removing characters from the middle instead of the end. So it will produce a link like this one: [raw.githubusercontent.com/.../hasprotocol.js](https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/src/tests/hasprotocol.js)
 
 ```javascript
 
 	anchorme(string,{
-		truncate:40,
-		middleTruncate:true
+		truncate:[25,15],
+		// means 26 characters from the beginning
+		// and 15 characters from the end
 	})
 
 ```
