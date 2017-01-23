@@ -42,6 +42,7 @@ function defaultOptions(options){
 			urls:true,
 			files:true,
 			truncate:0,
+			middleTruncate:false,
 			defaultProtocol:"http://",
 			list:false,
 		};
@@ -51,7 +52,7 @@ function defaultOptions(options){
 	if(typeof options.ips 				!== "boolean") 	options.ips = true;
 	if(typeof options.emails 			!== "boolean") 	options.emails = true;
 	if(typeof options.urls 				!== "boolean") 	options.urls = true;
-	if(typeof options.files 				!== "boolean") 	options.files = true;
+	if(typeof options.files 			!== "boolean") 	options.files = true;
 	if(typeof options.truncate		 	!== "number") 	options.truncate = 0;
 	if(typeof options.list				!== "boolean") 	options.list = false;
 	if(typeof options.defaultProtocol 	!== "string" && typeof options.defaultProtocol 	!== "function") 	options.defaultProtocol = "http://";
