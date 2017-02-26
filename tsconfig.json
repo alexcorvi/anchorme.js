@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"outDir": "./dist-node/",
+		"target":"ES6",
+		"declaration":true,
+		"strictNullChecks":true,
+		"alwaysStrict":true,
+		"forceConsistentCasingInFileNames":true
+	},
+	"files": ["./src/index.ts"],
+	"exclude": ["./node_modules/*"]
+}

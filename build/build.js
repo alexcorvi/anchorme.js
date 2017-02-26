@@ -1,19 +1,30 @@
-const path = require("path");
-const rollup = require('rollup');
-const srcPath = path.join(process.cwd(),"src","index.js");
-const distDir = path.join(process.cwd(),"dist") + "/";
 const fs = require("fs");
-const uglifyjs = require("uglify-js");
-const babel = require("rollup-plugin-babel");
+const path = require("path");
 
-require("./watcher/index.js");
+var exec = require('child_process').exec;
+function execute(cmd){
+	return new Promise((resolve,reject)=>{
+		exec(cmd, (error, stdout, stderr) => {
+			if(!error) resolve(stdout);
+			else reject(error);
+		});
+	})
+}
 
-var count = 0;
+
 function build(){
+	const rollup = require('rollup');
+	const srcPath = path.join(process.cwd(),"dist-node","index.js");
+	const distDir = path.join(process.cwd(),"dist-browser") + "/";
+	const uglifyjs = require("uglify-js");
+	const buble = require("rollup-plugin-buble");
+	const commonjs = require('rollup-plugin-commonjs');
+
 	rollup.rollup({
 		entry: srcPath,
-		plugins:[babel()]
-	}).then((bundle) => {
+		plugins:[buble(),commonjs()]
+	})
+	.then((bundle) => {
 		console.log("- Generating UMD bundle...");		
 		// Universal
 		var umd = bundle.generate({
@@ -26,13 +37,20 @@ function build(){
 		var minified = uglifyjs.minify(umd.code,{fromString:true}).code;
 		console.log("- Writing minified file...");	
 		fs.writeFileSync(distDir+"anchorme.min.js",minified);
-		count++;
-		console.log("files rebuilt for the",count,"time");
-	}).catch((err)=>{
+	})
+	.catch((err)=>{
 		console.log(err);
 		process.exit(1);
 	});
 }
 
-build();
-new fs._watcher(path.dirname(srcPath)).watch(build);
+execute("jest")
+.then((out)=>{
+	console.log("Test passed successfully");
+	return execute("tsc");
+})
+.then(()=>{
+	console.log("Built from typescript")
+	return build();
+})
+.catch(err=>console.error(err));
