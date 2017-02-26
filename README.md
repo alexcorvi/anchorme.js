@@ -1,10 +1,10 @@
 # Anchorme.js
-[![npm](https://img.shields.io/npm/dm/anchorme.svg)]()
-[![npm](https://img.shields.io/npm/v/anchorme.svg)]()
-[![GitHub release](https://img.shields.io/github/release/alexcorvi/anchorme.js.svg)]()
-[![license](https://img.shields.io/github/license/alexcorvi/anchorme.js.svg)]()
-[![David](https://img.shields.io/david/alexcorvi/anchorme.js.svg)]()
-[![David](https://img.shields.io/david/dev/alexcorvi/anchorme.js.svg)]()
+![npm](https://img.shields.io/npm/dm/anchorme.svg)
+![npm](https://img.shields.io/npm/v/anchorme.svg)
+![GitHub release](https://img.shields.io/github/release/alexcorvi/anchorme.js.svg)
+![license](https://img.shields.io/github/license/alexcorvi/anchorme.js.svg)
+![David](https://img.shields.io/david/alexcorvi/anchorme.js.svg)
+![David](https://img.shields.io/david/dev/alexcorvi/anchorme.js.svg)
 
 
 [![Documentation](http://puu.sh/ukS4g/ccc520ade4.jpg)](http://alexcorvi.github.io/anchorme.js/)
