@@ -2,21 +2,19 @@
 
 A library to convert URLs to a click-able HTML anchor elements
 
-## Features
+## What's Included
 
-*   Highly sensitive.
-*   produces the least possible false positives if any.
-*   Skips HTML, so it doesn't break your HTML if it had a URL as an attribute for an element.
-*   Links with or without protocols.
-*   Preserve upper and lower case, although when detecting, it's basically case insensitive.
-*   Checks against full IANA list of TLDs.
-*   Works with IPs, FTPs, Emails and files.
-*   Also works when ports are defined.
-*   Small in size.
-*   No RegExp involved, very readable and maintainable.
-*   Supports setting custom attributes with any values.
-*   Supports checking IPs only, Emails only, or URLs only.
-*   Helper methods can be used for other purposes.
+* __Sensitivity__: It's Highly sensitive with the least false positives.
+	- It validates URLs and Emails against full IANA list
+	- Validates port numbers (if present)
+	- Validates IP octet numbers (if present)
+* __Robustness__:
+	- Skips HTML, so it doesn't break your HTML if it had a URL as an attribute for an element.
+	- Links with or without protocols.
+	- Works with IPs, FTPs, Emails and files.
+	- Can detect parenthesis and quotation marks as part of the URL or as a surrounding to the URL.
+* __Fast__: It's definitely fast! processing H.G. Wells _The Time Machine_ novel with over 1500 URLs inserted at random places takes only 3.5 seconds.
+* __Light Weight__: Although it's a feature full library with a full IANA list included, it's only __6KB__ when minified and gzipped.
 
 ## Getting Started
 
