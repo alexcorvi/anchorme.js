@@ -1,70 +1,498 @@
+
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Anchorme.js</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script type="text/javascript" src="dist/anchorme.js"></script>
-        
-        <!-- Angular code for auto updating the test section -->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-        <script type="text/javascript">
-        /*global anchorme*/
-        /*global angular*/
-        var myApp = angular.module("myApp", []).controller('myCtrl', ["$scope", "$sce", myCtrl]);
-        function myCtrl($scope, $sce, myApp) {
-            $scope.input = "Examples:"+
-            "\nSimply a domain: www.google.com"+
-            "\nDomain with port: www.google.com:8000"+
-            "\nURL with query: www.google.com/?key=value"+
-            "\nDomain with international TLD: github.io"+
-            "\nEmail address: alex@arrayy.com"+
-            "\nIP address: 127.0.0.1:8000/somethinghere"+
-            "\nHTML elements won't break: <img src='http://dummyimage.com/50'>"+
-            "\nCapital case: FTP://GOOGLE.COM"+
-            "\nmixed case: https://www.youtube.com/watch?v=d7ez-gIt08I"+
-            "\nLinks with parenthesis: en.c.org/a_(b)"+
-            "\nLinks inside parenthesis: (www.google.com)"+
-            "\nLinks with paranethisis AND inside paranthesis: (en.c.org/a_(x)_(y))"+
-            "\nAnd even emojis: http://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws"+
-            "\nAnd non English letters: https://ka.wikipedia.org/wiki/მთავარი_გვერდი";
-            $scope.$watch("input", function(newValue, oldValue) {
-                $scope.linkedInput = anchorme($scope.input, {
-                    TLDs: 901,
-                });
-            });
-            $scope.renderHtml = function(html_code) {
-                return $sce.trustAsHtml(html_code);
-            };
-        }
-        myCtrl.$inject = ['$scope'];
-        </script>
-        
-        <style>
-            #textarea {font-family:monospace;}
-            #resultPlace{font-family:monospace;white-space:pre-wrap;line-height: 25px;}
-            #resultPlace a {background: gold;color: #000;padding: 2px 12px;border-radius: 4px;}
-        </style>
-    </head>
-    <body class="container">
-        
-        <header>
-            <h1>Anchorme.js Demo</h1>
-        </header>
-        <article id="page-test" ng-app="myApp">
-            <div ng-controller="myCtrl">
-                <section class="container col-xs-6">
-                    <h3>Input</h3>
-                    <textarea id="textarea" class="form-control" ng-model="input" style="height:200px;width:700px"></textarea>
-                </section>
-                <section class="col-xs-6">
-                    <h3>Result</h3>
-                    <p id="resultPlace" ng-bind-html="renderHtml(linkedInput)"></p>
-                </section>
-            </div>
-            <br>
-            <p>Not getting a result that satisfies you? please, do open an issue on github: <a class="github-button" href="https://github.com/alexcorvi/anchorme.min.js/issues" data-icon="octicon-issue-opened" data-count-api="/repos/alexcorvi/anchorme.js#open_issues_count" data-count-aria-label="# issues on GitHub" aria-label="Issue alexcorvi/anchorme.js on GitHub">Issue</a></p>
-        </article>
-        
-        <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
-    </body>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Anchorme: Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links</title>
+
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./assets/style.css" rel="stylesheet">
+
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.3.0/bootbox.min.js"></script>
+	<script src="./assets/script.js" type="text/javascript"></script>
+	<script src="./dist-browser/anchorme.js" type="text/javascript"></script>
+</head>
+
+<body>
+	<!-- Main navigation
+	=========================================== -->
+	<header class="navbar navbar-static-top bs-docs-nav" id="top">
+		<div class="container">
+			<div class="navbar-header" role="banner">
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="http://mistic100.github.io/jekyll-bootstrap-doc/index.html">Anchorme</a>
+			</div>
+			<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<a href="https://github.com/alexcorvi/anchorme.js">View on GitHub</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+
+	<!-- Header
+	=========================================== -->
+	
+	<div class="bs-docs-masthead" id="content" style="background: linear-gradient(135deg, #673AB7, #3F51B5);">
+		<div class="container">
+			<h1 class="home-title">Anchorme</h1>
+			<p class="lead" style='font-size:18px;margin-top:25px'>Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links</p>
+			<p class="lead">
+				<a data-bootbox="download-popup" data-bootbox-size="large" class="btn btn-outline-inverse btn-lg">Download</a>
+			</p>
+		</div>
+	</div>
+
+	
+	<div id="download-popup" title="Download Jekyll Bootstrap Doc 1.2.0" class="hidden">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Install with NPM</div>
+					<div class="panel-body">
+						<p>You can get this library via NPM</p>
+						<pre><code>$ npm i --save anchorme</code></pre>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">Download full version</div>
+					<div class="panel-body">
+						<p>Compiled version into single file.</p>
+						<a href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/dist-browser/anchorme.js">Download</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">Download minified version</div>
+					<div class="panel-body">
+						<p>Compiled and minified version.</p>
+						<a href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/dist-browser/anchorme.min.js">Download</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	
+	<div class="container bs-docs-container">
+		<div class="row">
+			<div class="col-md-9" role="main">
+				<section class="bs-docs-section">
+					<h1 id="overview" class="page-header">Overview</h1>
+					<blockquote>
+						Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links. You can also use it for extracting a list of valid links and emails out of text or use it as a validation library for emails, URLs and IPs.
+					</blockquote>
+					<h3 id="features">Features</h3>
+
+					<ul>
+						<li>
+							<strong>Sensitivity</strong>: It’s Highly sensitive with the least false positives. <br>
+							<ul>
+								<li>It validates URLs and Emails against full IANA list</li>
+								<li>Validates port numbers (if present)</li>
+								<li>Validates IP octet numbers (if present)</li>
+							</ul>
+						</li>
+						<li><strong>Robustness</strong>: <br>
+							<ul>
+								<li>Skips HTML, so it doesn’t break your HTML if it had a URL as an attribute for an element.</li>
+								<li>Links with or without protocols.</li>
+								<li>Works with IPs, FTPs, Emails and files.</li>
+								<li>Can detect parenthesis and quotation marks as part of the URL or as a surrounding to the URL.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Fast</strong>: It’s definitely fast! processing the full H.G. Wells "<em>The Time Machine</em>" novel with over 1500 URLs inserted at random places takes only 3.5 seconds.
+						</li>
+						<li>
+							<strong>Light Weight</strong>: Although it’s a feature rich library with a full IANA list included, it’s only <strong>6KB</strong> when minified and gzipped.
+						</li>
+					</ul>
+				</section>
+				<section class="bs-docs-section">
+					<h1 id="demo" class="page-header">Demo</h1>
+					<div class="row">
+						<div class="col-md-6">
+							<p><b>Input:</b></p>
+							<textarea onkeydown="refresh();" onkeyup="refresh();" onchange="refresh();" id="input" class="form-control" style="min-width:100%;max-width:100%;min-height:666px"></textarea>
+						</div>
+						<div class="col-md-6">
+							<p><b>Output:</b></p>
+							<pre class="output code text"><code id="output"></code></pre>
+							<style type="text/css" media="screen">
+								#output a {
+									background: #673AB7;
+									padding: 3px;
+									color: #fff;
+									margin: 0;
+									border-radius: 3px;
+								}
+								.output {
+								   line-height: 20px;
+								   padding: 15px;
+								   font-size: 11px;
+								}
+							</style>
+						</div>
+					</div>
+					<script type="text/javascript">
+						var initialInput = `Examples:\nSimply a domain:\nwww.google.com\nDomain with port:\nwww.google.com:8000\nURL with query:\nwww.google.com/?key=value\nDomain with international TLD:\ngithub.io\nEmail address:\nalex@arrayy.com\nIP address:\n127.0.0.1:8000/somethinghere\nHTML elements won't break:\n<img src='http://dummyimage.com/50'>\nCapital case:\nFTP://GOOGLE.COM\nmixed case:\nyoutube.com/watch?v=pS-gbqbVd8c\nLinks with parenthesis:\nen.c.org/a_(b)\nLinks inside parenthesis:\n(www.google.com)\nLinks with paranethisis AND inside paranthesis:\n(en.c.org/a_(x)_(y))\nAnd even emojis:\nhttp://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws\nAnd non English letters:\nhttps://ka.wikipedia.org/wiki/მთავარი_გვერდი\n\n`;
+
+						document.getElementById("input").value = initialInput;
+						refresh();
+
+						/*anchor me*/
+						function refresh(){
+							val = document.getElementById("input").value;
+							document.getElementById("output").innerHTML = anchorme(val);
+						}
+					</script>
+				</section>
+				<section class="bs-docs-section">
+					<h1 id="installation" class="page-header">Installation</h1>
+					<p>You can get this library via NPM</p>
+					<pre><code>npm i --save anchorme</code></pre>
+					<p>Or download the single filed compiled version <a href="https://github.com/alexcorvi/anchorme.js">here</a>.</p>
+				</section>
+				<section class="bs-docs-section">
+					<h1 id="usgae" class="page-header">Usage</h1>
+					<h3 id="basic-usage">Basic usage</h3>
+					<p>The anchorme library exports one function that can receives one or two parameters:</p>
+					<pre class="sml"><code>anchorme(input:string,[options:object])</code></pre>
+					<p>The example below demonstrates basic usage with no options</p>
+					<pre class="code"><code>
+var anchorme = require("anchorme"); // if installed via NPM
+
+var someText = "this is a text with a link www.github.com ..";
+var result = anchorme(someText);
+
+// You can also pass few options (totally optional)
+// to add attribute, truncate results, setting default protocols and more
+// read below
+					</code></pre>
+
+					<hr>
+					<h3 id="truncation">Truncation</h3>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value type</th>
+								<th>Default value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><pre class="sml"><code>truncate</code></pre></td>
+								<td><pre class="sml"><code>Number|[Number,Number]</code></pre></td>
+								<td><pre class="sml"><code>Infinity</code></pre></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<p>This will convert a long link like this: 
+					<a href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/src/tests/hasprotocol.js">https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/src/tests/hasprotocol.js</a>
+					
+					to this:
+					
+					<a href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/src/tests/hasprotocol.js">https://raw.githubusercontent.com/alexcorv...</a></p>
+
+					<p>However, if you wanted to remove characters from the middle instead of the end to produce a link like this: <a href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/src/tests/hasprotocol.js">raw.githubusercontent.com/.../hasprotocol.js</a>; you can pass an array of two numbers first number is the number of desired characters at the beginning and second number is the number of desired characters at the end.
+					</p>
+
+					<p><b>Example:</b></p>
+
+					<pre><code>
+anchorme(string,{
+	truncate:40 // 40 is the maximum length of the viewed link
+});
+
+anchorme(string,{
+	truncate:[26,15],
+	// means 26 characters from the beginning
+	// and 15 characters from the end
+});
+
+					</code></pre>
+
+					<p><b>JSFiddle Demo</b></p>
+					<script async src="//jsfiddle.net/alexcorvi/fouwnjkx/1/embed/js,result/"></script>
+
+
+					<hr>
+					<h3 id="adding-attributes">Adding attributes</h3>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value type</th>
+								<th>Default value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><pre class="sml"><code>attributes</code></pre></td>
+								<td><pre class="sml"><code>Array&lt;Object|Function&gt;</code></pre></td>
+								<td><pre class="sml"><code>[]</code></pre></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<p>You can add attributes to the links produced by anchorme. using the `attributes` prop in the options. this options should be an array of the attributes you'd like to pass.</p>
+
+					<p>Values of this array can be either object describing the attribute or functions that return an object that describes the attribute</p>
+<pre><code>
+anchorme(string,{
+	attributes:[ // attributes is an array
+
+		// an object that describes the attribute
+		// will produce: class="link"
+		{
+			name:"class",
+			value:"link"
+		},
+		
+
+		// a function that returns an object
+		function(urlObj){
+			if(urlObj.reason === "ip") return {name:"class",value:"ip-link"};
+		},
+
+
+		function(urlObj){
+			if(urlObj.protocol !== "mailto:") return {name:"target",value:"blank"};
+			// following conditions can also be used:
+			// if(urlObj.raw.indexOf("@") > 0) return {name:"target",value:"blank"};
+			// if(urlObj.reason !== "email") return {name:"target",value:"blank"};
+		}
+	]
+});
+</code></pre>			
+
+					<p>Where `data` is an object containing detailed info about the link in question. The example above will add `ip-link` class to all the links that are IPs, and add `target='_blank'` to all the links that are not emails.</p>
+
+					<p>If you log the data object you'll get something similar to this:</p>
+
+					<pre><code>
+{
+	// the reason this fragment
+	// was detected
+	// possible reasons: "file", "url", "ip", "email"
+    reason: "email",
+    
+    // the protocol that the link came with
+    // or the protocol that was added to the link
+    protocol: "mailto:",
+    
+    // the link (without any modification)
+    raw: "a@b.co",
+    
+    // the encoded version of the link
+    // i.e. non-Latin characters -> URI encoding
+    // also doesn't have a protocol (if it came with any)
+    encoded: "a@b.co",
+}
+					</code></pre>
+
+
+
+
+					<p><b>JSFiddle Demo</b></p>
+					<script async src="//jsfiddle.net/alexcorvi/y1qL2gmc/2/embed/js,result/"></script>
+
+					<hr>
+					<h3 id="default-protocol">Default protocol</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value type</th>
+								<th>Default value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><pre class="sml"><code>defaultProtocol</code></pre></td>
+								<td><pre class="sml"><code>String|Function</code></pre></td>
+								<td><pre class="sml"><code>"http://"</code></pre></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<p>If the link came without protocol, like <code>www.google.com</code> then anchorme will add the <code>http://</code> by default. However you can set your own default protocol.</p>
+
+					<pre class="javascript"><code>
+anchorme(string,{
+	defaultProtocol:"ftp://",
+	// ... or anything
+});
+					</code></pre>
+
+					<p>In some cases, you might want the protocol to be set conditionally. Anchorme allows you to pass a function as the `defaultProtocol` and uses whatever this function returns.</p>
+
+					<pre class="javascript"><code>
+anchorme(string,{
+	defaultProtocol:function(url){
+		// where url is like: "www.google.com"
+		if(url.indexOf("google") > 0) return "https://";
+		else return "http://";
+	},
+});
+					</code></pre>
+
+					<p><b>JSFiddle Demo</b></p>
+					<script async src="//jsfiddle.net/alexcorvi/fu0k9ata/embed/js,result/"></script>
+
+					<hr>
+					<h3 id="excluding">Excluding</h3>
+					<table>
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value type</th>
+								<th>Default value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><pre class="sml"><code>emails</code></pre></td>
+								<td><pre class="sml"><code>Boolean</code></pre></td>
+								<td><pre class="sml"><code>true</code></pre></td>
+							</tr>
+							<tr>
+								<td><pre class="sml"><code>urls</code></pre></td>
+								<td><pre class="sml"><code>Boolean</code></pre></td>
+								<td><pre class="sml"><code>true</code></pre></td>
+							</tr>
+							<tr>
+								<td><pre class="sml"><code>ips</code></pre></td>
+								<td><pre class="sml"><code>Boolean</code></pre></td>
+								<td><pre class="sml"><code>true</code></pre></td>
+							</tr>
+							<tr>
+								<td><pre class="sml"><code>files</code></pre></td>
+								<td><pre class="sml"><code>Boolean</code></pre></td>
+								<td><pre class="sml"><code>true</code></pre></td>
+							</tr>
+						</tbody>
+					</table>
+					<p>You can exclude IPs/Emails/URLs/Files like this:</p>
+					<pre><code>
+anchorme(string,{
+	emails:false,
+	urls:false,
+	ips:false,
+	files:false
+})
+// the example above won't do anything to your string
+// since you're excluding every possible link that can be detected
+					</code></pre>
+
+					<p><b>JSFiddle Demo</b></p>
+					<script async src="//jsfiddle.net/alexcorvi/gydnngrz/embed/js,result/"></script>
+
+				</section>
+				<section class="bs-docs-section">
+					<h1 id="additional-features" class="page-header">Additional Features</h1>
+					<h3 id="validation">Validation</h3>
+					<p>You can use <strong>anchorme</strong> to validate emails, URLs and IPs.</p>
+					<p><b>Example:</b></p>
+					<pre class="sml"><code>anchorme.validate(String)</code></pre>
+
+					<pre class="javascript"><code>
+anchorme.validate.ip("1.1.1.1:3000/something");
+// returns true
+anchorme.validate.ip("1.1.1.500:3000/something");
+// returns false
+anchorme.validate.email("alex@array.com");
+// returns true
+anchorme.validate.url("google.co.uk");
+// returns true
+					</code></pre>
+
+					<p><b>JSFiddle Demo:</b></p>
+					<script async src="//jsfiddle.net/alexcorvi/L0dex4q9/embed/js,result/"></script>
+
+					<hr>
+					<h3 id="listing">Listing</h3>
+
+					<p>Although anchorme was authored to transform URLs in text strings to a click-able HTML anchor tags, passing `true` to `list` property in options will change the library's behavior and instead of returning a text with an HTML tags it will only return an array of valid URLs.</p>
+
+					<pre><code>
+anchorme(myText,{
+	list:true
+});
+// returns an array of detected valid URLs
+					</code></pre>
+
+					<p><b>JSFiddle Demo:</b></p>
+					<script async src="//jsfiddle.net/alexcorvi/z3g3haL1/embed/js,result/"></script>
+
+				</section>
+			</div>
+			<div class="col-md-3" role="complementary">
+				<div class="bs-docs-sidebar hidden-print">
+					<ul class="nav bs-docs-sidenav">
+					</ul>
+					<a class="back-to-top" href="#top">
+					<i class="glyphicon glyphicon-chevron-up"></i> Back to top
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="bs-docs-footer" role="contentinfo">
+		<div class="container">
+			<div class="bs-docs-social">
+				<ul class="bs-docs-social-buttons">
+					<li>
+						<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=alexcorvi&amp;repo=anchorme.js&amp;type=fork&amp;count=true" width="90" height="20" title="Fork on GitHub"></iframe>
+					</li>
+					<li>
+						<iframe class="github-btn" src="http://ghbtns.com/github-btn.html?user=alexcorvi&amp;repo=anchorme.js&amp;type=star&amp;count=true" width="90" height="20" title="Star on GitHub"></iframe>
+					</li>
+				</ul>
+			</div>
+
+			<p>Licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT License</a></p>
+			<p>Documentation template by <a href="http://getbootstrap.com">Bootstrap team</a></p>
+
+			<ul class="bs-docs-footer-links muted">
+			
+				<li>·</li>
+				<li><a href="https://github.com/alexcorvi/anchorme.js">GitHub</a></li>
+			
+				<li>·</li>
+				<li><a href="https://github.com/alexcorvi/anchorme.js/issues?state=open">Issues</a></li>
+			
+			</ul>
+		</div>
+	</footer>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" type="text/javascript"></script>
+	<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+</body>
 </html>
