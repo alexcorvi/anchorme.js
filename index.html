@@ -12,8 +12,7 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 	<![endif]-->
 
-	<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
-	<link href="./assets/style.css" rel="stylesheet">
+	<link href="./assets/style.min.css" rel="stylesheet">
 
 	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
@@ -34,7 +33,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://mistic100.github.io/jekyll-bootstrap-doc/index.html">Anchorme</a>
+				<a class="navbar-brand" href="http://alexcorvi.github.io/anchorme.js/">Anchorme</a>
 			</div>
 			<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
 				<ul class="nav navbar-nav navbar-right">
@@ -61,7 +60,7 @@
 	</div>
 
 	
-	<div id="download-popup" title="Download Jekyll Bootstrap Doc 1.2.0" class="hidden">
+	<div id="download-popup" title="Download" class="hidden">
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="panel panel-default">
@@ -109,21 +108,21 @@
 						<li>
 							<strong>Sensitivity</strong>: It’s Highly sensitive with the least false positives. <br>
 							<ul>
-								<li>It validates URLs and Emails against full IANA list</li>
-								<li>Validates port numbers (if present)</li>
-								<li>Validates IP octet numbers (if present)</li>
+								<li>It validates URLs and Emails against full <strong>IANA</strong> list.</li>
+								<li>Validates <strong>port numbers</strong> (if present).</li>
+								<li>Validates <strong>IP octet numbers</strong> (if present).</li>
 							</ul>
 						</li>
 						<li><strong>Robustness</strong>: <br>
 							<ul>
-								<li>Skips HTML, so it doesn’t break your HTML if it had a URL as an attribute for an element.</li>
+								<li><strong>Skips HTML</strong>, so it doesn’t break your HTML if it had a URL as an attribute for an element.</li>
 								<li>Links with or without protocols.</li>
 								<li>Works with IPs, FTPs, Emails and files.</li>
 								<li>Can detect parenthesis and quotation marks as part of the URL or as a surrounding to the URL.</li>
 							</ul>
 						</li>
 						<li>
-							<strong>Fast</strong>: It’s definitely fast! processing the full H.G. Wells "<em>The Time Machine</em>" novel with over 1500 URLs inserted at random places takes only 3.5 seconds.
+							<strong>Fast</strong>: It’s definitely fast! processing the full H.G. Wells "<strong>The Time Machine</strong>" novel (633 KB text file) with over <strong>1500</strong> URLs inserted at random places takes about <strong>3</strong> seconds.
 						</li>
 						<li>
 							<strong>Light Weight</strong>: Although it’s a feature rich library with a full IANA list included, it’s only <strong>6KB</strong> when minified and gzipped.
@@ -183,10 +182,8 @@
 					<p>The example below demonstrates basic usage with no options</p>
 					<pre class="code"><code>
 var anchorme = require("anchorme"); // if installed via NPM
-
 var someText = "this is a text with a link www.github.com ..";
 var result = anchorme(someText);
-
 // You can also pass few options (totally optional)
 // to add attribute, truncate results, setting default protocols and more
 // read below
@@ -228,13 +225,11 @@ var result = anchorme(someText);
 anchorme(string,{
 	truncate:40 // 40 is the maximum length of the viewed link
 });
-
 anchorme(string,{
 	truncate:[26,15],
 	// means 26 characters from the beginning
 	// and 15 characters from the end
 });
-
 					</code></pre>
 
 					<p><b>JSFiddle Demo</b></p>
@@ -261,27 +256,22 @@ anchorme(string,{
 						</tbody>
 					</table>
 
-					<p>You can add attributes to the links produced by anchorme. using the `attributes` prop in the options. this options should be an array of the attributes you'd like to pass.</p>
+					<p>You can add attributes to the links produced by anchorme. using the `attributes` key in the options object. The value of this option should be an array of the attributes you'd like to pass.</p>
 
-					<p>Values of this array can be either object describing the attribute or functions that return an object that describes the attribute</p>
+					<p>Each value of this array can be either an <strong>object</strong> describing the attribute or a <strong>function</strong> that returns an <strong>object</strong> that describes the attribute</p>
 <pre><code>
 anchorme(string,{
 	attributes:[ // attributes is an array
-
 		// an object that describes the attribute
 		// will produce: class="link"
 		{
 			name:"class",
 			value:"link"
 		},
-		
-
 		// a function that returns an object
 		function(urlObj){
 			if(urlObj.reason === "ip") return {name:"class",value:"ip-link"};
 		},
-
-
 		function(urlObj){
 			if(urlObj.protocol !== "mailto:") return {name:"target",value:"blank"};
 			// following conditions can also be used:
@@ -292,9 +282,9 @@ anchorme(string,{
 });
 </code></pre>			
 
-					<p>Where `data` is an object containing detailed info about the link in question. The example above will add `ip-link` class to all the links that are IPs, and add `target='_blank'` to all the links that are not emails.</p>
+					<p>Where <code>urlObj</code> is an object containing detailed info about the link in question. The example above will add `ip-link` class to all the links that are IPs, and add `target='_blank'` to all the links that are not emails.</p>
 
-					<p>If you log the data object you'll get something similar to this:</p>
+					<p>If you log the <code>urlObj</code> you'll get something similar to this:</p>
 
 					<pre><code>
 {
@@ -302,14 +292,11 @@ anchorme(string,{
 	// was detected
 	// possible reasons: "file", "url", "ip", "email"
     reason: "email",
-    
     // the protocol that the link came with
     // or the protocol that was added to the link
     protocol: "mailto:",
-    
     // the link (without any modification)
     raw: "a@b.co",
-    
     // the encoded version of the link
     // i.e. non-Latin characters -> URI encoding
     // also doesn't have a protocol (if it came with any)
@@ -362,6 +349,10 @@ anchorme(string,{
 	},
 });
 					</code></pre>
+
+		            <p>
+		            	Please note that the default protocol does <strong>not</strong> apply on detected emails. Detected emails will always have <code>mailto:</code> as their protocol.
+		            </p>
 
 					<p><b>JSFiddle Demo</b></p>
 					<script async src="//jsfiddle.net/alexcorvi/fu0k9ata/embed/js,result/"></script>
@@ -418,9 +409,12 @@ anchorme(string,{
 				<section class="bs-docs-section">
 					<h1 id="additional-features" class="page-header">Additional Features</h1>
 					<h3 id="validation">Validation</h3>
+					<pre class="sml"><code>anchorme.validate.ip(input:String)</code></pre><br>
+					<pre class="sml"><code>anchorme.validate.email(input:String)</code></pre><br>
+					<pre class="sml"><code>anchorme.validate.url(input:String)</code></pre><br>
 					<p>You can use <strong>anchorme</strong> to validate emails, URLs and IPs.</p>
 					<p><b>Example:</b></p>
-					<pre class="sml"><code>anchorme.validate(String)</code></pre>
+					
 
 					<pre class="javascript"><code>
 anchorme.validate.ip("1.1.1.1:3000/something");
@@ -457,9 +451,7 @@ anchorme(myText,{
 				<div class="bs-docs-sidebar hidden-print">
 					<ul class="nav bs-docs-sidenav">
 					</ul>
-					<a class="back-to-top" href="#top">
-					<i class="glyphicon glyphicon-chevron-up"></i> Back to top
-					</a>
+					<a class="back-to-top" href="#top">Back to top</a>
 				</div>
 			</div>
 		</div>
