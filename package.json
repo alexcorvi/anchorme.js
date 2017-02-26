@@ -4,8 +4,8 @@
   "description": "A library to convert URLs to a clickable HTML anchor elements",
   "main": "./dist/anchorme.js",
   "scripts": {
-    "test": "mocha test/run.js",
-    "bench": "node test/bench.js",
+    "test": "jest",
+    "bench": "node benchmark/bench",
     "build": "node build/build"
   },
   "repository": {
@@ -28,9 +28,29 @@
     "babel-plugin-external-helpers": "^6.8.0",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-es2015-rollup": "^1.2.0",
+    "@types/jest": "^18.1.1",
+    "jest": "^19.0.2",
     "rollup": "^0.36.3",
     "rollup-plugin-babel": "^2.6.1",
+    "ts-jest": "^19.0.0",
+    "typescript": "^2.2.1",
     "uglify-js": "^2.7.3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": ".*spec\\.(ts|js)$",
+    "globals": {
+      "__TS_CONFIG__": {
+        "module": "commonjs"
+      }
+    }
+  }
 }
