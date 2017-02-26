@@ -7,10 +7,8 @@
 .Trashes
 ehthumbs.db
 Thumbs.dbma
-.jshintrc
 
 # Node.js Files #
 ######################
 /node_modules/*
 *.log
-.jshintrc
