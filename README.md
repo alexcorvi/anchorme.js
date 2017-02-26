@@ -1,6 +1,6 @@
 # Anchorme.js
 
-A library to convert URLs to a click-able HTML anchor elements
+Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links.
 
 ## [Getting Started, Documentations, Demos and more](http://alexcorvi.github.io/anchorme.js/)
 
