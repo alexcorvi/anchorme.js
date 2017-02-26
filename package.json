@@ -2,6 +2,8 @@
   "name": "anchorme",
   "version": "0.8.3",
   "description": "A library to convert URLs to a clickable HTML anchor elements",
+  "main": "./dist-node/index.js",
+  "types": "./dist-node/index.d.ts",
   "scripts": {
     "test": "jest",
     "bench": "node benchmark/bench",
