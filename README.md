@@ -1,8 +1,4 @@
 # Anchorme.js
-[![Documentation](http://puu.sh/ukS4g/ccc520ade4.jpg)](http://alexcorvi.github.io/anchorme.js/)
-
-Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links.
-
 [![npm](https://img.shields.io/npm/dm/anchorme.svg)]()
 [![npm](https://img.shields.io/npm/v/anchorme.svg)]()
 [![GitHub release](https://img.shields.io/github/release/alexcorvi/anchorme.js.svg)]()
@@ -10,6 +6,10 @@ Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / 
 [![David](https://img.shields.io/david/alexcorvi/anchorme.js.svg)]()
 [![David](https://img.shields.io/david/dev/alexcorvi/anchorme.js.svg)]()
 
+
+[![Documentation](http://puu.sh/ukS4g/ccc520ade4.jpg)](http://alexcorvi.github.io/anchorme.js/)
+
+Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links.
 ## [Getting Started, Documentations, Demos and more](http://alexcorvi.github.io/anchorme.js/)
 
 ## What's Included
