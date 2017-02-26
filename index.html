@@ -181,7 +181,8 @@
 					<pre class="sml"><code>anchorme(input:string,[options:object])</code></pre>
 					<p>The example below demonstrates basic usage with no options</p>
 					<pre class="code"><code>
-var anchorme = require("anchorme"); // if installed via NPM
+var anchorme = require("anchorme").default; // if installed via NPM
+import anchorme from "anchorme"; // ES6 / Typescript style imports
 var someText = "this is a text with a link www.github.com ..";
 var result = anchorme(someText);
 // You can also pass few options (totally optional)
