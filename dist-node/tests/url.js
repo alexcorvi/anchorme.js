@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../util");
-const lists_1 = require("../lists");
-const pattern = /^(https?:\/\/|ftps?:\/\/)?([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?(:(\d{1,5}))?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/i;
+var util_1 = require("../util");
+var lists_1 = require("../lists");
+var pattern = /^(https?:\/\/|ftps?:\/\/)?([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?(:(\d{1,5}))?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/i;
 function default_1(str) {
     // general pattern recognition https://regex101.com/r/RgKTA4/2
-    const match = str.match(pattern);
+    var match = str.match(pattern);
     if (match === null)
         return false;
     // validate TLD

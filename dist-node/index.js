@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("./util");
-const email_1 = require("./tests/email");
-const ip_1 = require("./tests/ip");
-const url_1 = require("./tests/url");
-const transform_1 = require("./transform/transform");
-const hasprotocol_1 = require("./tests/hasprotocol");
-const anchorme = function (str, options) {
+var util_1 = require("./util");
+var email_1 = require("./tests/email");
+var ip_1 = require("./tests/ip");
+var url_1 = require("./tests/url");
+var transform_1 = require("./transform/transform");
+var hasprotocol_1 = require("./tests/hasprotocol");
+var anchorme = function (str, options) {
     options = util_1.defaultOptions(options);
     var result = transform_1.default(str, options);
     return result;

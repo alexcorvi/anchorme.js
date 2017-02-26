@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const lists_1 = require("../lists");
+var lists_1 = require("../lists");
 // pattern that an emails MUST have
-const pattern = /^[a-z0-9!#$%&'*+\-/=?^_`{|}~.]+@([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?$/i;
+var pattern = /^[a-z0-9!#$%&'*+\-/=?^_`{|}~.]+@([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?$/i;
 // patterns that an email can not have
-const negativePatterns = [
+var negativePatterns = [
     /^[!#$%&'*+\-/=?^_`{|}~.]/,
     /[.]{2,}[a-z0-9!#$%&'*+\-/=?^_`{|}~.]+@/i,
     /\.@/
 ];
 function default_1(str) {
     // general pattern recognition
-    const match = str.match(pattern);
+    var match = str.match(pattern);
     if (match === null)
         return false;
     // doesn't have a negative pattern

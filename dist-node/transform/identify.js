@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const lists_1 = require("../lists");
-const hasprotocol_1 = require("../tests/hasprotocol");
-const email_1 = require("../tests/email");
-const ip_1 = require("../tests/ip");
-const url_1 = require("../tests/url");
+var lists_1 = require("../lists");
+var hasprotocol_1 = require("../tests/hasprotocol");
+var email_1 = require("../tests/email");
+var ip_1 = require("../tests/ip");
+var url_1 = require("../tests/url");
 function default_1(inputArr, options) {
-    return inputArr.map((fragment, index) => {
+    return inputArr.map(function (fragment, index) {
         var encoded = encodeURI(fragment);
         // quick validations
         // 1

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const fix_1 = require("./fix");
+var fix_1 = require("./fix");
 /**
  *
  * Split the string with word separators

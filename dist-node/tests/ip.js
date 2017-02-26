@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const util_1 = require("../util");
+var util_1 = require("../util");
 // general IP pattern https://regex101.com/r/rzUcJ4/1
-const pattern = /^(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?(\/.*)?$/;
+var pattern = /^(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?(\/.*)?$/;
 function default_1(str) {
     if (!pattern.test(str))
         return false;

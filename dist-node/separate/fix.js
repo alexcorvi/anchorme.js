@@ -31,7 +31,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function fixSeparators(arr, sep1, sep2) {
-    arr.forEach((bit, i) => {
+    arr.forEach(function (bit, i) {
         if ((bit.indexOf(".") > -1) &&
             (!(arr[i - 1] === sep1 && arr[i + 1] === sep2)) &&
             (arr[i + 1] === sep1 || arr[i + 1] === sep2) // the one after it, is either sep1 or sep2
@@ -53,8 +53,8 @@ exports.fixSeparators = fixSeparators;
 function default_1(arr) {
     arr = fixSeparators(arr, "(", ")");
     arr = fixSeparators(arr, "[", "]");
-    arr = fixSeparators(arr, `"`, `"`);
-    arr = fixSeparators(arr, `'`, `'`);
+    arr = fixSeparators(arr, "\"", "\"");
+    arr = fixSeparators(arr, "'", "'");
     return arr;
 }
 exports.default = default_1;

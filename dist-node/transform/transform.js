@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const separate_1 = require("../separate/separate");
-const separate_2 = require("../separate/separate");
-const identify_1 = require("./identify");
+var separate_1 = require("../separate/separate");
+var separate_2 = require("../separate/separate");
+var identify_1 = require("./identify");
 function default_1(str, options) {
     var arr = separate_1.separate(str);
     var identified = identify_1.default(arr, options);
@@ -17,7 +17,7 @@ function default_1(str, options) {
         return listed;
     }
     // transform objects to HTML tags
-    identified = identified.map((fragment) => {
+    identified = identified.map(function (fragment) {
         if (typeof fragment === "string")
             return fragment;
         return url2tag(fragment, options);
@@ -39,16 +39,16 @@ function url2tag(fragment, options) {
     }
     if (options.attributes === undefined)
         options.attributes = [];
-    return `<a href="${href}" ${options.attributes.map((attribute) => {
+    return "<a href=\"" + href + "\" " + options.attributes.map(function (attribute) {
         if (typeof attribute === 'function') {
             var name = (attribute(fragment) || {}).name;
             var value = (attribute(fragment) || {}).value;
             if (name && !value)
                 return " name ";
             if (name && value)
-                return ` ${name}="${value}" `;
+                return " " + name + "=\"" + value + "\" ";
         }
         else
-            return ` ${attribute.name}="${attribute.value}" `;
-    }).join("")}>${original}</a>`;
+            return " " + attribute.name + "=\"" + attribute.value + "\" ";
+    }).join("") + ">" + original + "</a>";
 }
