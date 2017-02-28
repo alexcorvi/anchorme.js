@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +12,6 @@
 	<![endif]-->
 
 	<link href="./assets/style.min.css" rel="stylesheet">
-
 	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.3.0/bootbox.min.js"></script>
@@ -52,7 +50,7 @@
 	<div class="bs-docs-masthead" id="content" style="background: linear-gradient(135deg, #673AB7, #3F51B5);">
 		<div class="container">
 			<h1 class="home-title">Anchorme</h1>
-			<p class="lead" style='font-size:18px;margin-top:25px'>Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links</p>
+			<p class="lead" style="font-size:18px;margin-top:25px">Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links</p>
 			<p class="lead">
 				<a data-bootbox="download-popup" data-bootbox-size="large" class="btn btn-outline-inverse btn-lg">Download</a>
 			</p>
@@ -234,7 +232,7 @@ anchorme(string,{
 					</code></pre>
 
 					<p><b>JSFiddle Demo</b></p>
-					<script async src="//jsfiddle.net/alexcorvi/fouwnjkx/1/embed/js,result/"></script>
+					<script async src="//jsfiddle.net/alexcorvi/fouwnjkx/2/embed/js,result/"></script>
 
 
 					<hr>
@@ -276,7 +274,7 @@ anchorme(string,{
 		function(urlObj){
 			if(urlObj.protocol !== "mailto:") return {name:"target",value:"blank"};
 			// following conditions can also be used:
-			// if(urlObj.raw.indexOf("@") > 0) return {name:"target",value:"blank"};
+			// if(urlObj.raw.indexOf("@") &gt; 0) return {name:"target",value:"blank"};
 			// if(urlObj.reason !== "email") return {name:"target",value:"blank"};
 		}
 	]
@@ -299,7 +297,7 @@ anchorme(string,{
     // the link (without any modification)
     raw: "a@b.co",
     // the encoded version of the link
-    // i.e. non-Latin characters -> URI encoding
+    // i.e. non-Latin characters -&gt; URI encoding
     // also doesn't have a protocol (if it came with any)
     encoded: "a@b.co",
 }
@@ -309,7 +307,7 @@ anchorme(string,{
 
 
 					<p><b>JSFiddle Demo</b></p>
-					<script async src="//jsfiddle.net/alexcorvi/y1qL2gmc/2/embed/js,result/"></script>
+					<script async src="//jsfiddle.net/alexcorvi/y1qL2gmc/4/embed/js,result/"></script> 
 
 					<hr>
 					<h3 id="default-protocol">Default protocol</h3>
@@ -345,7 +343,7 @@ anchorme(string,{
 anchorme(string,{
 	defaultProtocol:function(url){
 		// where url is like: "www.google.com"
-		if(url.indexOf("google") > 0) return "https://";
+		if(url.indexOf("google") &gt; 0) return "https://";
 		else return "http://";
 	},
 });
@@ -356,7 +354,7 @@ anchorme(string,{
 		            </p>
 
 					<p><b>JSFiddle Demo</b></p>
-					<script async src="//jsfiddle.net/alexcorvi/fu0k9ata/embed/js,result/"></script>
+					<script async src="//jsfiddle.net/alexcorvi/fu0k9ata/1/embed/js,result/"></script> 
 
 					<hr>
 					<h3 id="excluding">Excluding</h3>
@@ -404,7 +402,7 @@ anchorme(string,{
 					</code></pre>
 
 					<p><b>JSFiddle Demo</b></p>
-					<script async src="//jsfiddle.net/alexcorvi/gydnngrz/embed/js,result/"></script>
+					<<script async src="//jsfiddle.net/alexcorvi/gydnngrz/1/embed/js,result/"></script> 
 
 				</section>
 				<section class="bs-docs-section">
@@ -429,7 +427,7 @@ anchorme.validate.url("google.co.uk");
 					</code></pre>
 
 					<p><b>JSFiddle Demo:</b></p>
-					<script async src="//jsfiddle.net/alexcorvi/L0dex4q9/embed/js,result/"></script>
+					<script async src="//jsfiddle.net/alexcorvi/L0dex4q9/1/embed/js,result/"></script> 
 
 					<hr>
 					<h3 id="listing">Listing</h3>
@@ -444,7 +442,7 @@ anchorme(myText,{
 					</code></pre>
 
 					<p><b>JSFiddle Demo:</b></p>
-					<script async src="//jsfiddle.net/alexcorvi/z3g3haL1/embed/js,result/"></script>
+					<script async src="//jsfiddle.net/alexcorvi/z3g3haL1/1/embed/js,result/"></script> 
 
 				</section>
 			</div>
