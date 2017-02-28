@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("../util");
 // general IP pattern https://regex101.com/r/rzUcJ4/1
-var pattern = /^(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?(\/.*)?$/;
+var pattern = /^(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/;
 function default_1(str) {
     if (!pattern.test(str))
         return false;

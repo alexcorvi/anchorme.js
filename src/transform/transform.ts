@@ -1,9 +1,8 @@
-"use strict";
-import {separate as separate} from "../separate/separate";
-import {deSeparate as deSeparate} from "../separate/separate";
-import {URLObj as URLObj} from "../util";
-import {Options as Options} from "../util";
+import {Options} from "../util";
+import {URLObj} from "../util";
+import {deSeparate} from "../separate/separate";
 import identify from "./identify";
+import {separate} from "../separate/separate";
 
 export default function(str,options:Options):string|Array<URLObj>{
 

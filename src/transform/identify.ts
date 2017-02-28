@@ -1,10 +1,10 @@
-import {htmlAttrs as htmlAttrs} from "../lists";
-import hasProtocol from "../tests/hasprotocol";
-import emailChecker from "../tests/email";
-import ipChecker from "../tests/ip";
-import urlChecker from "../tests/url";
 import {Options} from "../util";
 import {URLObj} from "../util";
+import emailChecker from "../tests/email";
+import hasProtocol from "../tests/hasprotocol";
+import {htmlAttrs} from "../lists";
+import ipChecker from "../tests/ip";
+import urlChecker from "../tests/url";
 
 export default function (inputArr:Array<string>, options:Options) {
 	return inputArr.map((fragment,index)=>{
@@ -65,8 +65,6 @@ export default function (inputArr:Array<string>, options:Options) {
 
 		if(!urlObj) return fragment;
 		else {
-			var past = index-1;
-			var skip = false;
 			if((inputArr[index-1] === "'" || inputArr[index-1] === '"') && ~htmlAttrs.indexOf(inputArr[index-2]))
 				return fragment;
 			return urlObj;

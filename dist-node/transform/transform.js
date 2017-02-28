@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var separate_1 = require("../separate/separate");
-var separate_2 = require("../separate/separate");
 var identify_1 = require("./identify");
+var separate_2 = require("../separate/separate");
 function default_1(str, options) {
-    var arr = separate_1.separate(str);
+    var arr = separate_2.separate(str);
     var identified = identify_1.default(arr, options);
     // return the current list (with words being filtered out)
     if (options.list) {
@@ -23,7 +23,7 @@ function default_1(str, options) {
         return url2tag(fragment, options);
     });
     // join and return
-    return separate_2.deSeparate(identified);
+    return separate_1.deSeparate(identified);
 }
 exports.default = default_1;
 function url2tag(fragment, options) {
