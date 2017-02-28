@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var lists_1 = require("../lists");
-var hasprotocol_1 = require("../tests/hasprotocol");
 var email_1 = require("../tests/email");
+var hasprotocol_1 = require("../tests/hasprotocol");
+var lists_1 = require("../lists");
 var ip_1 = require("../tests/ip");
 var url_1 = require("../tests/url");
 function default_1(inputArr, options) {
@@ -55,8 +55,6 @@ function default_1(inputArr, options) {
         if (!urlObj)
             return fragment;
         else {
-            var past = index - 1;
-            var skip = false;
             if ((inputArr[index - 1] === "'" || inputArr[index - 1] === '"') && ~lists_1.htmlAttrs.indexOf(inputArr[index - 2]))
                 return fragment;
             return urlObj;

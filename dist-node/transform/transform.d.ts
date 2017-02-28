@@ -1,3 +1,3 @@
-import { URLObj as URLObj } from "../util";
-import { Options as Options } from "../util";
+import { Options } from "../util";
+import { URLObj } from "../util";
 export default function (str: any, options: Options): string | Array<URLObj>;
