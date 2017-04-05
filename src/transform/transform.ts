@@ -9,6 +9,15 @@ export default function(str,options:Options):string|Array<URLObj>{
 	var arr:Array<string> = separate(str);
 	var identified:Array<string|URLObj> = identify(arr,options);
 
+	// custom filtering-out function
+	if (options.exclude) {
+		for (var index = 0; index < identified.length; index++) {
+			var element = identified[index];
+			if(typeof element === "object" && options.exclude(element))
+				identified[index] = element.raw;
+		}
+	}
+
 	// return the current list (with words being filtered out)
 	if(options.list) {
 		var listed:Array<URLObj> = [];

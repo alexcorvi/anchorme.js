@@ -66,6 +66,15 @@ describe('options', function () {
 		expect(result.split("ftp://").length).toBe(2);
 	});
 
+	it('custom exclude function',function(){
+		var result = anchorme("something.zip",{
+			exclude:function(URLObject){
+				if(URLObject.raw.endsWith(".zip")) return true;
+			}
+		});
+		expect(result.split("href").length).toBe(1);
+	});
+
 });
 
 describe('Additional functionalities', function () {

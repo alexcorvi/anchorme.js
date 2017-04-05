@@ -22,7 +22,8 @@ export interface Options {
 	files?:boolean,
 	truncate?:number|[number,number],
 	defaultProtocol?:string|Function,
-	list?:boolean
+	list?:boolean,
+	exclude?:(URLObj)=>boolean
 }
 
 /**

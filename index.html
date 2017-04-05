@@ -404,6 +404,39 @@ anchorme(string,{
 					<p><b>JSFiddle Demo</b></p>
 					<script async src="//jsfiddle.net/alexcorvi/gydnngrz/1/embed/js,result/"></script> 
 
+					<hr>
+					<h3 id="custom-exclusion">Custom Exclusion</h3>
+
+					<table>
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value type</th>
+								<th>Default value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><pre class="sml"><code>exclude</code></pre></td>
+								<td><pre class="sml"><code>function</code></pre></td>
+								<td><pre class="sml"><code>undefined</code></pre></td>
+							</tr>
+						</tbody>
+					</table>
+
+					<p>The aforementioned exclusion options exclude URLs by their protocol. However, you might want to exclude URLs for any other reason.</p>
+
+<pre><code>
+// this example will exclude URLs ends with .zip
+anchorme(string,{
+	exclude:function(URLObj){
+		if(URLObj.raw.endsWith(".zip")) return true;
+		// returning "truthy" value will cause
+		// exclusion of the URL
+	}
+});
+</code></pre>
+
 				</section>
 				<section class="bs-docs-section">
 					<h1 id="additional-features" class="page-header">Additional Features</h1>
