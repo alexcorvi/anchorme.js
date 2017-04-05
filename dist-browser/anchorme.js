@@ -79,7 +79,7 @@ exports.htmlAttrs = ["src=", "data=", "href=", "cite=", "formaction=", "icon=", 
 var email = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var lists_1 = lists;
+
 // pattern that an emails MUST have
 var pattern = /^[a-z0-9!#$%&'*+\-/=?^_`{|}~.]+@([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?$/i;
 // patterns that an email can not have
@@ -102,7 +102,7 @@ function default_1(str) {
     var tld = match[2];
     if (!tld)
         { return false; }
-    if (lists_1.tlds.indexOf(tld) === -1)
+    if (lists.tlds.indexOf(tld) === -1)
         { return false; }
     return true;
 }
@@ -112,7 +112,7 @@ exports.default = default_1;
 var ip = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = util;
+
 // general IP pattern https://regex101.com/r/rzUcJ4/1
 var pattern = /^(\d{1,3}\.){3}\d{1,3}(:\d{1,5})?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/i;
 function default_1(str) {
@@ -137,7 +137,7 @@ function default_1(str) {
         { return false; }
     // validate port
     var port = (IPArray[3].match(/(^\d+)(:)(\d+)/) || [])[3];
-    if (port && (!util_1.isPort(port)))
+    if (port && (!util.isPort(port)))
         { return false; }
     return true;
 }
@@ -147,8 +147,8 @@ exports.default = default_1;
 var url = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = util;
-var lists_1 = lists;
+
+
 var pattern = /^(https?:\/\/|ftps?:\/\/)?([a-z0-9%\-]+\.){1,}([a-z0-9\-]+)?(:(\d{1,5}))?(\/([a-z0-9\-._~:\/\?#\[\]@!$&'\(\)\*\+,;=%]+)?)?$/i;
 function default_1(str) {
     // general pattern recognition https://regex101.com/r/RgKTA4/2
@@ -158,10 +158,10 @@ function default_1(str) {
     // validate TLD
     if (typeof match[3] !== "string")
         { return false; }
-    if (lists_1.tlds.indexOf(match[3].toLowerCase()) === -1)
+    if (lists.tlds.indexOf(match[3].toLowerCase()) === -1)
         { return false; }
     // validate port
-    if (match[5] && (!util_1.isPort(match[5])))
+    if (match[5] && (!util.isPort(match[5])))
         { return false; }
     return true;
 }
@@ -234,7 +234,7 @@ exports.default = default_1;
 var separate_1 = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var fix_1 = fix;
+
 /**
  *
  * Split the string with word separators
@@ -246,7 +246,7 @@ function separate(input) {
         .replace(/([\s\(\)\[\]<>"'])/g, "\0$1\0")
         .replace(/([?;:,.!]+)(?=(\0|$|\s))/g, "\0$1\0")
         .split("\0");
-    var fixed = fix_1.default(splitted);
+    var fixed = fix.default(splitted);
     return fixed;
 }
 exports.separate = separate;
@@ -287,20 +287,20 @@ exports.default = default_1;
 var identify = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var email_1 = email;
-var hasprotocol_1 = hasprotocol;
-var lists_1 = lists;
-var ip_1 = ip;
-var url_1 = url;
+
+
+
+
+
 function default_1(inputArr, options) {
     return inputArr.map(function (fragment, index) {
         var encoded = encodeURI(fragment);
         // quick validations
         // 1
-        if (encoded.indexOf(".") < 1 && (!hasprotocol_1.default(encoded)))
+        if (encoded.indexOf(".") < 1 && (!hasprotocol.default(encoded)))
             { return fragment; }
         var urlObj = null;
-        var protocol = hasprotocol_1.default(encoded) || "";
+        var protocol = hasprotocol.default(encoded) || "";
         // test 1: it's a file
         if (options.files && protocol === "file:///" && encoded.substr(protocol.length).split(/\/|\\/).length - 1) {
             urlObj = {
@@ -313,7 +313,7 @@ function default_1(inputArr, options) {
         else if (protocol)
             { encoded = encoded.substr(protocol.length); }
         // test 2: it's a URL
-        if ((!urlObj) && options.urls && url_1.default(encoded)) {
+        if ((!urlObj) && options.urls && url.default(encoded)) {
             urlObj = {
                 reason: "url",
                 protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
@@ -322,7 +322,7 @@ function default_1(inputArr, options) {
             };
         }
         // test 3: it's an email
-        if ((!urlObj) && options.emails && email_1.default(encoded)) {
+        if ((!urlObj) && options.emails && email.default(encoded)) {
             urlObj = {
                 reason: "email",
                 protocol: "mailto:",
@@ -331,7 +331,7 @@ function default_1(inputArr, options) {
             };
         }
         // test 4: it's an IP
-        if ((!urlObj) && options.ips && ip_1.default(encoded)) {
+        if ((!urlObj) && options.ips && ip.default(encoded)) {
             urlObj = {
                 reason: "ip",
                 protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
@@ -342,7 +342,7 @@ function default_1(inputArr, options) {
         if (!urlObj)
             { return fragment; }
         else {
-            if ((inputArr[index - 1] === "'" || inputArr[index - 1] === '"') && ~lists_1.htmlAttrs.indexOf(inputArr[index - 2]))
+            if ((inputArr[index - 1] === "'" || inputArr[index - 1] === '"') && ~lists.htmlAttrs.indexOf(inputArr[index - 2]))
                 { return fragment; }
             return urlObj;
         }
@@ -354,12 +354,12 @@ exports.default = default_1;
 var transform = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var separate_1$$1 = separate_1;
-var identify_1 = identify;
+
+
 var separate_2 = separate_1;
 function default_1(str, options) {
     var arr = separate_2.separate(str);
-    var identified = identify_1.default(arr, options);
+    var identified = identify.default(arr, options);
     // custom filtering-out function
     if (options.exclude) {
         for (var index = 0; index < identified.length; index++) {
@@ -385,7 +385,7 @@ function default_1(str, options) {
         return url2tag(fragment, options);
     });
     // join and return
-    return separate_1$$1.deSeparate(identified);
+    return separate_1.deSeparate(identified);
 }
 exports.default = default_1;
 function url2tag(fragment, options) {
@@ -419,29 +419,29 @@ function url2tag(fragment, options) {
 var index = createCommonjsModule(function (module, exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = util;
-var email_1 = email;
-var ip_1 = ip;
-var url_1 = url;
-var transform_1 = transform;
-var hasprotocol_1 = hasprotocol;
+
+
+
+
+
+
 var anchorme = function (str, options) {
-    options = util_1.defaultOptions(options);
-    var result = transform_1.default(str, options);
+    options = util.defaultOptions(options);
+    var result = transform.default(str, options);
     return result;
 };
 // exposing few functions for extra uses
 anchorme.validate = {
-    ip: ip_1.default,
+    ip: ip.default,
     url: function (input) {
         // simple wrapper that does what "identify.ts" does initially
         // remove the protocal
-        var protocol = hasprotocol_1.default(input) || "";
+        var protocol = hasprotocol.default(input) || "";
         input = input.substr(protocol.length);
         input = encodeURI(input);
-        return url_1.default(input);
+        return url.default(input);
     },
-    email: email_1.default
+    email: email.default
 };
 exports.default = anchorme;
 });

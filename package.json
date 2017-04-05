@@ -27,14 +27,14 @@
   },
   "homepage": "http://alexcorvi.github.io/anchorme.js/",
   "devDependencies": {
-    "@types/jest": "^18.1.1",
+    "@types/jest": "^19.2.2",
     "jest": "^19.0.2",
-    "rollup": "^0.36.3",
+    "rollup": "^0.41.6",
     "rollup-plugin-buble": "^0.15.0",
-    "rollup-plugin-commonjs": "^7.0.0",
-    "ts-jest": "^19.0.0",
-    "typescript": "^2.2.1",
-    "uglify-js": "^2.7.3"
+    "rollup-plugin-commonjs": "^8.0.2",
+    "ts-jest": "^19.0.7",
+    "typescript": "^2.2.2",
+    "uglify-js": "^2.8.21"
   },
   "dependencies": {},
   "jest": {
