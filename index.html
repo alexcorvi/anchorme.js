@@ -426,6 +426,8 @@ anchorme(string,{
 
 					<p>The aforementioned exclusion options exclude URLs by their protocol. However, you might want to exclude URLs for any other reason.</p>
 
+					<p>Each identified URL will go through this function. The function can be used to test the URLs and return a truthy value (<code>true</code> or <code>1</code> or <code>"non-empty string"</code> ... etc) to exclude or a falsy value (<code>false</code> or <code>1</code> or <code>undefined</code> ... etc) to include.</p>
+
 <pre><code>
 // this example will exclude URLs ends with .zip
 anchorme(string,{
@@ -436,6 +438,9 @@ anchorme(string,{
 	}
 });
 </code></pre>
+
+					<p><b>JSFiddle Demo</b></p>
+					<script async src="//jsfiddle.net/gydnngrz/3/embed/js,result/"></script>
 
 				</section>
 				<section class="bs-docs-section">
