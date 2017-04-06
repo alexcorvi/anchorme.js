@@ -18,12 +18,11 @@ export default function (inputArr:Array<string>, options:Options) {
 		var urlObj:URLObj|null = null;
 
 		var protocol = hasProtocol(encoded) || "";
-		
 		// remove the protocol before proceeding to any other test
 		if(protocol) encoded = encoded.substr(protocol.length);
 
 		// test 1: it's a file
-		if(options.files && protocol === "file:///" && encoded.substr(protocol.length).split(/\/|\\/).length - 1) {
+		if(options.files && protocol === "file:///" && encoded.split(/\/|\\/).length - 1) {
 			urlObj = {
 				reason:"file",
 				protocol:protocol,
