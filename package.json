@@ -1,6 +1,6 @@
 {
   "name": "anchorme",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A library to convert URLs to a clickable HTML anchor elements",
   "main": "./dist-node/index.js",
   "types": "./dist-node/index.d.ts",
