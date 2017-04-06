@@ -17,8 +17,10 @@ export default function (inputArr:Array<string>, options:Options) {
 
 		var urlObj:URLObj|null = null;
 
-
 		var protocol = hasProtocol(encoded) || "";
+		
+		// remove the protocol before proceeding to any other test
+		if(protocol) encoded = encoded.substr(protocol.length);
 
 		// test 1: it's a file
 		if(options.files && protocol === "file:///" && encoded.substr(protocol.length).split(/\/|\\/).length - 1) {
@@ -30,8 +32,6 @@ export default function (inputArr:Array<string>, options:Options) {
 			};
 		}
 
-		// remove the protocol before proceeding to any other test
-		else if(protocol) encoded = encoded.substr(protocol.length);
 
 		// test 2: it's a URL
 		if((!urlObj) && options.urls && urlChecker(encoded)) {

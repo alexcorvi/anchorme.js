@@ -301,6 +301,9 @@ function default_1(inputArr, options) {
             { return fragment; }
         var urlObj = null;
         var protocol = hasprotocol.default(encoded) || "";
+        // remove the protocol before proceeding to any other test
+        if (protocol)
+            { encoded = encoded.substr(protocol.length); }
         // test 1: it's a file
         if (options.files && protocol === "file:///" && encoded.substr(protocol.length).split(/\/|\\/).length - 1) {
             urlObj = {
@@ -310,8 +313,6 @@ function default_1(inputArr, options) {
                 encoded: encoded,
             };
         }
-        else if (protocol)
-            { encoded = encoded.substr(protocol.length); }
         // test 2: it's a URL
         if ((!urlObj) && options.urls && url.default(encoded)) {
             urlObj = {
