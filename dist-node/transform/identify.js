@@ -18,7 +18,7 @@ function default_1(inputArr, options) {
         if (protocol)
             encoded = encoded.substr(protocol.length);
         // test 1: it's a file
-        if (options.files && protocol === "file:///" && encoded.substr(protocol.length).split(/\/|\\/).length - 1) {
+        if (options.files && protocol === "file:///" && encoded.split(/\/|\\/).length - 1) {
             urlObj = {
                 reason: "file",
                 protocol: protocol,
