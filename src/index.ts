@@ -19,7 +19,7 @@ anchorme.validate = {
 	ip:ipChecker,
 	url:function(input:string):boolean{
 		// simple wrapper that does what "identify.ts" does initially
-		// remove the protocal
+		// remove the protocol
 		var protocol = hasprotocol(input) || "";
 		input = input.substr(protocol.length);
 		input = encodeURI(input);
