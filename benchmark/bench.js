@@ -4,4 +4,4 @@ const anchorme = require(path.join(process.cwd(),"dist-node","index.js")).defaul
 const bigData = fs.readFileSync(process.cwd()+"/benchmark/big.sample.txt","utf-8");
 const t0 = new Date().getTime();
 anchorme(bigData);
-console.log(new Date().getTime() - t0);
+console.log("Total runtime: " + (new Date().getTime() - t0) + " ms");
