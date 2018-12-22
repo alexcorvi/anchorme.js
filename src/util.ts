@@ -23,7 +23,7 @@ export interface Options {
 	truncate?:number|[number,number],
 	defaultProtocol?:string|Function,
 	list?:boolean,
-	exclude?:(URLObj)=>boolean
+	exclude?:(url:URLObj)=>boolean
 }
 
 /**
