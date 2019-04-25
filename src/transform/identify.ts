@@ -9,7 +9,7 @@ import urlChecker from "../tests/url";
 export default function (inputArr:Array<string>, options:Options) {
 	return inputArr.map((fragment,index)=>{
 		
-		var encoded = encodeURI(fragment);
+		var encoded = encodeURI(decodeURI(fragment));
 
 		// quick validations
 		// 1

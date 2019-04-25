@@ -7,7 +7,7 @@ var ip_1 = require("../tests/ip");
 var url_1 = require("../tests/url");
 function default_1(inputArr, options) {
     return inputArr.map(function (fragment, index) {
-        var encoded = encodeURI(fragment);
+        var encoded = encodeURI(decodeURI(fragment));
         // quick validations
         // 1
         if (encoded.indexOf(".") < 1 && (!hasprotocol_1.default(encoded)))
