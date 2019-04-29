@@ -7,7 +7,15 @@ var ip_1 = require("../tests/ip");
 var url_1 = require("../tests/url");
 function default_1(inputArr, options) {
     return inputArr.map(function (fragment, index) {
-        var encoded = encodeURI(decodeURI(fragment));
+        var encoded;
+        try {
+            // prevent double encoding
+            encoded = encodeURI(decodeURI(fragment));
+        }
+        catch (e) {
+            // if the above fails it probably means that a genuine "%" char is present in the fragmet
+            encoded = encodeURI(fragment);
+        }
         // quick validations
         // 1
         if (encoded.indexOf(".") < 1 && (!hasprotocol_1.default(encoded)))

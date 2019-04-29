@@ -9,7 +9,15 @@ import urlChecker from "../tests/url";
 export default function (inputArr:Array<string>, options:Options) {
 	return inputArr.map((fragment,index)=>{
 		
-		var encoded = encodeURI(decodeURI(fragment));
+		var encoded: string;
+		
+		try {
+			// prevent double encoding
+			encoded = encodeURI(decodeURI(fragment))
+		} catch (e) {
+			// if the above fails it probably means that a genuine "%" char is present in the fragmet
+			encoded = encodeURI(fragment);
+		}
 
 		// quick validations
 		// 1

@@ -310,7 +310,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 
 function default_1(inputArr, options) {
     return inputArr.map(function (fragment, index) {
-        var encoded = encodeURI(decodeURI(fragment));
+        var encoded;
+        try {
+            // prevent double encoding
+            encoded = encodeURI(decodeURI(fragment));
+        }
+        catch (e) {
+            // if the above fails it probably means that a genuine "%" char is present in the fragmet
+            encoded = encodeURI(fragment);
+        }
         // quick validations
         // 1
         if (encoded.indexOf(".") < 1 && (!hasprotocol.default(encoded)))
