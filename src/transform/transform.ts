@@ -4,7 +4,7 @@ import {deSeparate} from "../separate/separate";
 import identify from "./identify";
 import {separate} from "../separate/separate";
 
-export default function(str,options:Options):string|Array<URLObj>{
+export default function(str,options:Options):string|Array<URLObj | string>{
 
 	var arr:Array<string> = separate(str);
 	var identified:Array<string|URLObj> = identify(arr,options);
@@ -20,10 +20,11 @@ export default function(str,options:Options):string|Array<URLObj>{
 
 	// return the current list (with words being filtered out)
 	if(options.list) {
-		var listed:Array<URLObj> = [];
+		var listed:Array<URLObj | string> = [];
 		for (var i = 0; i < identified.length; i++) {
 			var fragment = identified[i];
-			if(typeof fragment !== "string") listed.push(fragment);
+			if(!!options.includeStringsInList || typeof fragment !== "string") 
+				listed.push(fragment);
 		}
 		return listed;
 	}

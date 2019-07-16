@@ -86,6 +86,18 @@ describe('Additional functionalities', function () {
 		expect(result.length).toBe(2);
 	});
 
+	it('return a list of valid URLs mixed with text', function () {
+		var result = anchorme("one www.google.com two mail@gmail.com three",{
+			list:true,
+			includeStringsInList: true
+		});
+
+		expect(typeof result).toBe("object");
+		expect(result.length).toBe(9); //spaces come as separate fragments
+		expect(typeof result[2]).toBe("object"); //www.google.com
+		expect(typeof result[6]).toBe("object"); //mail@gmail.com
+	});
+
 	it('URLs validator works with emojis', function () {
 		expect(anchorme.validate.url("http://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws")).toBe(true);
 	});

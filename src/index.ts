@@ -8,7 +8,7 @@ import hasprotocol from "./tests/hasprotocol";
 import {Options} from "./util";
 import {URLObj} from "./util";
 
-const anchorme:any = function(str:string,options?:Options):Array<URLObj>|string{
+const anchorme:any = function(str:string,options?:Options):Array<URLObj|string>|string{
 	options = defaultOptions(options);
 	var result = transform(str, options);
 	return result;

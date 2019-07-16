@@ -23,6 +23,7 @@ export interface Options {
 	truncate?:number|[number,number],
 	defaultProtocol?:string|Function,
 	list?:boolean,
+	includeStringsInList?:boolean,
 	exclude?:(url:URLObj)=>boolean
 }
 
@@ -41,7 +42,8 @@ export function defaultOptions(options:Options|undefined):Options{
 			files:true,
 			truncate:Infinity,
 			defaultProtocol:"http://",
-			list:false
+			list:false,
+			includeStringsInList:false
 		};
 	}
 
