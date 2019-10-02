@@ -16,7 +16,7 @@ anchorme.validate = {
     ip: ip_1.default,
     url: function (input) {
         // simple wrapper that does what "identify.ts" does initially
-        // remove the protocal
+        // remove the protocol
         var protocol = hasprotocol_1.default(input) || "";
         input = input.substr(protocol.length);
         input = encodeURI(input);

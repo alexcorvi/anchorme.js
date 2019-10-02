@@ -33,12 +33,17 @@ export default function (inputArr:Array<string>, options:Options) {
 
 
 		// test 2: it's a URL
-		if((!urlObj) && options.urls && urlChecker(encoded)) {
+		// allow for technically invalid url queries
+		// example: google.com?query=true
+		// by transforming the encoded to google.com/?query=true
+		// using new ref so as not to affect other tests bellow
+		var url = encoded.replace(/([^\/])\?([a-z])/i, '$1/?$2');
+		if((!urlObj) && options.urls && urlChecker(url)) {
 			urlObj = {
 				reason:"url",
 				protocol:protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
 				raw:fragment,
-				encoded:encoded,
+				encoded:url,
 			};
 		}
 

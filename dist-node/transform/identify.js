@@ -27,12 +27,17 @@ function default_1(inputArr, options) {
             };
         }
         // test 2: it's a URL
-        if ((!urlObj) && options.urls && url_1.default(encoded)) {
+        // allow for technically invalid url queries
+        // example: google.com?query=true
+        // by transforming the encoded to google.com/?query=true
+        // using new ref so as not to affect other tests bellow
+        var url = encoded.replace(/([^\/])\?([a-z])/i, '$1/?$2');
+        if ((!urlObj) && options.urls && url_1.default(url)) {
             urlObj = {
                 reason: "url",
                 protocol: protocol ? protocol : typeof options.defaultProtocol === "function" ? options.defaultProtocol(fragment) : options.defaultProtocol,
                 raw: fragment,
-                encoded: encoded,
+                encoded: url,
             };
         }
         // test 3: it's an email

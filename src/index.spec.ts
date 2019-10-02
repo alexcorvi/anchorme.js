@@ -90,3 +90,22 @@ describe('Additional functionalities', function () {
 		expect(anchorme.validate.url("http://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws")).toBe(true);
 	});
 });
+
+describe('Invalid URL queries transformed to valid URL queries', function () {
+	it('google.com?q transforms to link with valid /?', function () {
+		var result = anchorme('google.com?q');
+		expect(result).toBe('<a href="http://google.com/?q" >google.com?q</a>');
+	});
+	it('google.com?q=1&o=2 transforms to link with valid /?', function () {
+		var result = anchorme('google.com?q=1&o=2');
+		expect(result).toBe('<a href="http://google.com/?q=1&o=2" >google.com?q=1&o=2</a>');
+	});
+	it('google.com/whatever/path?q=1&o=2 transforms to link with valid /?', function () {
+		var result = anchorme('google.com/whatever/path?q=1&o=2');
+		expect(result).toBe('<a href="http://google.com/whatever/path/?q=1&o=2" >google.com/whatever/path?q=1&o=2</a>');
+	});
+	it('trancate works google.com/whatever/path?q=1&o=2 transforms to link with valid /?', function () {
+		var result = anchorme('google.com/whatever/path?q=1&o=2', {truncate: [3,4]});
+		expect(result).toBe('<a href="http://google.com/whatever/path/?q=1&o=2" >goo...&o=2</a>');
+	});
+});

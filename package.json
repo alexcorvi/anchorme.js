@@ -8,7 +8,8 @@
     "test": "jest",
     "bench": "node benchmark/bench",
     "build": "node build/build",
-    "prepublish": "npm run test && npm run bench && npm run build"
+    "prepublish": "npm run test && npm run bench && npm run build",
+    "watch": "watch 'npm run build' src"
   },
   "repository": {
     "type": "git",
@@ -34,7 +35,8 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "ts-jest": "^19.0.7",
     "typescript": "^2.2.2",
-    "uglify-js": "^2.8.21"
+    "uglify-js": "^2.8.21",
+    "watch": "^1.0.2"
   },
   "dependencies": {},
   "jest": {

@@ -1,3 +1,4 @@
+"use strict";
 /**
  *
  * @hack
@@ -28,12 +29,11 @@
  *
  *
 **/
-"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function fixSeparators(arr, sep1, sep2) {
     arr.forEach(function (bit, i) {
-        if ((bit.indexOf(".") > -1) &&
-            (!(arr[i - 1] === sep1 && arr[i + 1] === sep2)) &&
+        if ((bit.indexOf(".") > -1) && // it has a .
+            (!(arr[i - 1] === sep1 && arr[i + 1] === sep2)) && // it's not surrounded by separators
             (arr[i + 1] === sep1 || arr[i + 1] === sep2) // the one after it, is either sep1 or sep2
         ) {
             arr[i] = arr[i] + arr[i + 1];
