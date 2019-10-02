@@ -100,11 +100,11 @@ describe('Invalid URL queries transformed to valid URL queries', function () {
 		var result = anchorme('google.com?q=1&o=2');
 		expect(result).toBe('<a href="http://google.com/?q=1&o=2" >google.com?q=1&o=2</a>');
 	});
-	it('google.com/whatever/path?q=1&o=2 transforms to link with valid /?', function () {
+	it('google.com/whatever/path?q=1&o=2 leaves intact', function () {
 		var result = anchorme('google.com/whatever/path?q=1&o=2');
 		expect(result).toBe('<a href="http://google.com/whatever/path/?q=1&o=2" >google.com/whatever/path?q=1&o=2</a>');
 	});
-	it('trancate works google.com/whatever/path?q=1&o=2 transforms to link with valid /?', function () {
+	it('trancate works google.com/whatever/path?q=1&o=2 leaves intact', function () {
 		var result = anchorme('google.com/whatever/path?q=1&o=2', {truncate: [3,4]});
 		expect(result).toBe('<a href="http://google.com/whatever/path/?q=1&o=2" >goo...&o=2</a>');
 	});
