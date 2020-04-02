@@ -37,15 +37,15 @@ This function will validate a given string as URL, email, file, ip
 ```javascript
 anchorme.validate.email("mail@example.com"); // true
 anchorme.validate.email("mail@@example.com"); // false
-anchorme.validate.ip("127.0.1.1"); // true
-anchorme.validate.ip("127.0.1.1:8000/some/path"); // true
-anchorme.validate.ip("127.400.1.1"); // false
-anchorme.validate.ip("777.0.1.1:8000/some/path"); // false
+anchorme.validate.url("github.com/some/path"); // true
 anchorme.validate.url("127.0.1.1"); // true
 anchorme.validate.url("127.0.1.1:8000/some/path"); // true
 anchorme.validate.url("127.0.1.300"); // false
 anchorme.validate.url("127.0.1.500:8000/some/path"); // false
-anchorme.validate.url("github.com/some/path"); // true
+anchorme.validate.ip("127.0.1.1"); // true
+anchorme.validate.ip("127.0.1.1/path"); // false (only validates pure IPs - not URLs)
+anchorme.validate.ip("127.400.1.1"); // false
+anchorme.validate.ip("777.0.1.1:8000/some/path"); // false
 anchorme.validate.file("file:///c:/some/file.zip"); // true
 ```
 
