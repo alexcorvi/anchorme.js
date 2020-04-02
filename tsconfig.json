@@ -1,12 +1,11 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"outDir": "./dist-node/",
-		"target":"ES5",
-		"declaration":true,
-		"strictNullChecks":true,
-		"alwaysStrict":true,
-		"forceConsistentCasingInFileNames":true
+		"outDir": "./dist/node/",
+		"target": "ES5",
+		"declaration": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true
 	},
 	"files": ["./src/index.ts"],
 	"exclude": ["./node_modules/*"]

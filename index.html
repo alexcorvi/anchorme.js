@@ -1,100 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Anchorme: Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links</title>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>
+			Anchorme: Javascript library to detect links / URLs / Emails in text
+			and convert them to clickable HTML anchor links
+		</title>
 
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 
-	<link href="./assets/style.min.css" rel="stylesheet">
-	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.3.0/bootbox.min.js"></script>
-	<script src="./assets/script.js" type="text/javascript"></script>
-	<script src="./dist-browser/anchorme.js" type="text/javascript"></script>
-</head>
+		<link href="./assets/style.min.css" rel="stylesheet" />
+		<style>
+			a.detected {
+				background: #fff59d;
+			}
 
-<body>
-	<!-- Main navigation
+			a.detected:hover {
+				background: #ffe082;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!-- Main navigation
 	=========================================== -->
-	<header class="navbar navbar-static-top bs-docs-nav" id="top">
-		<div class="container">
-			<div class="navbar-header" role="banner">
-				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="http://alexcorvi.github.io/anchorme.js/">Anchorme</a>
+		<header class="navbar navbar-static-top bs-docs-nav" id="top">
+			<div class="container">
+				<div class="navbar-header" role="banner">
+					<button
+						class="navbar-toggle"
+						type="button"
+						data-toggle="collapse"
+						data-target=".bs-navbar-collapse"
+					>
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a
+						class="navbar-brand"
+						href="http://alexcorvi.github.io/anchorme.js/"
+						>Anchorme</a
+					>
+				</div>
+				<nav
+					class="collapse navbar-collapse bs-navbar-collapse"
+					role="navigation"
+				>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<a href="https://github.com/alexcorvi/anchorme.js"
+								>View on GitHub</a
+							>
+						</li>
+					</ul>
+				</nav>
 			</div>
-			<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="https://github.com/alexcorvi/anchorme.js">View on GitHub</a>
-					</li>
-				</ul>
-			</nav>
-		</div>
-	</header>
+		</header>
 
-
-	<!-- Header
+		<!-- Header
 	=========================================== -->
-	
-	<div class="bs-docs-masthead" id="content" style="background: linear-gradient(135deg, #673AB7, #3F51B5);">
-		<div class="container">
-			<h1 class="home-title">Anchorme</h1>
-			<p class="lead" style="font-size:18px;margin-top:25px">Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links</p>
-			<p class="lead">
-				<a data-bootbox="download-popup" data-bootbox-size="large" class="btn btn-outline-inverse btn-lg">Download</a>
-			</p>
-		</div>
-	</div>
 
-	
-	<div id="download-popup" title="Download" class="hidden">
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="panel panel-default">
-					<div class="panel-heading">Install with NPM</div>
-					<div class="panel-body">
-						<p>You can get this library via NPM</p>
-						<pre><code>$ npm i --save anchorme</code></pre>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">Download full version</div>
-					<div class="panel-body">
-						<p>Compiled version into single file.</p>
-						<a href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/dist-browser/anchorme.js">Download</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">Download minified version</div>
-					<div class="panel-body">
-						<p>Compiled and minified version.</p>
-						<a href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/dist-browser/anchorme.min.js">Download</a>
-					</div>
-				</div>
+		<div
+			class="bs-docs-masthead"
+			id="content"
+			style="background: linear-gradient(135deg, #673AB7, #3F51B5);"
+		>
+			<div class="container">
+				<h1 class="home-title">Anchorme</h1>
+				<p class="lead" style="font-size:18px;margin-top:25px">
+					Tiny, fast, efficient, feature rich Javascript library to
+					detect links / URLs / Emails in text and convert them to
+					clickable HTML anchor links
+				</p>
+				<p class="lead">
+					<a
+						data-bootbox="download-popup"
+						data-bootbox-size="large"
+						class="btn btn-outline-inverse btn-lg"
+						>Download</a
+					>
+				</p>
 			</div>
 		</div>
-	</div>
-	
 
-	
-	<div class="container bs-docs-container">
-		<div class="row">
-			<div class="col-md-9" role="main">
+		<div id="download-popup" title="Download" class="hidden">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">Install with NPM</div>
+						<div class="panel-body">
+							<p>You can get this library via NPM or yarn</p>
+							<pre><code>$ npm i --save anchorme
+$ yarn add anchorme</code></pre>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">Download full version</div>
+						<div class="panel-body">
+							<p>Compiled version into single file.</p>
+							<a
+								href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/dist-browser/anchorme.js"
+								>Download</a
+							>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Download minified version
+						</div>
+						<div class="panel-body">
+							<p>Compiled and minified version.</p>
+							<a
+								href="https://raw.githubusercontent.com/alexcorvi/anchorme.js/gh-pages/dist-browser/anchorme.min.js"
+								>Download</a
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container bs-docs-container">
+			<div class="row">
+				<div class="col-md-9" role="main">
+					<section class="bs-docs-section">
+						<h1 id="overview" class="page-header">
+							Overview
+						</h1>
+						<div id="overview-content"></div>
+					</section>
+					<section class="bs-docs-section">
+						<h1 id="demo" class="page-header">
+							Demo
+						</h1>
+						<div id="demo-content">
+							<div class="row">
+								<div class="col-md-6">
+									<textarea
+										onkeydown="refresh();"
+										onkeyup="refresh();"
+										onchange="refresh();"
+										id="input"
+										style="width:100%; height: 1000px;"
+									>
+									</textarea>
+								</div>
+								<div class="col-md-6">
+									<div
+										id="output"
+										style="white-space: pre-line"
+									></div>
+								</div>
+							</div>
+						</div>
+					</section>
+					<section class="bs-docs-section">
+						<h1 id="getting-started" class="page-header">
+							Getting started
+						</h1>
+						<div id="getting-started-content"></div>
+					</section>
+					<section class="bs-docs-section">
+						<h1 id="options" class="page-header">
+							Options
+						</h1>
+						<div id="options-content"></div>
+					</section>
+					<section class="bs-docs-section">
+						<h1 id="extending" class="page-header">
+							Extending
+						</h1>
+						<div id="extending-content"></div>
+					</section>
+					<section class="bs-docs-section">
+						<h1 id="utility" class="page-header">
+							Utility functions
+						</h1>
+						<div id="utility-content"></div>
+					</section>
+					<section class="bs-docs-section">
+						<h1 id="contributing" class="page-header">
+							Contributing
+						</h1>
+						<div id="contributing-content"></div>
+					</section>
+					<section class="bs-docs-section">
+						<h1 id="license" class="page-header">
+							License
+						</h1>
+						<div id="license-content"></div>
+					</section>
+					<!--
 				<section class="bs-docs-section">
 					<h1 id="overview" class="page-header">Overview</h1>
 					<blockquote>
@@ -162,7 +269,11 @@
 						/*anchor me*/
 						function refresh(){
 							val = document.getElementById("input").value;
-							document.getElementById("output").innerHTML = anchorme(val);
+							document.getElementById("output").innerHTML = anchorme({input: val, options: {
+
+							}, extensions: [{
+								test: /#(\w|_)+/gi, transform: (string) => `<a href="https://twitter.com/hashtag/${string.substr(1)}">${string}</a>`
+							}]});
 						}
 					</script>
 				</section>
@@ -483,45 +594,232 @@ anchorme(myText,{
 					<script async src="//jsfiddle.net/alexcorvi/z3g3haL1/1/embed/js,result/"></script> 
 
 				</section>
-			</div>
-			<div class="col-md-3" role="complementary">
-				<div class="bs-docs-sidebar hidden-print">
-					<ul class="nav bs-docs-sidenav">
-					</ul>
-					<a class="back-to-top" href="#top">Back to top</a>
+			</div>-->
+				</div>
+				<div class="col-md-3" role="complementary">
+					<div class="bs-docs-sidebar hidden-print">
+						<ul class="nav bs-docs-sidenav"></ul>
+						<a class="back-to-top" href="#top">Back to top</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<footer class="bs-docs-footer" role="contentinfo">
-		<div class="container">
-			<div class="bs-docs-social">
-				<ul class="bs-docs-social-buttons">
+		<footer class="bs-docs-footer" role="contentinfo">
+			<div class="container">
+				<div class="bs-docs-social">
+					<ul class="bs-docs-social-buttons">
+						<li>
+							<iframe
+								class="github-btn"
+								src="//ghbtns.com/github-btn.html?user=alexcorvi&amp;repo=anchorme.js&amp;type=fork&amp;count=true"
+								width="90"
+								height="20"
+								title="Fork on GitHub"
+							></iframe>
+						</li>
+						<li>
+							<iframe
+								class="github-btn"
+								src="//ghbtns.com/github-btn.html?user=alexcorvi&amp;repo=anchorme.js&amp;type=star&amp;count=true"
+								width="90"
+								height="20"
+								title="Star on GitHub"
+							></iframe>
+						</li>
+					</ul>
+				</div>
+
+				<p>
+					Licensed under
+					<a href="http://opensource.org/licenses/MIT" target="_blank"
+						>MIT License</a
+					>
+				</p>
+				<p>
+					Documentation template by
+					<a href="http://getbootstrap.com">Bootstrap team</a>
+				</p>
+
+				<ul class="bs-docs-footer-links muted">
+					<li>·</li>
 					<li>
-						<iframe class="github-btn" src="//ghbtns.com/github-btn.html?user=alexcorvi&amp;repo=anchorme.js&amp;type=fork&amp;count=true" width="90" height="20" title="Fork on GitHub"></iframe>
+						<a href="https://github.com/alexcorvi/anchorme.js"
+							>GitHub</a
+						>
 					</li>
+
+					<li>·</li>
 					<li>
-						<iframe class="github-btn" src="//ghbtns.com/github-btn.html?user=alexcorvi&amp;repo=anchorme.js&amp;type=star&amp;count=true" width="90" height="20" title="Star on GitHub"></iframe>
+						<a
+							href="https://github.com/alexcorvi/anchorme.js/issues?state=open"
+							>Issues</a
+						>
 					</li>
 				</ul>
 			</div>
+		</footer>
+		<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.3.0/bootbox.min.js"></script>
+		<script
+			src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"
+			type="text/javascript"
+		></script>
+		<script type="text/javascript">
+			hljs.initHighlightingOnLoad();
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+		<script src="./assets/script.js" type="text/javascript"></script>
+		<script
+			src="./dist/browser/anchorme.js"
+			type="text/javascript"
+		></script>
+		<script type="text/javascript">
+			var initialInput = `Library works with (http://www.google.com) or without (www.google.com) protocols in link. It works well on paths [www.github.io/something/something] and queries <wordpress.com/post.php?p=112> and even when query starts immediately after the TLDS "wordpress.com?p=112". This library does validation against a full IANA list, so for example this link will be detected: 'alex.photography', yet this one will not 'alex.photograph'. Some links might also have ports in them like this one (https://a.co:8999/ab.php?p=12). Some are actually an IP (127.0.0.1/should_(be)_detected, invalid:127.0.0.300/should/not(be)_detected). Local machine names URLs are detected only when preceded by a protocol (https://localhost/abc, ftps://hostname).\n\nLinks with non-english alphabets are considered as non-valid, yet they are commonly used in chat application and so, so we supported them (to some degree). (examples: ka.wikipedia.org/wiki/მთავარი_გვერდი, ka.wikipedia.org/wiki/ბაქო, ka.wikipedia.org/wiki/2_აპრილი, ka.wikipedia.org/wiki/მერი_(სპილო)). Encoded links works too (example:ka.wikipedia.org/wiki/%E1%83%91).\n\nEmails are detected too: (valid: email@ex.com e.mail@ex.com e-mail@ex.com e+mail@ex.com e_mail@example.com 123@ex.com 123.123@ex.com email@sub.domain.com email@ex.co.jp  email@123.123.123.123) (invalid email.@example.web email@example email@example.abcd email@111.222.333.444).\n\nFiles (when starting with fil:e/// protocol) are detected too. (file:///c:/somefile.zip).\n\nTokenization is as accurate as it can get, you can see from the above text that we've tried almost all common punctuation marks and the library detected links from between them.\n\nLibrary doesn't break your HTML, so an HTML attribute that has a link in it will not be broken <img src='http://dummyimage.com/30'> or a link that is already inside an attribute, will not be broken (e.g. <a href="https://github.io">https://github.io</a>).`;
 
-			<p>Licensed under <a href="http://opensource.org/licenses/MIT" target="_blank">MIT License</a></p>
-			<p>Documentation template by <a href="http://getbootstrap.com">Bootstrap team</a></p>
+			document.getElementById("input").value = initialInput;
+			refresh();
 
-			<ul class="bs-docs-footer-links muted">
-			
-				<li>·</li>
-				<li><a href="https://github.com/alexcorvi/anchorme.js">GitHub</a></li>
-			
-				<li>·</li>
-				<li><a href="https://github.com/alexcorvi/anchorme.js/issues?state=open">Issues</a></li>
-			
-			</ul>
-		</div>
-	</footer>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" type="text/javascript"></script>
-	<script type="text/javascript">hljs.initHighlightingOnLoad();</script>
-</body>
+			/*anchor me*/
+			function refresh() {
+				val = document.getElementById("input").value;
+				document.getElementById("output").innerHTML = anchorme({
+					input: val,
+					options: {
+						attributes: {
+							class: "detected"
+						}
+					},
+					extensions: [
+						{
+							test: /#(\w|_)+/gi,
+							transform: string =>
+								`<a href="https://twitter.com/hashtag/${string.substr(
+									1
+								)}">${string}</a>`
+						}
+					]
+				});
+			}
+
+			async function fetchMD(relativePath, linesToDelete) {
+				return (await (await fetch(relativePath)).text())
+					.split(/\n/)
+					.filter((x, i) => i >= linesToDelete)
+					.join("\n");
+			}
+
+			async function placeMDContent(
+				relativePath,
+				linesToDelete,
+				elementID
+			) {
+				const content = await fetchMD(relativePath, linesToDelete);
+				document.getElementById(elementID).innerHTML = marked(content);
+			}
+
+			async function loadContent() {
+				await placeMDContent("./readme.md", 4, "overview-content");
+				await placeMDContent(
+					"./docs/getting-started.md",
+					1,
+					"getting-started-content"
+				);
+				await placeMDContent("./docs/options.md", 1, "options-content");
+				await placeMDContent(
+					"./docs/contributing.md",
+					1,
+					"contributing-content"
+				);
+				await placeMDContent("./license.md", 0, "license-content");
+				await placeMDContent(
+					"./docs/extending.md",
+					1,
+					"extending-content"
+				);
+
+				await placeMDContent(
+					"./docs/utility-functions.md",
+					1,
+					"utility-content"
+				);
+
+				document.querySelectorAll("pre code").forEach(block => {
+					hljs.highlightBlock(block);
+				});
+
+				var html = "";
+
+				$(".bs-docs-section").each(function() {
+					var h1 = $(this)
+							.find("h1[id]")
+							.first(),
+						h23 = $(this).find(
+							"h2[id], h3[id]:not([data-no-menu])"
+						);
+
+					if (h1.length) {
+						html +=
+							'<li><a href="#' +
+							h1[0].id +
+							'">' +
+							h1
+								.clone()
+								.children()
+								.remove()
+								.end()
+								.text() +
+							"</a>";
+
+						if (h23.length) {
+							html += '<ul class="nav">';
+							h23.each(function() {
+								html +=
+									'<li><a href="#' +
+									this.id +
+									'">' +
+									$(this)
+										.clone()
+										.children()
+										.remove()
+										.end()
+										.text() +
+									"</a></li>";
+							});
+							html += "</ul>";
+						}
+
+						html += "</li>";
+					}
+				});
+
+				if (html == "") {
+					$("[role=complementary]").hide();
+					$("[role=main]").toggleClass("col-md-9 col-md-12");
+				} else {
+					$(".bs-docs-sidenav").html(html);
+				}
+
+				// add heading anchors
+				$("h1[id], h2[id], h3[id], h4[id], h5[id]").each(function() {
+					$(this).prepend(
+						'<a href="#' + this.id + '" class="anchor-link">§</i>'
+					);
+				});
+
+				// enable bootbox
+				$("[data-bootbox]").on("click", function() {
+					var $target = $("#" + $(this).data("bootbox"));
+					bootbox.alert({
+						title: $target.attr("title"),
+						message: $target.html(),
+						size: $(this).data("bootbox-size")
+					});
+				});
+			}
+
+			loadContent();
+		</script>
+	</body>
 </html>

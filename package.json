@@ -1,56 +1,49 @@
 {
-  "name": "anchorme",
-  "version": "1.1.2",
-  "description": "A library to convert URLs to a clickable HTML anchor elements",
-  "main": "./dist-node/index.js",
-  "types": "./dist-node/index.d.ts",
-  "scripts": {
-    "test": "jest",
-    "bench": "node benchmark/bench",
-    "build": "node build/build",
-    "prepublish": "npm run test && npm run bench && npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexcorvi/anchorme.js.git"
-  },
-  "keywords": [
-    "text",
-    "to",
-    "anchor",
-    "tags"
-  ],
-  "author": "Alex Corvi <alex@arrayy.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/alexcorvi/anchorme.js/issues"
-  },
-  "homepage": "http://alexcorvi.github.io/anchorme.js/",
-  "devDependencies": {
-    "@types/jest": "^19.2.2",
-    "jest": "^19.0.2",
-    "rollup": "^0.41.6",
-    "rollup-plugin-buble": "^0.15.0",
-    "rollup-plugin-commonjs": "^8.0.2",
-    "ts-jest": "^19.0.7",
-    "typescript": "^2.2.2",
-    "uglify-js": "^2.8.21"
-  },
-  "dependencies": {},
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "\\.(ts)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": ".*spec\\.(ts|js)$",
-    "globals": {
-      "__TS_CONFIG__": {
-        "module": "commonjs"
-      }
-    }
-  }
+	"name": "anchorme",
+	"version": "2.0.0",
+	"description": "A library to convert URLs to a clickable HTML anchor elements",
+	"main": "./dist/node/index.js",
+	"types": "./dist/node/index.d.ts",
+	"scripts": {
+		"test": "mocha",
+		"testw": "mocha -w",
+		"build": "./node_modules/.bin/ts-node ./build/build.ts",
+		"buildw": "./node_modules/.bin/ts-node ./build/build.ts -w",
+		"update-tlds": "./node_modules/.bin/ts-node build/tlds/update.ts",
+		"server": "./node_modules/.bin/lite-server"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/alexcorvi/anchorme.js.git"
+	},
+	"keywords": [
+		"text",
+		"to",
+		"anchor",
+		"tags"
+	],
+	"author": "Alex Corvi <alex@arrayy.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/alexcorvi/anchorme.js/issues"
+	},
+	"homepage": "http://alexcorvi.github.io/anchorme.js/",
+	"devDependencies": {
+		"@rollup/plugin-buble": "^0.21.1",
+		"@rollup/plugin-commonjs": "^11.0.2",
+		"@types/expect": "^24.3.0",
+		"@types/mocha": "^7.0.2",
+		"@types/node-fetch": "^2.5.5",
+		"@types/uglify-js": "^3.0.4",
+		"chokidar": "^3.3.1",
+		"expect": "^25.2.3",
+		"lite-server": "^2.5.4",
+		"mocha": "^7.1.1",
+		"node-fetch": "^2.6.0",
+		"rollup": "^2.2.0",
+		"ts-node": "^8.8.1",
+		"typescript": "^3.8.3",
+		"uglify-js": "^3.8.0"
+	},
+	"dependencies": {}
 }
