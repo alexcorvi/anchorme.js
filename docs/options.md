@@ -78,7 +78,7 @@ const resultB = anchorme({
 });
 ```
 
-**[JSFiddle Demo]()**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/g1xpah9y/3/)**
 
 ---
 
@@ -129,7 +129,7 @@ const resultB = anchorme({
 });
 ```
 
-**[JSFiddle Demo]()**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/6Lph7xke/1/)**
 
 ---
 
@@ -170,7 +170,7 @@ const resultB = anchorme({
 });
 ```
 
-**[JSFiddle Demo]()**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/0r3c14gw/1/)**
 
 ---
 
@@ -213,6 +213,8 @@ const resultB = anchorme({
 });
 ```
 
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/86yz30Lg/2/)**
+
 ## Special transformation
 
 > **Default Behaviour**: No special transformation
@@ -254,3 +256,5 @@ const result = anchorme({
 	}
 });
 ```
+
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/jbucrys1/2/)**

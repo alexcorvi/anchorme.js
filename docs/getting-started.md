@@ -46,3 +46,5 @@ const resultC = anchorme({
 	]
 });
 ```
+
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/hLwjkyq6/13/)**

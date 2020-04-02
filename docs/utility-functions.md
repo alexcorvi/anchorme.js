@@ -26,7 +26,7 @@ anchorme.list(
 ]
 ```
 
-**[JSFiddle Demo]()**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/7v4nt6d9/4/)**
 
 ## Validation
 
@@ -49,4 +49,4 @@ anchorme.validate.ip("777.0.1.1:8000/some/path"); // false
 anchorme.validate.file("file:///c:/some/file.zip"); // true
 ```
 
-**[JSFiddle Demo]()**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/64tozj28/15/)**
