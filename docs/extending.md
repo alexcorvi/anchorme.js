@@ -10,13 +10,13 @@ anchorme({
 	extensions: [
 		// Hashtags
 		{
-			test: /\b#(\w|_)+\b/gi,
+			test: /#(\w|_)+/gi,
 			transform: string =>
 				`<a href="https://a.b?s=${string.substr(1)}">${string}</a>`
 		},
 		// an extension for mentions
 		{
-			test: /\b@(\w|_)+\b/gi,
+			test: /@(\w|_)+/gi,
 			transform: string =>
 				`<a href="https://a.b?p=${string.substr(1)}">${string}</a>`
 		}
