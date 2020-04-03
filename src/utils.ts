@@ -42,7 +42,7 @@ export function isInsideAnchorTag(
 ) {
 	const escapedTarget = target.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
 	const regex = new RegExp(
-		`(?<=(<a))(?!([\\s\\S]*)(<\\/a>)(${escapedTarget}))[\\s\\S]*?(${escapedTarget})(?!"|')`,
+		`(?=(<a))(?!([\\s\\S]*)(<\\/a>)(${escapedTarget}))[\\s\\S]*?(${escapedTarget})(?!"|')`,
 		"gi"
 	);
 	let result: RegExpExecArray | null = null;
