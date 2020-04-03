@@ -100,8 +100,10 @@ const resultA = anchorme({
 	input,
 	options: {
 		// any link will have the attribute "class='link'"
+		// and will be downloaded
 		attributes: {
-			class: "link"
+			class: "link",
+			download: true
 		}
 	}
 });
@@ -112,6 +114,7 @@ const resultB = anchorme({
 		// google links will have "google" class
 		// bing links will have "bing" class
 		// other links will have "other" class
+		// links that end with ".zip" will be downloaded
 		attributes: function(string) {
 			const attributes = {
 				target: "_blank"
@@ -122,6 +125,9 @@ const resultB = anchorme({
 				attributes["class"] = "bing";
 			} else {
 				attributes["class"] = "other";
+			}
+			if (string.endsWith("zip")) {
+				attributes["download"] = true;
 			}
 			return attributes;
 		}
