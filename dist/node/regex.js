@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var dictionary_1 = require("./dictionary");
 var email_address = "([a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
-var domainWithTLD = "(([a-z0-9]+)(([a-z0-9-]+)?)(?<=[a-z0-9])\\.)+(" + dictionary_1.TLDs + ")";
-var domainWithAnyTLD = "([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]";
+var domainWithTLD = "([a-z0-9]+(-+[a-z0-9]+)*\\.)+(" + dictionary_1.TLDs + ")";
+var domainWithAnyTLD = "([a-z0-9]+(-+[a-z0-9]+)*\\.)+([a-z0-9][a-z0-9-]{0," + (Math.max.apply(this, dictionary_1.TLDs.split("|").map(function (x) { return x.length; })) - 2) + "}[a-z0-9])";
 var allowedInPath = "a-zA-Z\\d\\-._~\\!$&*+,;=:@%'\"\\[\\]()";
 var path = "(((\\/(?:(?:[" + allowedInPath + "]+(?:\\/[" + allowedInPath + "]*)*))?)?)((?:\\?([" + allowedInPath + "\\/?]*))?)((?:\\#([" + allowedInPath + "\\/?]*))?))?";
 var ipv4 = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
@@ -17,6 +17,7 @@ exports.email = "\\b(mailto:)?" + email_address + "@(" + domainWithTLD + "|" + i
 exports.url = "(" + nonLatinMatches + ")|(\\b(((" + protocol + ")?(" + domainWithTLD + "|" + ipv4 + "|" + protocol + "(" + ipv6 + "|" + domainWithAnyTLD + "))(?!@\\w)" + port + path + ")|(" + confirmedByProtocol + "))\\b" + additionalSlashes + ")";
 exports.file = "file:\\/\\/\\/([a-z]+:\\/)?([\\w.]+[\\/\\\\]?)+";
 exports.final = exports.url + "|" + exports.email + "|" + exports.file;
+exports.finalRegex = new RegExp(exports.final, "gi");
 // for validation purposes
 exports.ipRegex = new RegExp("^(" + ipv4 + "|" + ipv6 + ")$", "i");
 exports.emailRegex = new RegExp("^(" + exports.email + ")$", "i");

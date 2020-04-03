@@ -4,6 +4,8 @@
 	(global = global || self, global.anchorme = factory());
 }(this, (function () { 'use strict';
 
+	var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
 	function unwrapExports (x) {
 		return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 	}
@@ -63,8 +65,8 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 
 	var email_address = "([a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
-	var domainWithTLD = "(([a-z0-9]+)(([a-z0-9-]+)?)(?<=[a-z0-9])\\.)+(" + dictionary.TLDs + ")";
-	var domainWithAnyTLD = "([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]";
+	var domainWithTLD = "([a-z0-9]+(-+[a-z0-9]+)*\\.)+(" + dictionary.TLDs + ")";
+	var domainWithAnyTLD = "([a-z0-9]+(-+[a-z0-9]+)*\\.)+([a-z0-9][a-z0-9-]{0," + (Math.max.apply(commonjsGlobal, dictionary.TLDs.split("|").map(function (x) { return x.length; })) - 2) + "}[a-z0-9])";
 	var allowedInPath = "a-zA-Z\\d\\-._~\\!$&*+,;=:@%'\"\\[\\]()";
 	var path = "(((\\/(?:(?:[" + allowedInPath + "]+(?:\\/[" + allowedInPath + "]*)*))?)?)((?:\\?([" + allowedInPath + "\\/?]*))?)((?:\\#([" + allowedInPath + "\\/?]*))?))?";
 	var ipv4 = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
@@ -78,6 +80,7 @@
 	exports.url = "(" + nonLatinMatches + ")|(\\b(((" + protocol + ")?(" + domainWithTLD + "|" + ipv4 + "|" + protocol + "(" + ipv6 + "|" + domainWithAnyTLD + "))(?!@\\w)" + port + path + ")|(" + confirmedByProtocol + "))\\b" + additionalSlashes + ")";
 	exports.file = "file:\\/\\/\\/([a-z]+:\\/)?([\\w.]+[\\/\\\\]?)+";
 	exports.final = exports.url + "|" + exports.email + "|" + exports.file;
+	exports.finalRegex = new RegExp(exports.final, "gi");
 	// for validation purposes
 	exports.ipRegex = new RegExp("^(" + ipv4 + "|" + ipv6 + ")$", "i");
 	exports.emailRegex = new RegExp("^(" + exports.email + ")$", "i");
@@ -90,11 +93,12 @@
 	var regex_1 = regex.email;
 	var regex_2 = regex.url;
 	var regex_3 = regex.file;
-	var regex_4 = regex.ipRegex;
-	var regex_5 = regex.emailRegex;
-	var regex_6 = regex.fileRegex;
-	var regex_7 = regex.urlRegex;
-	var regex_8 = regex.protocolPresent;
+	var regex_4 = regex.finalRegex;
+	var regex_5 = regex.ipRegex;
+	var regex_6 = regex.emailRegex;
+	var regex_7 = regex.fileRegex;
+	var regex_8 = regex.urlRegex;
+	var regex_9 = regex.protocolPresent;
 
 	var transform_1 = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -154,8 +158,9 @@
 	        attributes = applyOption(input, options.attributes);
 	    }
 	    return "<a " + Object.keys(attributes)
-	        .filter(function (x) { return typeof attributes[x] !== "undefined"; })
-	        .map(function (key) { return key + "=\"" + attributes[key] + "\" "; })
+	        .map(function (key) {
+	        return attributes[key] === true ? key : key + "=\"" + attributes[key] + "\" ";
+	    })
 	        .join(" ") + "href=\"" + protocol + input + "\">" + (input.length > truncation
 	        ? truncateFromTheMiddle
 	            ? input.substring(0, Math.floor(truncation / 2)) +
@@ -199,7 +204,7 @@
 	exports.isInsideAttribute = isInsideAttribute;
 	function isInsideAnchorTag(target, fullInput, targetEnd) {
 	    var escapedTarget = target.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-	    var regex = new RegExp("(?<=(<a))(?!([\\s\\S]*)(<\\/a>)(" + escapedTarget + "))[\\s\\S]*?(" + escapedTarget + ")(?!\"|')", "gi");
+	    var regex = new RegExp("(?=(<a))(?!([\\s\\S]*)(<\\/a>)(" + escapedTarget + "))[\\s\\S]*?(" + escapedTarget + ")(?!\"|')", "gi");
 	    var result = null;
 	    while ((result = regex.exec(fullInput)) !== null) {
 	        var end = result.index + result[0].length;
@@ -225,7 +230,13 @@
 
 
 	var list = function (input) {
-	    var regex$1 = new RegExp(regex.final, "gi");
+	    // early kill
+	    if (!regex.finalRegex.test(input)) {
+	        return [];
+	    }
+	    else {
+	        regex.finalRegex.lastIndex = 0;
+	    }
 	    var found = [];
 	    var result = null;
 	    var _loop_1 = function () {
@@ -278,7 +289,7 @@
 	            string: string
 	        });
 	    };
-	    while ((result = regex$1.exec(input)) !== null) {
+	    while ((result = regex.finalRegex.exec(input)) !== null) {
 	        _loop_1();
 	    }
 	    return found;
@@ -295,6 +306,8 @@
 	    }
 	    var found = list(input);
 	    var newStr = "";
+	    // the following code isn't very intuitive nor human readable
+	    // but faster than others
 	    for (var index = 0; index < found.length; index++) {
 	        newStr =
 	            (newStr

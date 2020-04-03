@@ -4,7 +4,7 @@ export interface TokenProps {
     string: string;
 }
 export declare type DesiredValues = {
-    [key: string]: string | undefined;
+    [key: string]: string | undefined | true;
 } | number | string | boolean;
 export declare type TransformationOption<desiredValue> = desiredValue | ((props: string) => desiredValue);
 export interface Options {
@@ -17,6 +17,6 @@ export interface Options {
     middleTruncation: TransformationOption<boolean>;
     exclude: TransformationOption<boolean>;
     attributes: TransformationOption<{
-        [key: string]: string | undefined;
+        [key: string]: string | undefined | true;
     }>;
 }

@@ -56,8 +56,9 @@ function transform(input, options) {
         attributes = applyOption(input, options.attributes);
     }
     return "<a " + Object.keys(attributes)
-        .filter(function (x) { return typeof attributes[x] !== "undefined"; })
-        .map(function (key) { return key + "=\"" + attributes[key] + "\" "; })
+        .map(function (key) {
+        return attributes[key] === true ? key : key + "=\"" + attributes[key] + "\" ";
+    })
         .join(" ") + "href=\"" + protocol + input + "\">" + (input.length > truncation
         ? truncateFromTheMiddle
             ? input.substring(0, Math.floor(truncation / 2)) +

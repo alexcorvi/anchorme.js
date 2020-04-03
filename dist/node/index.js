@@ -5,7 +5,13 @@ var regex_1 = require("./regex");
 var transform_1 = require("./transform");
 var utils_1 = require("./utils");
 var list = function (input) {
-    var regex = new RegExp(regex_1.final, "gi");
+    // early kill
+    if (!regex_1.finalRegex.test(input)) {
+        return [];
+    }
+    else {
+        regex_1.finalRegex.lastIndex = 0;
+    }
     var found = [];
     var result = null;
     var _loop_1 = function () {
@@ -58,7 +64,7 @@ var list = function (input) {
             string: string
         });
     };
-    while ((result = regex.exec(input)) !== null) {
+    while ((result = regex_1.finalRegex.exec(input)) !== null) {
         _loop_1();
     }
     return found;
@@ -75,6 +81,8 @@ var anchorme = function (arg) {
     }
     var found = list(input);
     var newStr = "";
+    // the following code isn't very intuitive nor human readable
+    // but faster than others
     for (var index = 0; index < found.length; index++) {
         newStr =
             (newStr
