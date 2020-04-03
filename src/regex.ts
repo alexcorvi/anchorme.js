@@ -20,6 +20,7 @@ export const email = `\\b(mailto:)?${email_address}@(${domainWithTLD}|${ipv4})\\
 export const url = `(${nonLatinMatches})|(\\b(((${protocol})?(${domainWithTLD}|${ipv4}|${protocol}(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port}${path})|(${confirmedByProtocol}))\\b${additionalSlashes})`;
 export const file = `file:\\/\\/\\/([a-z]+:\\/)?([\\w.]+[\\/\\\\]?)+`;
 export const final = `${url}|${email}|${file}`;
+export const finalRegex = new RegExp(final, "gi");
 
 // for validation purposes
 export const ipRegex = new RegExp(`^(${ipv4}|${ipv6})$`, "i");

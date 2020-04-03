@@ -1,15 +1,14 @@
 import { closingParenthesis, parenthesis } from "./dictionary";
-import { emailRegex, fileRegex, final, ipRegex, urlRegex } from "./regex";
+import { emailRegex, fileRegex, finalRegex, ipRegex, urlRegex } from "./regex";
 import { transform } from "./transform";
 import { Options, TokenProps } from "./types";
 import { checkParenthesis as parenthesisIsPartOfTheURL, isInsideAnchorTag, isInsideAttribute, maximumAttrLength } from "./utils";
 
 const list = function(input: string) {
-	const regex = new RegExp(final, "gi");
 	const found: TokenProps[] = [];
 	let result: RegExpExecArray | null = null;
 
-	while ((result = regex.exec(input)) !== null) {
+	while ((result = finalRegex.exec(input)) !== null) {
 		const start = result.index;
 		let end = start + result[0].length;
 		let string = result[0];
