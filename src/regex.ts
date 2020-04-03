@@ -11,7 +11,7 @@ const port = `(:\\d{1,5})?`;
 const protocol = `(https?:|ftps?:)\\/\\/`;
 const confirmedByProtocol = `${protocol}\\S+`;
 const additionalSlashes = `(([\\/]?))+`;
-const nonLatinMatches = `(((${protocol})?${domainWithTLD})|${protocol}${domainWithAnyTLD})((((\\/(?:(?:[${allowedInPath}]+(?:\\/[${allowedInPath}${nonLatinAlphabetRanges}]*)*))?)?)((?:\\?([${allowedInPath}\\/?]*))?)((?:\\#([${allowedInPath}\\/?]*))?))?\\b((([${allowedInPath}\\/${nonLatinAlphabetRanges}][a-zA-Z\\d\\-_~+=\\/${nonLatinAlphabetRanges}]+)?))+)`;
+const nonLatinMatches = `(((${protocol})?${domainWithTLD})|${protocol}${domainWithAnyTLD})(${port})((((\\/(?:(?:[${allowedInPath}]+(?:\\/[${allowedInPath}${nonLatinAlphabetRanges}]*)*))?)?)((?:\\?([${allowedInPath}\\/?]*))?)((?:\\#([${allowedInPath}\\/?]*))?))?\\b((([${allowedInPath}\\/${nonLatinAlphabetRanges}][a-zA-Z\\d\\-_~+=\\/${nonLatinAlphabetRanges}]+)?))+)`;
 
 export const email = `\\b(mailto:)?${email_address}@(${domainWithTLD}|${ipv4})\\b`;
 export const url = `(${nonLatinMatches})|(\\b(((${protocol})?(${domainWithTLD}|${ipv4}|${protocol}(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port}${path})|(${confirmedByProtocol}))\\b${additionalSlashes})`;
