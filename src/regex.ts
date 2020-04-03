@@ -2,7 +2,10 @@ import { nonLatinAlphabetRanges, TLDs } from "./dictionary";
 const email_address =
 	"([a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
 const domainWithTLD = `([a-z0-9]+(-+[a-z0-9]+)*\\.)+(${TLDs})`;
-const domainWithAnyTLD = `([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`;
+const domainWithAnyTLD = `([a-z0-9]+(-+[a-z0-9]+)*\\.)+([a-z0-9][a-z0-9-]{0,${Math.max.apply(
+	this,
+	TLDs.split("|").map(x => x.length)
+) - 2}}[a-z0-9])`;
 const allowedInPath = `a-zA-Z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()`;
 const path = `(((\\/(?:(?:[${allowedInPath}]+(?:\\/[${allowedInPath}]*)*))?)?)((?:\\?([${allowedInPath}\\/?]*))?)((?:\\#([${allowedInPath}\\/?]*))?))?`;
 const ipv4 = `(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`;
