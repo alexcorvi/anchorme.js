@@ -12,7 +12,7 @@ or download the single file compiled version from [the github repository](https:
 ```javascript
 // If you're using NPM/Yarn, then you need
 // to require the library first
-const anchorme = require("anchorme"); // like this
+const anchorme = require("anchorme").default; // like this
 import anchorme from "anchorme"; // or this
 
 // the library will export a single function
@@ -26,24 +26,24 @@ const resultC = anchorme({
 	options: {
 		attributes: {
 			target: "_blank",
-			class: "detected"
-		}
+			class: "detected",
+		},
 	},
 	// and extensions
 	extensions: [
 		// an extension for hashtag search
 		{
 			test: /#(\w|_)+/gi,
-			transform: string =>
-				`<a href="https://a.b?s=${string.substr(1)}">${string}</a>`
+			transform: (string) =>
+				`<a href="https://a.b?s=${string.substr(1)}">${string}</a>`,
 		},
 		// an extension for mentions
 		{
 			test: /@(\w|_)+/gi,
-			transform: string =>
-				`<a href="https://a.b/${string.substr(1)}">${string}</a>`
-		}
-	]
+			transform: (string) =>
+				`<a href="https://a.b/${string.substr(1)}">${string}</a>`,
+		},
+	],
 });
 ```
 
