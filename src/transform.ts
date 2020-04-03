@@ -18,7 +18,7 @@ function applyOption<desiredValueType extends DesiredValues>(
 export function transform(input: string, options?: Partial<Options>): string {
 	let protocol = "";
 	let truncation = Infinity;
-	let attributes: { [key: string]: string | undefined } = {};
+	let attributes: { [key: string]: string | undefined | true } = {};
 	let truncateFromTheMiddle = false;
 
 	// special transformation
@@ -62,8 +62,9 @@ export function transform(input: string, options?: Partial<Options>): string {
 	}
 
 	return `<a ${Object.keys(attributes)
-		.filter(x => typeof attributes[x] !== "undefined")
-		.map(key => `${key}="${attributes[key]}" `)
+		.map(key =>
+			attributes[key] === true ? key : `${key}="${attributes[key]}" `
+		)
 		.join(" ")}href="${protocol}${input}">${
 		input.length > truncation
 			? truncateFromTheMiddle
