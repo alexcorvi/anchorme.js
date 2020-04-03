@@ -107,6 +107,9 @@ const anchorme = function(
 
 	const found = list(input);
 	let newStr = "";
+
+	// the following code isn't very intuitive nor human readable
+	// but faster than others
 	for (let index = 0; index < found.length; index++) {
 		newStr =
 			(newStr
