@@ -5,13 +5,6 @@ var regex_1 = require("./regex");
 var transform_1 = require("./transform");
 var utils_1 = require("./utils");
 var list = function (input) {
-    // early kill
-    if (!regex_1.finalRegex.test(input)) {
-        return [];
-    }
-    else {
-        regex_1.finalRegex.lastIndex = 0;
-    }
     var found = [];
     var result = null;
     var _loop_1 = function () {
