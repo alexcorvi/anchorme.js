@@ -18,27 +18,25 @@ const attributesThatCanHaveURL = [
 	"action",
 	"longdesc",
 	"classid",
-	"archive"
+	"archive",
+	"other",
+	"non-standard",
 ];
 
 describe("UNIT: is inside attribute", () => {
 	describe("Positive", () => {
-		attributesThatCanHaveURL.forEach(attr => {
+		attributesThatCanHaveURL.forEach((attr) => {
 			it(`${attr} with "`, () => {
-				expect(isInsideAttribute(`"`, `${attr}="`)).toBe(true);
+				expect(isInsideAttribute(` ${attr}="`)).toBe(true);
 			});
 			it(`${attr} with '`, () => {
-				expect(isInsideAttribute(`'`, `${attr}='`)).toBe(true);
+				expect(isInsideAttribute(` ${attr}='`)).toBe(true);
 			});
 		});
 	});
 	describe("Negative", () => {
 		it("not preceded with a quote", () => {
-			expect(isInsideAttribute("'", `src=`)).toBe(false);
-		});
-
-		it("not not an attribute", () => {
-			expect(isInsideAttribute("'", `abc='`)).toBe(false);
+			expect(isInsideAttribute(` src=`)).toBe(false);
 		});
 	});
 });
