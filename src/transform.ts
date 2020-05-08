@@ -1,13 +1,18 @@
-import { emailRegex, fileRegex, ipRegex, protocolPresent } from "./regex";
-import { DesiredValues, Options, TokenProps, TransformationOption } from "./types";
+import {
+	DesiredValues,
+	Options,
+	TransformationOption,
+	ListingProps,
+} from "./types";
 
 function applyOption<desiredValueType extends DesiredValues>(
-	tokenProps: string,
+	string: string,
+	props: Partial<ListingProps> & { string: string },
 	option: TransformationOption<desiredValueType>
 ): desiredValueType {
 	// conditional
 	if (typeof option === "function") {
-		return option(tokenProps);
+		return option(string, props);
 	}
 	// all
 	else {
@@ -15,7 +20,10 @@ function applyOption<desiredValueType extends DesiredValues>(
 	}
 }
 
-export function transform(input: string, options?: Partial<Options>): string {
+export function transform(
+	input: Partial<ListingProps> & { string: string },
+	options?: Partial<Options>
+): string {
 	let protocol = "";
 	let truncation = Infinity;
 	let attributes: { [key: string]: string | undefined | true } = {};
@@ -25,56 +33,61 @@ export function transform(input: string, options?: Partial<Options>): string {
 	if (options && options.specialTransform) {
 		for (let index = 0; index < options.specialTransform.length; index++) {
 			const transformer = options.specialTransform[index];
-			if (transformer.test.test(input)) {
-				return transformer.transform(input);
+			if (transformer.test.test(input.string)) {
+				return transformer.transform(input.string, input);
 			}
 		}
 	}
 	// exclude
 	if (options && options.exclude) {
-		if (applyOption(input, options.exclude)) return input;
+		if (applyOption(input.string, input, options.exclude))
+			return input.string;
 	}
 
 	// protocol
 	if (options && options.protocol) {
-		protocol = applyOption(input, options.protocol);
+		protocol = applyOption(input.string, input, options.protocol);
 	}
-	if (protocolPresent.test(input)) {
+	if (input.protocol) {
 		protocol = "";
 	} else if (!protocol) {
-		protocol = emailRegex.test(input)
+		protocol = input.isEmail
 			? "mailto:"
-			: fileRegex.test(input)
+			: input.isFile
 			? "file:///"
 			: "http://";
 	}
 
 	// truncation
 	if (options && options.truncate) {
-		truncation = applyOption(input, options.truncate);
+		truncation = applyOption(input.string, input, options.truncate);
 	}
 	if (options && options.middleTruncation) {
-		truncateFromTheMiddle = applyOption(input, options.middleTruncation);
+		truncateFromTheMiddle = applyOption(
+			input.string,
+			input,
+			options.middleTruncation
+		);
 	}
 	// attributes
 	if (options && options.attributes) {
-		attributes = applyOption(input, options.attributes);
+		attributes = applyOption(input.string, input, options.attributes);
 	}
 
 	return `<a ${Object.keys(attributes)
-		.map(key =>
+		.map((key) =>
 			attributes[key] === true ? key : `${key}="${attributes[key]}" `
 		)
-		.join(" ")}href="${protocol}${input}">${
-		input.length > truncation
+		.join(" ")}href="${protocol}${input.string}">${
+		input.string.length > truncation
 			? truncateFromTheMiddle
-				? input.substring(0, Math.floor(truncation / 2)) +
+				? input.string.substring(0, Math.floor(truncation / 2)) +
 				  "…" +
-				  input.substring(
-						input.length - Math.ceil(truncation / 2),
-						input.length
+				  input.string.substring(
+						input.string.length - Math.ceil(truncation / 2),
+						input.string.length
 				  )
-				: input.substring(0, truncation) + "…"
-			: input
+				: input.string.substring(0, truncation) + "…"
+			: input.string
 	}</a>`;
 }

@@ -8,7 +8,7 @@ function vanilla(input: string) {
 
 describe("UNIT: transform", () => {
 	it("vanilla transformation", () => {
-		const transformRes = transform("X");
+		const transformRes = transform({ string: "X" });
 		expect(transformRes).toBe(vanilla("X"));
 	});
 	describe("Applying options", () => {
@@ -17,40 +17,46 @@ describe("UNIT: transform", () => {
 				specialTransform: [
 					{
 						test: /a/,
-						transform: () => "X"
+						transform: () => "X",
 					},
 					{
 						test: /b/,
-						transform: () => "Y"
-					}
-				]
+						transform: () => "Y",
+					},
+				],
 			};
 			describe("Special transformation should apply", () => {
-				it("a", () => expect(transform("a", options)).toBe("X"));
-				it("b", () => expect(transform("b", options)).toBe("Y"));
-				it("ab", () => expect(transform("ab", options)).toBe("X"));
-				it("fffa", () => expect(transform("fffa", options)).toBe("X"));
-				it("fffb", () => expect(transform("fffb", options)).toBe("Y"));
+				it("a", () =>
+					expect(transform({ string: "a" }, options)).toBe("X"));
+				it("b", () =>
+					expect(transform({ string: "b" }, options)).toBe("Y"));
+				it("ab", () =>
+					expect(transform({ string: "ab" }, options)).toBe("X"));
+				it("fffa", () =>
+					expect(transform({ string: "fffa" }, options)).toBe("X"));
+				it("fffb", () =>
+					expect(transform({ string: "fffb" }, options)).toBe("Y"));
 			});
 			describe("Special transformation should not apply", () => {
 				it("c", () => {
-					const transformRes = transform("c", options);
+					const transformRes = transform({ string: "c" }, options);
 					expect(transformRes).toBe(vanilla("c"));
 				});
 			});
 		});
 		describe("truncation", () => {
 			const optionsAll: Partial<Options> = {
-				truncate: 10
+				truncate: 10,
 			};
 			const optionsConditional: Partial<Options> = {
-				truncate: string => (string.startsWith("abc") ? 10 : Infinity)
+				truncate: (string) =>
+					string.startsWith("abc") ? 10 : Infinity,
 			};
 
 			describe("truncation options / all", () => {
 				it("Should truncate", () => {
 					const transformRes = transform(
-						"aaaaaaaaaaaaaaaaaaaaaaaaaa",
+						{ string: "aaaaaaaaaaaaaaaaaaaaaaaaaa" },
 						optionsAll
 					);
 					expect(transformRes).not.toBe(
@@ -59,7 +65,10 @@ describe("UNIT: transform", () => {
 					expect(transformRes.indexOf("…")).toBeGreaterThan(10);
 				});
 				it("should not truncate", () => {
-					const transformRes = transform("aaaaaaaaa", optionsAll);
+					const transformRes = transform(
+						{ string: "aaaaaaaaa" },
+						optionsAll
+					);
 					expect(transformRes).toBe(vanilla("aaaaaaaaa"));
 					expect(transformRes.indexOf("…")).toBe(-1);
 				});
@@ -68,7 +77,7 @@ describe("UNIT: transform", () => {
 			describe("truncation options / conditional", () => {
 				it("Should truncate / starts with abc", () => {
 					const transformRes = transform(
-						"abc1234567890abc",
+						{ string: "abc1234567890abc" },
 						optionsConditional
 					);
 					expect(transformRes).not.toBe(vanilla("abc1234567890abc"));
@@ -78,14 +87,17 @@ describe("UNIT: transform", () => {
 				});
 				it("should not truncate / does not start with abc", () => {
 					const transformRes = transform(
-						"1234567890abcabc",
+						{ string: "1234567890abcabc" },
 						optionsConditional
 					);
 					expect(transformRes).toBe(vanilla("1234567890abcabc"));
 					expect(transformRes.indexOf("…")).toBe(-1);
 				});
 				it("should not truncate / less than specified length", () => {
-					const transformRes = transform("abc12", optionsConditional);
+					const transformRes = transform(
+						{ string: "abc12" },
+						optionsConditional
+					);
 					expect(transformRes).toBe(vanilla("abc12"));
 					expect(transformRes.indexOf("…")).toBe(-1);
 				});
@@ -94,16 +106,19 @@ describe("UNIT: transform", () => {
 		describe("middle truncation", () => {
 			const optionsAll: Partial<Options> = {
 				truncate: 6,
-				middleTruncation: true
+				middleTruncation: true,
 			};
 			const optionsConditional: Partial<Options> = {
 				truncate: 6,
-				middleTruncation: string => string.startsWith("aaa")
+				middleTruncation: (string) => string.startsWith("aaa"),
 			};
 
 			describe("middle truncation options / all", () => {
 				it("Should be middle", () => {
-					const transformRes = transform("aaaaaaaaaa", optionsAll);
+					const transformRes = transform(
+						{ string: "aaaaaaaaaa" },
+						optionsAll
+					);
 					expect(transformRes).not.toBe(vanilla("aaaaaaaaaa"));
 					expect(transformRes.indexOf("aa…aa")).toBeGreaterThan(-1);
 				});
@@ -112,7 +127,7 @@ describe("UNIT: transform", () => {
 			describe("middle truncation options / conditional", () => {
 				it("Should be middle / starts with aaa", () => {
 					const transformRes = transform(
-						"aaaaaaaaaa",
+						{ string: "aaaaaaaaa" },
 						optionsConditional
 					);
 					expect(transformRes).not.toBe(vanilla("aaaaaaaaaa"));
@@ -120,7 +135,7 @@ describe("UNIT: transform", () => {
 				});
 				it("should not be middle / does not start with aaa", () => {
 					const transformRes = transform(
-						"0aaaaaaaaaaaa",
+						{ string: "0aaaaaaaaaaaa" },
 						optionsConditional
 					);
 					expect(transformRes.indexOf("aa…aa")).toBe(-1);
@@ -129,22 +144,28 @@ describe("UNIT: transform", () => {
 		});
 		describe("exclusion", () => {
 			const optionsAllTrue: Partial<Options> = {
-				exclude: true
+				exclude: true,
 			};
 			const optionsAllFalse: Partial<Options> = {
-				exclude: false
+				exclude: false,
 			};
 			const optionsConditional: Partial<Options> = {
-				exclude: string => (string.startsWith("a") ? true : false)
+				exclude: (string) => (string.startsWith("a") ? true : false),
 			};
 
 			describe("exclusion options / all", () => {
 				it("Should exclude everything", () => {
-					const transformRes = transform("aaaa", optionsAllTrue);
+					const transformRes = transform(
+						{ string: "aaaa" },
+						optionsAllTrue
+					);
 					expect(transformRes).toBe("aaaa");
 				});
 				it("Should exclude nothing", () => {
-					const transformRes = transform("aaaa", optionsAllFalse);
+					const transformRes = transform(
+						{ string: "aaaa" },
+						optionsAllFalse
+					);
 					expect(transformRes).toBe(vanilla("aaaa"));
 				});
 			});
@@ -152,14 +173,14 @@ describe("UNIT: transform", () => {
 			describe("exclusion options / conditional", () => {
 				it("Should exclude / starts with a", () => {
 					const transformRes = transform(
-						"abc1234567890abc",
+						{ string: "abc1234567890abc" },
 						optionsConditional
 					);
 					expect(transformRes).toBe("abc1234567890abc");
 				});
 				it("should not exclude / does not start a", () => {
 					const transformRes = transform(
-						"bc1234567890abc",
+						{ string: "bc1234567890abc" },
 						optionsConditional
 					);
 					expect(transformRes).toBe(vanilla("bc1234567890abc"));
@@ -171,22 +192,25 @@ describe("UNIT: transform", () => {
 			const optionsAll: Partial<Options> = {
 				attributes: {
 					a: "b",
-					x: "y"
-				}
+					x: "y",
+				},
 			};
 			const optionsConditional: Partial<Options> = {
-				attributes: string =>
+				attributes: (string) =>
 					string.startsWith("a")
 						? {
 								a: "b",
-								x: "y"
+								x: "y",
 						  }
-						: {}
+						: {},
 			};
 
 			describe("attributes options / all", () => {
 				it("Should add attributes", () => {
-					const transformRes = transform("link", optionsAll);
+					const transformRes = transform(
+						{ string: "link" },
+						optionsAll
+					);
 					expect(transformRes).not.toBe(vanilla("link"));
 					expect(transformRes.indexOf(`a="b"`)).toBeGreaterThan(-1);
 					expect(transformRes.indexOf(`x="y"`)).toBeGreaterThan(-1);
@@ -195,13 +219,19 @@ describe("UNIT: transform", () => {
 
 			describe("attributes options / conditional", () => {
 				it("Should add attributes / starts with a", () => {
-					const transformRes = transform("alink", optionsConditional);
+					const transformRes = transform(
+						{ string: "alink" },
+						optionsConditional
+					);
 					expect(transformRes).not.toBe(vanilla("alink"));
 					expect(transformRes.indexOf(`a="b"`)).toBeGreaterThan(-1);
 					expect(transformRes.indexOf(`x="y"`)).toBeGreaterThan(-1);
 				});
 				it("should not add attributes / does not start a", () => {
-					const transformRes = transform("link", optionsConditional);
+					const transformRes = transform(
+						{ string: "link" },
+						optionsConditional
+					);
 					expect(transformRes).toBe(vanilla("link"));
 					expect(transformRes.indexOf(`a="b"`)).toBe(-1);
 					expect(transformRes.indexOf(`x="y"`)).toBe(-1);

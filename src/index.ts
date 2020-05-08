@@ -1,11 +1,23 @@
 import { closingParenthesis, parenthesis } from "./dictionary";
-import { emailRegex, fileRegex, finalRegex, ipRegex, urlRegex } from "./regex";
 import { transform } from "./transform";
-import { Options, TokenProps } from "./types";
-import { checkParenthesis as parenthesisIsPartOfTheURL, isInsideAnchorTag, isInsideAttribute, maximumAttrLength } from "./utils";
+import { ListingProps, Options } from "./types";
+import {
+	emailRegex,
+	fileRegex,
+	finalRegex,
+	ipRegex,
+	urlRegex,
+	iidxes,
+} from "./regex";
+import {
+	checkParenthesis as parenthesisIsPartOfTheURL,
+	isInsideAnchorTag,
+	isInsideAttribute,
+	maximumAttrLength,
+} from "./utils";
 
-const list = function(input: string) {
-	const found: TokenProps[] = [];
+const list = function (input: string) {
+	const found: ListingProps[] = [];
 	let result: RegExpExecArray | null = null;
 
 	while ((result = finalRegex.exec(input)) !== null) {
@@ -13,7 +25,19 @@ const list = function(input: string) {
 		let end = start + result[0].length;
 		let string = result[0];
 
-		// Parenthesis problem
+		// ### trailing slashes problem
+		/**
+		 * This is a quick and dirty fix for a problem that could be probably fixed with
+		 * slight modification in the regex.
+		 * The problem is that the library doesn't count the trailing slashes as part
+		 * of the URL, unless there were multiple trailing slashes.
+		 */
+		if (input.charAt(end) === "/") {
+			string = string + input.charAt(end);
+			end++;
+		}
+
+		// ### Parenthesis problem
 		/**
 				As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
 				and sometimes they are actually the last part, this makes the tokenization stops just
@@ -23,7 +47,7 @@ const list = function(input: string) {
 				parenthesis character is part of the URL or not
 			*/
 		if (closingParenthesis.indexOf(input.charAt(end)) > -1) {
-			parenthesis.forEach(str => {
+			parenthesis.forEach((str) => {
 				const opening = str.charAt(0);
 				const closing = str.charAt(1);
 				if (
@@ -40,7 +64,7 @@ const list = function(input: string) {
 			});
 		}
 
-		// HTML problem 1
+		// ### HTML problem 1
 		/**
 				checking whether the token is already inside an HTML element by seeing if it's
 				preceded by an HTML attribute that would hold a url (e.g. scr, cite ...etc)
@@ -59,7 +83,7 @@ const list = function(input: string) {
 			}
 		}
 
-		// HTML problem 2
+		// ### HTML problem 2
 		/**
 				Checking whether the token is the content of an actual anchor
 				e.g. <a href="https://something.com">click to go to something.com and have fun</a>
@@ -73,16 +97,72 @@ const list = function(input: string) {
 			continue;
 		}
 
-		found.push({
-			start,
-			end,
-			string
-		});
+		if (result[iidxes.isURL]) {
+			const path =
+				(result[iidxes.url.path] || "") +
+					(result[iidxes.url.secondPartOfPath] || "") || undefined;
+			const protocol =
+				result[iidxes.url.protocol1] ||
+				result[iidxes.url.protocol2] ||
+				result[iidxes.url.protocol3];
+			found.push({
+				start,
+				end,
+				string,
+				isURL: true,
+				protocol: protocol,
+				port: result[iidxes.url.port],
+				ipv4: result[iidxes.url.ipv4Confirmation]
+					? result[iidxes.url.ipv4]
+					: undefined,
+				ipv6: result[iidxes.url.ipv6],
+				host: result[iidxes.url.byProtocol]
+					? undefined
+					: (result[iidxes.url.protocolWithDomain] || "").substr(
+							(protocol || "").length
+					  ),
+				confirmedByProtocol: !!result[iidxes.url.byProtocol],
+				path: result[iidxes.url.byProtocol] ? undefined : path,
+				query: result[iidxes.url.query] || undefined,
+				fragment: result[iidxes.url.fragment] || undefined,
+			});
+		} else if (result[iidxes.isFile]) {
+			const filePath = string.substr(8);
+			found.push({
+				start,
+				end,
+				string,
+				isFile: true,
+				protocol: result[iidxes.file.protocol],
+				filename: result[iidxes.file.fileName],
+				filePath,
+				fileDirectory: filePath.substr(
+					0,
+					filePath.length - result[iidxes.file.fileName].length
+				),
+			});
+		} else if (result[iidxes.isEmail]) {
+			found.push({
+				start,
+				end,
+				string,
+				isEmail: true,
+				local: result[iidxes.email.local],
+				protocol: result[iidxes.email.protocol],
+				host: result[iidxes.email.host],
+			});
+		} else {
+			found.push({
+				start,
+				end,
+				string,
+			});
+		}
 	}
 	return found;
 };
 
-const anchorme = function(
+const anchorme = function (
 	arg:
 		| string
 		| {
@@ -117,7 +197,7 @@ const anchorme = function(
 				: index === 0
 				? input.substring(0, found[index].start)
 				: "") +
-			transform(found[index].string, options) +
+			transform(found[index], options) +
 			(found[index + 1]
 				? input.substring(found[index].end, found[index + 1].start)
 				: input.substring(found[index].end));
@@ -125,7 +205,7 @@ const anchorme = function(
 	return newStr ? newStr : input;
 };
 
-anchorme.list = function(input: string) {
+anchorme.list = function (input: string) {
 	return list(input);
 };
 
@@ -133,7 +213,7 @@ anchorme.validate = {
 	ip: (input: string) => ipRegex.test(input),
 	email: (input: string) => emailRegex.test(input),
 	file: (input: string) => fileRegex.test(input),
-	url: (input: string) => urlRegex.test(input) || ipRegex.test(input)
+	url: (input: string) => urlRegex.test(input) || ipRegex.test(input),
 };
 
 export default anchorme;

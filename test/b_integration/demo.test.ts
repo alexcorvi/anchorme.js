@@ -34,7 +34,7 @@ const snapshot = [
 	"email@sub.domain.com",
 	"email@ex.co.jp",
 	"email@123.123.123.123",
-	"file:///c:/somefile.zip"
+	"file:///c:/somefile.zip",
 ];
 describe("Demo testing: should be the same as snapshot", () => {
 	anchorme.list(input).forEach((res, index) => {
@@ -43,3 +43,5 @@ describe("Demo testing: should be the same as snapshot", () => {
 		});
 	});
 });
+
+// TODO: update this to the latest demo

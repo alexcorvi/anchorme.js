@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var regex_1 = require("./regex");
-function applyOption(tokenProps, option) {
+function applyOption(string, props, option) {
     // conditional
     if (typeof option === "function") {
-        return option(tokenProps);
+        return option(string, props);
     }
     // all
     else {
@@ -20,51 +19,51 @@ function transform(input, options) {
     if (options && options.specialTransform) {
         for (var index = 0; index < options.specialTransform.length; index++) {
             var transformer = options.specialTransform[index];
-            if (transformer.test.test(input)) {
-                return transformer.transform(input);
+            if (transformer.test.test(input.string)) {
+                return transformer.transform(input.string, input);
             }
         }
     }
     // exclude
     if (options && options.exclude) {
-        if (applyOption(input, options.exclude))
-            return input;
+        if (applyOption(input.string, input, options.exclude))
+            return input.string;
     }
     // protocol
     if (options && options.protocol) {
-        protocol = applyOption(input, options.protocol);
+        protocol = applyOption(input.string, input, options.protocol);
     }
-    if (regex_1.protocolPresent.test(input)) {
+    if (input.protocol) {
         protocol = "";
     }
     else if (!protocol) {
-        protocol = regex_1.emailRegex.test(input)
+        protocol = input.isEmail
             ? "mailto:"
-            : regex_1.fileRegex.test(input)
+            : input.isFile
                 ? "file:///"
                 : "http://";
     }
     // truncation
     if (options && options.truncate) {
-        truncation = applyOption(input, options.truncate);
+        truncation = applyOption(input.string, input, options.truncate);
     }
     if (options && options.middleTruncation) {
-        truncateFromTheMiddle = applyOption(input, options.middleTruncation);
+        truncateFromTheMiddle = applyOption(input.string, input, options.middleTruncation);
     }
     // attributes
     if (options && options.attributes) {
-        attributes = applyOption(input, options.attributes);
+        attributes = applyOption(input.string, input, options.attributes);
     }
     return "<a " + Object.keys(attributes)
         .map(function (key) {
         return attributes[key] === true ? key : key + "=\"" + attributes[key] + "\" ";
     })
-        .join(" ") + "href=\"" + protocol + input + "\">" + (input.length > truncation
+        .join(" ") + "href=\"" + protocol + input.string + "\">" + (input.string.length > truncation
         ? truncateFromTheMiddle
-            ? input.substring(0, Math.floor(truncation / 2)) +
+            ? input.string.substring(0, Math.floor(truncation / 2)) +
                 "…" +
-                input.substring(input.length - Math.ceil(truncation / 2), input.length)
-            : input.substring(0, truncation) + "…"
-        : input) + "</a>";
+                input.string.substring(input.string.length - Math.ceil(truncation / 2), input.string.length)
+            : input.string.substring(0, truncation) + "…"
+        : input.string) + "</a>";
 }
 exports.transform = transform;

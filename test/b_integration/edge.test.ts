@@ -2,24 +2,24 @@ import anchorme from "../../dist/node";
 import * as expect from "expect";
 
 const polluting = [
-	(string: string) => `here it is:${string}, have a go at it`,
-	(string: string) => `here it is: ${string} , have a go at it`,
-	(string: string) => `here it is ${string},, have a go at it`,
-	(string: string) => `here it is ${string}; have a go at it`,
-	(string: string) => `here it is ${string}. have a go at it`
+	(string: string) => `pollution:${string}, pollution ends`,
+	(string: string) => `pollution: ${string} , pollution ends`,
+	(string: string) => `pollution ${string},, pollution ends`,
+	(string: string) => `pollution ${string}; pollution ends`,
+	(string: string) => `pollution ${string}. pollution ends`,
 ];
 
 const insideParenthesis = `()|[]|""|''|<>|{}`
 	.split("|")
-	.map(x => (string: string) => `${x[0]}${string}${x[1]}`);
+	.map((x) => (string: string) => `${x[0]}${string}${x[1]}`);
 
 const surroundedWithPunctuation = `’':,!.«»?‘’“”&*`
 	.split("")
-	.map(x => (string: string) => `${x}${string}${x}`);
+	.map((x) => (string: string) => `${x}${string}${x}`);
 
 const endsWithParenthesis = `()|[]|""|''`
 	.split("|")
-	.map(x => (string: string) => `${string}/a_${x[0]}b${x[1]}`);
+	.map((x) => (string: string) => `${string}/a_${x[0]}b${x[1]}`);
 
 const AddingNonEnglishAlphabets = [
 	(string: string) => `${string}/რომის`,
@@ -31,7 +31,7 @@ const AddingNonEnglishAlphabets = [
 	(string: string) => `${string}/abcრომის_პაპი`,
 	(string: string) => `${string}/რომის_პაპი/`,
 	(string: string) => `${string}/რ/რ/რ`,
-	(string: string) => `${string}/რ_(რ)`
+	(string: string) => `${string}/რ_(რ)`,
 ];
 
 function putInsideHTMLAttribute(string: string) {
@@ -68,7 +68,7 @@ describe("Edge cases testing", () => {
 		});
 
 		describe("Polluted", () => {
-			polluting.forEach(func => {
+			polluting.forEach((func) => {
 				const polluted = func(str);
 				const res = anchorme.list(polluted);
 				describe(polluted, () => {
@@ -86,7 +86,7 @@ describe("Edge cases testing", () => {
 		});
 
 		describe("Inside Parenthesis", () => {
-			insideParenthesis.forEach(func => {
+			insideParenthesis.forEach((func) => {
 				const inside = func(str);
 				const res = anchorme.list(inside);
 				describe(inside, () => {
@@ -104,8 +104,8 @@ describe("Edge cases testing", () => {
 		});
 
 		describe("Inside Parenthesis and polluted", () => {
-			insideParenthesis.forEach(pa => {
-				polluting.forEach(po => {
+			insideParenthesis.forEach((pa) => {
+				polluting.forEach((po) => {
 					const insideParen = pa(str);
 					const pollutedAndInside = po(insideParen);
 					const res = anchorme.list(pollutedAndInside);
@@ -129,9 +129,9 @@ describe("Edge cases testing", () => {
 		});
 
 		describe("Inside Parenthesis and polluted and ending with parenthesis", () => {
-			insideParenthesis.forEach(inside => {
-				polluting.forEach(pollute => {
-					endsWithParenthesis.forEach(end => {
+			insideParenthesis.forEach((inside) => {
+				polluting.forEach((pollute) => {
+					endsWithParenthesis.forEach((end) => {
 						let sameParen = false;
 						const endsWithParenthesis = end(str);
 						const endingChar = endsWithParenthesis.charAt(
@@ -185,7 +185,7 @@ describe("Edge cases testing", () => {
 		});
 
 		describe("Surrounded with punctuation", () => {
-			surroundedWithPunctuation.forEach(func => {
+			surroundedWithPunctuation.forEach((func) => {
 				const surrounded = func(str);
 				const res = anchorme.list(surrounded);
 				describe(surrounded, () => {
@@ -203,7 +203,7 @@ describe("Edge cases testing", () => {
 		});
 
 		describe("Ends with parenthesis", () => {
-			endsWithParenthesis.forEach(func => {
+			endsWithParenthesis.forEach((func) => {
 				const endsWithParenthesis = func(str);
 				const closingChar = endsWithParenthesis.charAt(
 					endsWithParenthesis.length - 1
@@ -228,7 +228,7 @@ describe("Edge cases testing", () => {
 		});
 
 		describe("Non english alphabets added", () => {
-			AddingNonEnglishAlphabets.forEach(func => {
+			AddingNonEnglishAlphabets.forEach((func) => {
 				const withNonEnglish = func(str);
 				const closingChar = withNonEnglish.charAt(
 					withNonEnglish.length - 1
@@ -253,8 +253,8 @@ describe("Edge cases testing", () => {
 
 	describe("having the email local address as a valid domain name", () => {
 		const str = `me.com@gmail.com`;
-		polluting.forEach(p => {
-			it(p(str), () => {
+		polluting.forEach((p) => {
+			it(str + " (polluted)", () => {
 				expect(anchorme(p(str))).toBe(
 					p(`<a href="mailto:${str}">${str}</a>`)
 				);
@@ -266,7 +266,7 @@ describe("Edge cases testing", () => {
 		const email = "mailto:alex@yahoo.com";
 		const url = "http://127.2.2.1/query";
 		describe("Should be found when not in query", () => {
-			polluting.forEach(p => {
+			polluting.forEach((p) => {
 				const pollutedEmail = p(email);
 				const pollutedURL = p(url);
 				it(pollutedEmail, () => {
@@ -293,8 +293,8 @@ describe("Edge cases testing", () => {
 	describe("Invalid TLDs", () => {
 		const link = `www.usinginvalidtld.inherE`;
 		describe("Are invalid when not using protocol", () => {
-			polluting.forEach(po => {
-				AddingNonEnglishAlphabets.forEach(nonEn => {
+			polluting.forEach((po) => {
+				AddingNonEnglishAlphabets.forEach((nonEn) => {
 					const polluted = po(link);
 					const nonEnglish = nonEn(link);
 					const nonEnglishAndPolluted = po(nonEnglish);
@@ -321,8 +321,8 @@ describe("Edge cases testing", () => {
 		});
 
 		describe("Are valid when using protocol", () => {
-			polluting.forEach(po => {
-				AddingNonEnglishAlphabets.forEach(nonEn => {
+			polluting.forEach((po) => {
+				AddingNonEnglishAlphabets.forEach((nonEn) => {
 					const withProtocol = "Http://" + link;
 					const polluted = po(withProtocol);
 					const nonEnglish = nonEn(withProtocol);
@@ -393,7 +393,7 @@ describe("Edge cases testing", () => {
 				"Aub.mkyong-info.com",
 				"Akyong.com.au",
 				"A.co",
-				"Akyong.t.t.co"
+				"Akyong.t.t.co",
 			],
 			invalid: [
 				"mkyong,com",
@@ -403,20 +403,20 @@ describe("Edge cases testing", () => {
 				".com",
 				"mkyong-.com",
 				"sub.mkyong-.com",
-				"ab:3000"
-			]
+				"ab:3000",
+			],
 		};
 
 		describe("Valid domain names", () => {
 			edgeDomainNames.valid
-				.map(x => x + "/some-patH")
-				.forEach(validURL => {
+				.map((x) => x + "/some-patH")
+				.forEach((validURL) => {
 					it(validURL + " should be valid", () => {
 						expect(anchorme(validURL)).toBe(
 							`<a href="http://${validURL}">${validURL}</a>`
 						);
 					});
-					polluting.forEach(po => {
+					polluting.forEach((po) => {
 						const polluted = po(validURL);
 						it(polluted + " should be valid", () => {
 							expect(anchorme(polluted)).toBe(
@@ -431,8 +431,8 @@ describe("Edge cases testing", () => {
 
 		describe("invalid domain names", () => {
 			edgeDomainNames.invalid
-				.map(x => x + "/some-patH")
-				.forEach(invalidURL => {
+				.map((x) => x + "/some-patH")
+				.forEach((invalidURL) => {
 					it(invalidURL + " should be invalid", () => {
 						expect(anchorme(invalidURL)).toBe(invalidURL);
 					});
@@ -442,9 +442,9 @@ describe("Edge cases testing", () => {
 
 	describe("Non english alphabets", () => {
 		const base = "wikipedia.com";
-		AddingNonEnglishAlphabets.forEach(addingFunc => {
+		AddingNonEnglishAlphabets.forEach((addingFunc) => {
 			const nonEnglishAdded = addingFunc(base);
-			polluting.forEach(p => {
+			polluting.forEach((p) => {
 				const polluted = p(nonEnglishAdded);
 				it(polluted, () => {
 					expect(anchorme(polluted)).toBe(
@@ -462,11 +462,11 @@ describe("Edge cases testing", () => {
 			"http://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws",
 			"http://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws/someting",
 			"https://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws",
-			"https://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws/someting/"
+			"https://🐌🍏⌚✨😐😍🐸🍑.🍕💩.ws/someting/",
 		];
 
-		links.forEach(x => {
-			polluting.forEach(p => {
+		links.forEach((x) => {
+			polluting.forEach((p) => {
 				it(p(x), () => {
 					expect(anchorme(p(x))).toBe(p(`<a href="${x}">${x}</a>`));
 				});
@@ -479,11 +479,11 @@ describe("Edge cases testing", () => {
 			`<img src='http://dummyimage.com/50'>`,
 			`<img src='http://dummyimage.com/50'> google.com`,
 			`google.com <a href='http://dummyimage.com/50/a'></a> google.com`,
-			`google.com <form formaction='http://dummyimage.com/50/a'></form> google.com google.com`
+			`google.com <form formaction='http://dummyimage.com/50/a'></form> google.com google.com`,
 		];
 
 		strings.forEach((string, index) => {
-			polluting.forEach(p => {
+			polluting.forEach((p) => {
 				const target = p(string);
 				it(target, () => {
 					expect(anchorme.list(target).length).toBe(index);

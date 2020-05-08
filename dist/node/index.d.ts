@@ -1,4 +1,4 @@
-import { Options, TokenProps } from "./types";
+import { ListingProps, Options } from "./types";
 declare const anchorme: {
     (arg: string | {
         input: string;
@@ -8,7 +8,7 @@ declare const anchorme: {
             transform: (string: string) => string;
         }[] | undefined;
     }): string;
-    list(input: string): TokenProps[];
+    list(input: string): ListingProps[];
     validate: {
         ip: (input: string) => boolean;
         email: (input: string) => boolean;

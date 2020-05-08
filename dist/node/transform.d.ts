@@ -1,2 +1,4 @@
-import { Options } from "./types";
-export declare function transform(input: string, options?: Partial<Options>): string;
+import { Options, ListingProps } from "./types";
+export declare function transform(input: Partial<ListingProps> & {
+    string: string;
+}, options?: Partial<Options>): string;
