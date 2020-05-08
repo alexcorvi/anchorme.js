@@ -30,3 +30,7 @@ Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / 
     -   Processing H.G. Wells novel, the time machine, took only 100 milliseconds.
     -   This library is also faster than other alternatives (linkify & autolinker). [Link to benchmark](https://alexcorvi.github.io/anchorme.js/benchmark.html)
 -   **Light Weight**: Although it's a feature rich library with a full IANA list included, it's only **9KB** when minified and GZipped.
+
+---
+
+-   [React component by Pavel Potáček](https://github.com/potty/react-anchorme)
