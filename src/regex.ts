@@ -30,7 +30,6 @@ export const ipRegex = new RegExp(`^(${ipv4}|${ipv6})$`, "i");
 export const emailRegex = new RegExp(`^(${email})$`, "i");
 export const fileRegex = new RegExp(`^(${file})$`, "i");
 export const urlRegex = new RegExp(`^(${url})$`, "i");
-export const protocolPresent = /^((file:\/\/\/)|(https?:|ftps?:)\/\/|(mailto:))/i;
 
 // identifying parts of the link
 const iidxes = {
