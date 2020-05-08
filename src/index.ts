@@ -125,6 +125,7 @@ const list = function (input: string) {
 				path: result[iidxes.url.byProtocol] ? undefined : path,
 				query: result[iidxes.url.query] || undefined,
 				fragment: result[iidxes.url.fragment] || undefined,
+				reason: "url",
 			});
 		} else if (result[iidxes.isFile]) {
 			const filePath = string.substr(8);
@@ -140,6 +141,7 @@ const list = function (input: string) {
 					0,
 					filePath.length - result[iidxes.file.fileName].length
 				),
+				reason: "file",
 			});
 		} else if (result[iidxes.isEmail]) {
 			found.push({
@@ -150,12 +152,14 @@ const list = function (input: string) {
 				local: result[iidxes.email.local],
 				protocol: result[iidxes.email.protocol],
 				host: result[iidxes.email.host],
+				reason: "email",
 			});
 		} else {
 			found.push({
 				start,
 				end,
 				string,
+				reason: "unknown",
 			});
 		}
 	}
