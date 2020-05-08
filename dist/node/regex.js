@@ -24,7 +24,6 @@ exports.ipRegex = new RegExp("^(" + ipv4 + "|" + ipv6 + ")$", "i");
 exports.emailRegex = new RegExp("^(" + exports.email + ")$", "i");
 exports.fileRegex = new RegExp("^(" + exports.file + ")$", "i");
 exports.urlRegex = new RegExp("^(" + exports.url + ")$", "i");
-exports.protocolPresent = /^((file:\/\/\/)|(https?:|ftps?:)\/\/|(mailto:))/i;
 // identifying parts of the link
 var iidxes = {
     isURL: 0,

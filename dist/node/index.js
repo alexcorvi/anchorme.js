@@ -46,9 +46,8 @@ var list = function (input) {
                 checking whether the token is already inside an HTML element by seeing if it's
                 preceded by an HTML attribute that would hold a url (e.g. scr, cite ...etc)
             */
-        if (input.charAt(start - 1) === "'" ||
-            input.charAt(start - 1) === '"') {
-            if (utils_1.isInsideAttribute(input.charAt(start - 1), input.substring(start - utils_1.maximumAttrLength - 5, start))) {
+        if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
+            if (utils_1.isInsideAttribute(input.substring(start - utils_1.maximumAttrLength - 15, start))) {
                 return "continue";
             }
         }

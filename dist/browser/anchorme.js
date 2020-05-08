@@ -161,7 +161,6 @@
 	exports.emailRegex = new RegExp("^(" + exports.email + ")$", "i");
 	exports.fileRegex = new RegExp("^(" + exports.file + ")$", "i");
 	exports.urlRegex = new RegExp("^(" + exports.url + ")$", "i");
-	exports.protocolPresent = /^((file:\/\/\/)|(https?:|ftps?:)\/\/|(mailto:))/i;
 	// identifying parts of the link
 	var iidxes = {
 	    isURL: 0,
@@ -254,8 +253,7 @@
 	var regex_6 = regex.emailRegex;
 	var regex_7 = regex.fileRegex;
 	var regex_8 = regex.urlRegex;
-	var regex_9 = regex.protocolPresent;
-	var regex_10 = regex.iidxes;
+	var regex_9 = regex.iidxes;
 
 	var utils = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
@@ -271,17 +269,9 @@
 	}
 	exports.checkParenthesis = checkParenthesis;
 	exports.maximumAttrLength = dictionary.htmlAttributes.sort(function (a, b) { return b.length - a.length; })[0].length;
-	function isInsideAttribute(quoteType, prevFragment) {
-	    for (var index = 0; index < dictionary.htmlAttributes.length; index++) {
-	        var atr = dictionary.htmlAttributes[index];
-	        var targetString = atr.toLowerCase() + "=" + quoteType;
-	        if (prevFragment.toLowerCase().indexOf(targetString) !== -1 &&
-	            prevFragment.toLowerCase().indexOf(targetString) ===
-	                prevFragment.length - targetString.length) {
-	            return true;
-	        }
-	    }
-	    return false;
+	function isInsideAttribute(prevFragment) {
+	    return (/\s[a-z0-9-]+=('|")$/i.test(prevFragment) ||
+	        /: ?url\(('|")?$/i.test(prevFragment));
 	}
 	exports.isInsideAttribute = isInsideAttribute;
 	function isInsideAnchorTag(target, fullInput, targetEnd) {
@@ -353,9 +343,8 @@
 	                checking whether the token is already inside an HTML element by seeing if it's
 	                preceded by an HTML attribute that would hold a url (e.g. scr, cite ...etc)
 	            */
-	        if (input.charAt(start - 1) === "'" ||
-	            input.charAt(start - 1) === '"') {
-	            if (utils.isInsideAttribute(input.charAt(start - 1), input.substring(start - utils.maximumAttrLength - 5, start))) {
+	        if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
+	            if (utils.isInsideAttribute(input.substring(start - utils.maximumAttrLength - 15, start))) {
 	                return "continue";
 	            }
 	        }

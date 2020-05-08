@@ -7,7 +7,6 @@ export declare const ipRegex: RegExp;
 export declare const emailRegex: RegExp;
 export declare const fileRegex: RegExp;
 export declare const urlRegex: RegExp;
-export declare const protocolPresent: RegExp;
 declare const iidxes: {
     isURL: number;
     isEmail: number;

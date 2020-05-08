@@ -12,17 +12,9 @@ function checkParenthesis(opening, closing, target, nextChar) {
 }
 exports.checkParenthesis = checkParenthesis;
 exports.maximumAttrLength = dictionary_1.htmlAttributes.sort(function (a, b) { return b.length - a.length; })[0].length;
-function isInsideAttribute(quoteType, prevFragment) {
-    for (var index = 0; index < dictionary_1.htmlAttributes.length; index++) {
-        var atr = dictionary_1.htmlAttributes[index];
-        var targetString = atr.toLowerCase() + "=" + quoteType;
-        if (prevFragment.toLowerCase().indexOf(targetString) !== -1 &&
-            prevFragment.toLowerCase().indexOf(targetString) ===
-                prevFragment.length - targetString.length) {
-            return true;
-        }
-    }
-    return false;
+function isInsideAttribute(prevFragment) {
+    return (/\s[a-z0-9-]+=('|")$/i.test(prevFragment) ||
+        /: ?url\(('|")?$/i.test(prevFragment));
 }
 exports.isInsideAttribute = isInsideAttribute;
 function isInsideAnchorTag(target, fullInput, targetEnd) {
