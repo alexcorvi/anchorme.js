@@ -70,13 +70,13 @@ const list = function (input: string) {
 				preceded by an HTML attribute that would hold a url (e.g. scr, cite ...etc)
 			*/
 		if (
-			input.charAt(start - 1) === "'" ||
-			input.charAt(start - 1) === '"'
+			['""', "''", "()"].indexOf(
+				input.charAt(start - 1) + input.charAt(end)
+			) !== -1
 		) {
 			if (
 				isInsideAttribute(
-					input.charAt(start - 1),
-					input.substring(start - maximumAttrLength - 5, start)
+					input.substring(start - maximumAttrLength - 15, start)
 				)
 			) {
 				continue;

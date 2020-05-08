@@ -20,19 +20,11 @@ export const maximumAttrLength = htmlAttributes.sort(
 	(a, b) => b.length - a.length
 )[0].length;
 
-export function isInsideAttribute(quoteType: string, prevFragment: string) {
-	for (let index = 0; index < htmlAttributes.length; index++) {
-		const atr = htmlAttributes[index];
-		const targetString = `${atr.toLowerCase()}=${quoteType}`;
-		if (
-			prevFragment.toLowerCase().indexOf(targetString) !== -1 &&
-			prevFragment.toLowerCase().indexOf(targetString) ===
-				prevFragment.length - targetString.length
-		) {
-			return true;
-		}
-	}
-	return false;
+export function isInsideAttribute(prevFragment: string) {
+	return (
+		/\s[a-z0-9-]+=('|")$/i.test(prevFragment) ||
+		/: ?url\(('|")?$/i.test(prevFragment)
+	);
 }
 
 export function isInsideAnchorTag(
