@@ -85,6 +85,7 @@ var list = function (input) {
                 path: result[regex_1.iidxes.url.byProtocol] ? undefined : path,
                 query: result[regex_1.iidxes.url.query] || undefined,
                 fragment: result[regex_1.iidxes.url.fragment] || undefined,
+                reason: "url",
             });
         }
         else if (result[regex_1.iidxes.isFile]) {
@@ -98,6 +99,7 @@ var list = function (input) {
                 filename: result[regex_1.iidxes.file.fileName],
                 filePath: filePath,
                 fileDirectory: filePath.substr(0, filePath.length - result[regex_1.iidxes.file.fileName].length),
+                reason: "file",
             });
         }
         else if (result[regex_1.iidxes.isEmail]) {
@@ -109,6 +111,7 @@ var list = function (input) {
                 local: result[regex_1.iidxes.email.local],
                 protocol: result[regex_1.iidxes.email.protocol],
                 host: result[regex_1.iidxes.email.host],
+                reason: "email",
             });
         }
         else {
@@ -116,6 +119,7 @@ var list = function (input) {
                 start: start,
                 end: end,
                 string: string,
+                reason: "unknown",
             });
         }
     };

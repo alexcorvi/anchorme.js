@@ -13,7 +13,7 @@ var protocol = "(https?:|ftps?:)\\/\\/";
 var confirmedByProtocol = "(" + protocol + ")\\S+";
 var additionalSlashes = "(([\\/]?))+";
 var fqdn = "(((" + protocol + ")?(" + domainWithTLD + "|" + ipv4 + "|(" + protocol + ")(" + ipv6 + "|" + domainWithAnyTLD + "))(?!@\\w)" + port + ")|(" + confirmedByProtocol + "))";
-var nonLatinMatches = fqdn + "((((\\/(([" + allowedInPath + "]+(\\/[" + allowedInPath + dictionary_1.nonLatinAlphabetRanges + "]*)*))?)?)((\\?([" + allowedInPath + "\\/?]*))?)((\\#([" + allowedInPath + "\\/?]*))?))?\\b((([" + allowedInPath + "\\/" + dictionary_1.nonLatinAlphabetRanges + "][a-zA-Z\\d\\-_~+=\\/" + dictionary_1.nonLatinAlphabetRanges + "]+)?))+)";
+var nonLatinMatches = fqdn + "((((\\/(([" + allowedInPath + "]+(\\/[" + allowedInPath + dictionary_1.nonLatinAlphabetRanges + "]*)*))?)?)((\\?([" + allowedInPath + "\\/?]*))?)((\\#([" + allowedInPath + "\\/?]*))?))?\\b((([" + allowedInPath + "\\/" + dictionary_1.nonLatinAlphabetRanges + "][a-zA-Z\\d\\-_~+=\\/" + dictionary_1.nonLatinAlphabetRanges + "]+$)?))+)";
 exports.email = "\\b(mailto:)?" + email_address + "@(" + domainWithTLD + "|" + ipv4 + ")\\b";
 exports.url = "(" + nonLatinMatches + ")|(\\b" + fqdn + path + "\\b" + additionalSlashes + ")";
 exports.file = "(file:\\/\\/\\/)([a-z]+:(\\/|\\\\)+)?([\\w.]+([\\/\\\\]?)+)+";

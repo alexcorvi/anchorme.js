@@ -150,7 +150,7 @@
 	var confirmedByProtocol = "(" + protocol + ")\\S+";
 	var additionalSlashes = "(([\\/]?))+";
 	var fqdn = "(((" + protocol + ")?(" + domainWithTLD + "|" + ipv4 + "|(" + protocol + ")(" + ipv6 + "|" + domainWithAnyTLD + "))(?!@\\w)" + port + ")|(" + confirmedByProtocol + "))";
-	var nonLatinMatches = fqdn + "((((\\/(([" + allowedInPath + "]+(\\/[" + allowedInPath + dictionary.nonLatinAlphabetRanges + "]*)*))?)?)((\\?([" + allowedInPath + "\\/?]*))?)((\\#([" + allowedInPath + "\\/?]*))?))?\\b((([" + allowedInPath + "\\/" + dictionary.nonLatinAlphabetRanges + "][a-zA-Z\\d\\-_~+=\\/" + dictionary.nonLatinAlphabetRanges + "]+)?))+)";
+	var nonLatinMatches = fqdn + "((((\\/(([" + allowedInPath + "]+(\\/[" + allowedInPath + dictionary.nonLatinAlphabetRanges + "]*)*))?)?)((\\?([" + allowedInPath + "\\/?]*))?)((\\#([" + allowedInPath + "\\/?]*))?))?\\b((([" + allowedInPath + "\\/" + dictionary.nonLatinAlphabetRanges + "][a-zA-Z\\d\\-_~+=\\/" + dictionary.nonLatinAlphabetRanges + "]+$)?))+)";
 	exports.email = "\\b(mailto:)?" + email_address + "@(" + domainWithTLD + "|" + ipv4 + ")\\b";
 	exports.url = "(" + nonLatinMatches + ")|(\\b" + fqdn + path + "\\b" + additionalSlashes + ")";
 	exports.file = "(file:\\/\\/\\/)([a-z]+:(\\/|\\\\)+)?([\\w.]+([\\/\\\\]?)+)+";
@@ -382,6 +382,7 @@
 	                path: result[regex.iidxes.url.byProtocol] ? undefined : path,
 	                query: result[regex.iidxes.url.query] || undefined,
 	                fragment: result[regex.iidxes.url.fragment] || undefined,
+	                reason: "url",
 	            });
 	        }
 	        else if (result[regex.iidxes.isFile]) {
@@ -395,6 +396,7 @@
 	                filename: result[regex.iidxes.file.fileName],
 	                filePath: filePath,
 	                fileDirectory: filePath.substr(0, filePath.length - result[regex.iidxes.file.fileName].length),
+	                reason: "file",
 	            });
 	        }
 	        else if (result[regex.iidxes.isEmail]) {
@@ -406,6 +408,7 @@
 	                local: result[regex.iidxes.email.local],
 	                protocol: result[regex.iidxes.email.protocol],
 	                host: result[regex.iidxes.email.host],
+	                reason: "email",
 	            });
 	        }
 	        else {
@@ -413,6 +416,7 @@
 	                start: start,
 	                end: end,
 	                string: string,
+	                reason: "unknown",
 	            });
 	        }
 	    };
