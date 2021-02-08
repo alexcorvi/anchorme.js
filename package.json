@@ -4,6 +4,13 @@
 	"description": "A library to convert URLs to a clickable HTML anchor elements",
 	"main": "./dist/node/index.js",
 	"types": "./dist/node/index.d.ts",
+	"exports": {
+		".": {
+			"require": "./dist/node/index.js",
+			"import": "./wrapper.mjs"
+		},
+		"./": "./"
+	},
 	"scripts": {
 		"test": "mocha",
 		"testw": "mocha -w",
