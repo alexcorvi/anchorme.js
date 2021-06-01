@@ -255,6 +255,18 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 		query: undefined,
 		fragment: undefined,
 	},
+	"ircs://irc.libera.chat/%23libera": {
+		isURL: true,
+		protocol: "ircs://",
+		host: "irc.libera.chat",
+		port: undefined,
+		ipv4: undefined,
+		ipv6: undefined,
+		confirmedByProtocol: false,
+		path: "/%23libera",
+		query: undefined,
+		fragment: undefined,
+	},
 	"https://عرب.com/wiki/მთავარი_გვერდი": {
 		isURL: true,
 		protocol: "https://",
