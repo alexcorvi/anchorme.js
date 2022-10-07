@@ -76,7 +76,7 @@ export function transform(
 
 	return `<a ${Object.keys(attributes)
 		.map((key) =>
-			attributes[key] === true ? key : `${key}="${attributes[key]}" `
+			attributes[key] === true ? key : `${key}="${attributes[key].replace(/"/g, '&quot;')}" `
 		)
 		.join(" ")}href="${protocol}${input.string}">${
 		input.string.length > truncation
