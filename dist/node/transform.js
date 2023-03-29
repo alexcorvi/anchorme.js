@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.transform = void 0;
 function applyOption(string, props, option) {
     // conditional
     if (typeof option === "function") {
@@ -54,16 +55,16 @@ function transform(input, options) {
     if (options && options.attributes) {
         attributes = applyOption(input.string, input, options.attributes);
     }
-    return "<a " + Object.keys(attributes)
+    return "<a ".concat(Object.keys(attributes)
         .map(function (key) {
-        return attributes[key] === true ? key : key + "=\"" + attributes[key] + "\" ";
+        return attributes[key] === true ? key : "".concat(key, "=\"").concat(attributes[key], "\" ");
     })
-        .join(" ") + "href=\"" + protocol + input.string + "\">" + (input.string.length > truncation
+        .join(" "), "href=\"").concat(protocol).concat(input.string, "\">").concat(input.string.length > truncation
         ? truncateFromTheMiddle
             ? input.string.substring(0, Math.floor(truncation / 2)) +
                 "…" +
                 input.string.substring(input.string.length - Math.ceil(truncation / 2), input.string.length)
             : input.string.substring(0, truncation) + "…"
-        : input.string) + "</a>";
+        : input.string, "</a>");
 }
 exports.transform = transform;

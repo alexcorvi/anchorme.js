@@ -35,7 +35,7 @@ var list = function (input) {
             dictionary_1.parenthesis.forEach(function (str) {
                 var opening = str.charAt(0);
                 var closing = str.charAt(1);
-                if (utils_1.checkParenthesis(opening, closing, string, input.charAt(end))) {
+                if ((0, utils_1.checkParenthesis)(opening, closing, string, input.charAt(end))) {
                     string = string + input.charAt(end);
                     end++;
                 }
@@ -47,7 +47,7 @@ var list = function (input) {
                 preceded by an HTML attribute that would hold a url (e.g. scr, cite ...etc)
             */
         if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
-            if (utils_1.isInsideAttribute(input.substring(start - utils_1.maximumAttrLength - 15, start))) {
+            if ((0, utils_1.isInsideAttribute)(input.substring(start - utils_1.maximumAttrLength - 15, start))) {
                 return "continue";
             }
         }
@@ -58,7 +58,7 @@ var list = function (input) {
             */
         if (input.substring(end, input.length).indexOf("</a>") > -1 &&
             input.substring(0, start).indexOf("<a") > -1 &&
-            utils_1.isInsideAnchorTag(string, input, end)) {
+            (0, utils_1.isInsideAnchorTag)(string, input, end)) {
             return "continue";
         }
         if (result[regex_1.iidxes.isURL]) {
@@ -149,7 +149,7 @@ var anchorme = function (arg) {
                 : index === 0
                     ? input.substring(0, found[index].start)
                     : "") +
-                transform_1.transform(found[index], options) +
+                (0, transform_1.transform)(found[index], options) +
                 (found[index + 1]
                     ? input.substring(found[index].end, found[index + 1].start)
                     : input.substring(found[index].end));

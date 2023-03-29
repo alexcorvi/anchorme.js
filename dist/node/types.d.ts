@@ -28,12 +28,12 @@ export interface File extends BaseTokenProps {
     filePath: string;
     fileDirectory: string;
 }
-declare type TokenProps = Email & File & URL;
-export declare type ListingProps = Partial<TokenProps> & BaseTokenProps;
-export declare type DesiredValues = {
+type TokenProps = Email & File & URL;
+export type ListingProps = Partial<TokenProps> & BaseTokenProps;
+export type DesiredValues = {
     [key: string]: string | undefined | true;
 } | number | string | boolean;
-export declare type TransformationOption<desiredValue> = desiredValue | ((string: string, props: Partial<ListingProps> & {
+export type TransformationOption<desiredValue> = desiredValue | ((string: string, props: Partial<ListingProps> & {
     string: string;
 }) => desiredValue);
 export interface Options {

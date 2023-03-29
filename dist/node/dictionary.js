@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TLDs = exports.nonLatinAlphabetRanges = exports.htmlAttributes = exports.parenthesis = exports.closingParenthesis = exports.openingParenthesis = void 0;
 var tlds_1 = require("./tlds");
 exports.openingParenthesis = "([\"'{";
 exports.closingParenthesis = ")]\"'}";
 exports.parenthesis = exports.openingParenthesis
     .split("")
-    .map(function (x, i) { return "" + x + exports.closingParenthesis.charAt(i); });
+    .map(function (x, i) { return "".concat(x).concat(exports.closingParenthesis.charAt(i)); });
 exports.htmlAttributes = [
     "src",
     "data",

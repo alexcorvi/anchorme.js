@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.isInsideAnchorTag = exports.isInsideAttribute = exports.maximumAttrLength = exports.checkParenthesis = void 0;
 var dictionary_1 = require("./dictionary");
 function checkParenthesis(opening, closing, target, nextChar) {
     if (nextChar !== closing) {
@@ -19,7 +20,7 @@ function isInsideAttribute(prevFragment) {
 exports.isInsideAttribute = isInsideAttribute;
 function isInsideAnchorTag(target, fullInput, targetEnd) {
     var escapedTarget = target.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-    var regex = new RegExp("(?=(<a))(?!([\\s\\S]*)(<\\/a>)(" + escapedTarget + "))[\\s\\S]*?(" + escapedTarget + ")(?!\"|')", "gi");
+    var regex = new RegExp("(?=(<a))(?!([\\s\\S]*)(<\\/a>)(".concat(escapedTarget, "))[\\s\\S]*?(").concat(escapedTarget, ")(?!\"|')"), "gi");
     var result = null;
     while ((result = regex.exec(fullInput)) !== null) {
         var end = result.index + result[0].length;
