@@ -216,29 +216,6 @@ $ yarn add anchorme</code></pre>
 
 		<footer class="bs-docs-footer" role="contentinfo">
 			<div class="container">
-				<div class="bs-docs-social">
-					<ul class="bs-docs-social-buttons">
-						<li>
-							<iframe
-								class="github-btn"
-								src="//ghbtns.com/github-btn.html?user=alexcorvi&amp;repo=anchorme.js&amp;type=fork&amp;count=true"
-								width="90"
-								height="20"
-								title="Fork on GitHub"
-							></iframe>
-						</li>
-						<li>
-							<iframe
-								class="github-btn"
-								src="//ghbtns.com/github-btn.html?user=alexcorvi&amp;repo=anchorme.js&amp;type=star&amp;count=true"
-								width="90"
-								height="20"
-								title="Star on GitHub"
-							></iframe>
-						</li>
-					</ul>
-				</div>
-
 				<p>
 					Licensed under
 					<a href="http://opensource.org/licenses/MIT" target="_blank"
@@ -336,7 +313,7 @@ $ yarn add anchorme</code></pre>
 			) {
 				let content = await fetchMD(relativePath, linesToDelete);
 				content = embedJSFiddleCode(content);
-				document.getElementById(elementID).innerHTML = marked(content);
+				document.getElementById(elementID).innerHTML = marked.marked(content);
 			}
 
 			async function loadContent() {
