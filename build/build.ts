@@ -9,7 +9,7 @@ import * as uglify from "uglify-js";
 
 let currentlyBuilding = false;
 
-function execute(cmd: string) {
+function execute(cmd: string): Promise<unknown> {
 	return new Promise((resolve, reject) => {
 		exec(cmd, (error, stdout, stderr) => {
 			if (!error) {
@@ -17,11 +17,12 @@ function execute(cmd: string) {
 					console.log("🔨", stdout);
 				}
 			} else {
-				console.log("🔨", "ERROR");
-				console.log("🔨", error);
-				console.log("🔨", stderr);
+				console.log("🔨X", "ERROR");
+				console.log("🔨X", error);
+				console.log("🔨X", stdout);
+				console.log("🔨X", stderr);
 			}
-			resolve();
+			resolve(0);
 		});
 	});
 }
