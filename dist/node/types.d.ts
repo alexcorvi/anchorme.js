@@ -1,6 +1,7 @@
 export interface BaseTokenProps {
     start: number;
     end: number;
+    reason: string;
     string: string;
 }
 export interface Email extends BaseTokenProps {
