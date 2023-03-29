@@ -7,8 +7,6 @@
 ![npm](https://img.shields.io/npm/v/anchorme.svg)
 ![GitHub release](https://img.shields.io/github/release/alexcorvi/anchorme.js.svg)
 ![license](https://img.shields.io/github/license/alexcorvi/anchorme.js.svg)
-![David](https://img.shields.io/david/alexcorvi/anchorme.js.svg)
-![David](https://img.shields.io/david/dev/alexcorvi/anchorme.js.svg)
 
 Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / Emails in text and convert them to clickable HTML anchor links.
 
