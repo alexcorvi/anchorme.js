@@ -49,7 +49,7 @@ const iidxes = {
 	},
 	url: {
 		ipv4: 7,
-		ipv6: 16,
+		ipv6: 18,
 		ipv4Confirmation: 12,
 		byProtocol: 25,
 		port: 24,
