@@ -11,7 +11,7 @@ const protocol = `(https?:|ftps?:)\\/\\/`;
 const confirmedByProtocol = `(${protocol})\\S+`;
 const additionalSlashes = `(([\\/]?))+`;
 const fqdn = `(((${protocol})?(${domainWithAnyTLD}|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))`;
-const nonLatinMatches = `(((${protocol})?((?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))((((\\/(([${allowedInPath}]+(\\/[${allowedInPath}${nonLatinAlphabetRanges}]*)*))*?)?))?\\b((([${allowedInPath}\\/${nonLatinAlphabetRanges}]([a-z\\d\\-_~+=\\/${nonLatinAlphabetRanges}]|\\b)+)*))+)`;
+const nonLatinMatches = `(((${protocol})?((?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))((?:\\/)?\\b(?:([${allowedInPath}\\/${nonLatinAlphabetRanges}](?:[a-z\\d\\-_~+=#&\\/${nonLatinAlphabetRanges}]|\\b)+)*)+)`;
 
 export const email = `\\b(mailto:)?${email_address}@(${domainWithAnyTLD}|${ipv4})\\b`;
 export const url = `(${nonLatinMatches})|(\\b${fqdn}${path}\\b${additionalSlashes})`;
