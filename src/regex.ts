@@ -1,4 +1,4 @@
-import { nonLatinAlphabetRanges, TLDs } from "./dictionary";
+import { nonLatinAlphabetRanges } from "./dictionary";
 const email_address =
 	"([a-z0-9!#$%&'*+=?^_`{|}~-]+(\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
 const domainWithAnyTLD = `((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)`;
