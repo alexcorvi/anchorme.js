@@ -2,3 +2,4 @@ export declare function checkParenthesis(opening: string, closing: string, targe
 export declare const maximumAttrLength: number;
 export declare function isInsideAttribute(prevFragment: string): boolean;
 export declare function isInsideAnchorTag(target: string, fullInput: string, targetEnd: number): boolean;
+export declare function isInsideImgSrc(target: string, fullInput: string, targetEnd: number): boolean;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isInsideAnchorTag = exports.isInsideAttribute = exports.maximumAttrLength = exports.checkParenthesis = void 0;
+exports.isInsideImgSrc = exports.isInsideAnchorTag = exports.isInsideAttribute = exports.maximumAttrLength = exports.checkParenthesis = void 0;
 var dictionary_1 = require("./dictionary");
 function checkParenthesis(opening, closing, target, nextChar) {
     if (nextChar !== closing) {
@@ -31,3 +31,16 @@ function isInsideAnchorTag(target, fullInput, targetEnd) {
     return false;
 }
 exports.isInsideAnchorTag = isInsideAnchorTag;
+function isInsideImgSrc(target, fullInput, targetEnd) {
+    var escapedTarget = target.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    var regex = new RegExp("(?=(<img))(?!([\\s\\S]*)(<\\/a>)(".concat(escapedTarget, "))[\\s\\S]*?(").concat(escapedTarget, ")(?!\"|')"), "gi");
+    var result = null;
+    while ((result = regex.exec(fullInput)) !== null) {
+        var end = result.index + result[0].length;
+        if (end === targetEnd) {
+            return true;
+        }
+    }
+    return false;
+}
+exports.isInsideImgSrc = isInsideImgSrc;

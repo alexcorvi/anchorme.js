@@ -4,6 +4,9 @@ var dictionary_1 = require("./dictionary");
 var transform_1 = require("./transform");
 var regex_1 = require("./regex");
 var utils_1 = require("./utils");
+var dictionary_2 = require("./dictionary");
+var TLDsArray = dictionary_2.TLDs.toLowerCase().split("|");
+console.log(regex_1.finalRegex);
 var list = function (input) {
     var found = [];
     var result = null;
@@ -11,6 +14,9 @@ var list = function (input) {
         var start = result.index;
         var end = start + result[0].length;
         var string = result[0];
+        var protocol = result[regex_1.iidxes.url.protocol[0]] ||
+            result[regex_1.iidxes.url.protocol[1]] ||
+            result[regex_1.iidxes.url.protocol[2]];
         // ### trailing slashes problem
         /**
          * This is a quick and dirty fix for a problem that could be probably fixed with
@@ -44,7 +50,7 @@ var list = function (input) {
         // ### HTML problem 1
         /**
                 checking whether the token is already inside an HTML element by seeing if it's
-                preceded by an HTML attribute that would hold a url (e.g. scr, cite ...etc)
+                preceded by an HTML attribute that would hold a url (e.g. src, cite ...etc)
             */
         if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
             if ((0, utils_1.isInsideAttribute)(input.substring(start - utils_1.maximumAttrLength - 15, start))) {
@@ -61,12 +67,20 @@ var list = function (input) {
             (0, utils_1.isInsideAnchorTag)(string, input, end)) {
             return "continue";
         }
+        // same thing like above for img src, and we're doing only those two since they are most common
+        if (input.substring(0, start).indexOf("<img") > -1 &&
+            input.substring(end, input.length).indexOf(">") > -1 &&
+            (0, utils_1.isInsideImgSrc)(string, input, end)) {
+            return "continue";
+        }
+        // filter out URLs that doesn't have a vaild TLD
+        var tld = result[regex_1.iidxes.url.TLD[0]] || result[regex_1.iidxes.url.TLD[1]] || result[regex_1.iidxes.url.TLD[2]];
+        if (tld && (!protocol) && (!result[regex_1.iidxes.email.protocol]) && TLDsArray.indexOf(tld.toLowerCase()) === -1) {
+            return "continue";
+        }
         if (result[regex_1.iidxes.isURL]) {
             var path = (result[regex_1.iidxes.url.path] || "") +
                 (result[regex_1.iidxes.url.secondPartOfPath] || "") || undefined;
-            var protocol = result[regex_1.iidxes.url.protocol1] ||
-                result[regex_1.iidxes.url.protocol2] ||
-                result[regex_1.iidxes.url.protocol3];
             found.push({
                 start: start,
                 end: end,
@@ -78,11 +92,11 @@ var list = function (input) {
                     ? result[regex_1.iidxes.url.ipv4]
                     : undefined,
                 ipv6: result[regex_1.iidxes.url.ipv6],
-                host: result[regex_1.iidxes.url.byProtocol]
+                host: result[regex_1.iidxes.url.protocol[1]]
                     ? undefined
                     : (result[regex_1.iidxes.url.protocolWithDomain] || "").substr((protocol || "").length),
-                confirmedByProtocol: !!result[regex_1.iidxes.url.byProtocol],
-                path: result[regex_1.iidxes.url.byProtocol] ? undefined : path,
+                confirmedByProtocol: !!protocol,
+                path: result[regex_1.iidxes.url.protocol[1]] ? undefined : path,
                 query: result[regex_1.iidxes.url.query] || undefined,
                 fragment: result[regex_1.iidxes.url.fragment] || undefined,
                 reason: "url",
