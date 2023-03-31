@@ -138,11 +138,7 @@ const list = function (input: string) {
 					? result[iidxes.url.ipv4]
 					: undefined,
 				ipv6: result[iidxes.url.ipv6],
-				host: result[iidxes.url.protocol[1]]
-					? undefined
-					: (result[iidxes.url.protocolWithDomain] || "").substr(
-							(protocol || "").length
-					  ),
+				host: result[iidxes.url.host[0]] || result[iidxes.url.host[1]] || result[iidxes.url.host[2]],
 				confirmedByProtocol: !!protocol,
 				path: result[iidxes.url.protocol[1]] ? undefined : path,
 				query: result[iidxes.url.query] || undefined,
