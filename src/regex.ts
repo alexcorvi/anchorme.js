@@ -1,6 +1,6 @@
 import { nonLatinAlphabetRanges } from "./dictionary";
-const email_address =
-	"([a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
+
+const email_address = "([a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
 const domainWithAnyTLD = `(?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)`;
 const allowedInPath = `a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#`;
 const path = `(((\\/(([${allowedInPath}]+(\\/[${allowedInPath}]*)*))*?)?))?`;
