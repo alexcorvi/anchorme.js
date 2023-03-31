@@ -17,6 +17,8 @@ import {
 	maximumAttrLength,
 } from "./utils";
 
+import { TLDs } from "./dictionary";
+let TLDsArray = TLDs.toLowerCase().split("|");
 const list = function (input: string) {
 	const found: ListingProps[] = [];
 	let result: RegExpExecArray | null = null;
@@ -25,6 +27,11 @@ const list = function (input: string) {
 		const start = result.index;
 		let end = start + result[0].length;
 		let string = result[0];
+
+		const protocol =
+		result[iidxes.url.protocol[0]] ||
+		result[iidxes.url.protocol[1]] ||
+		result[iidxes.url.protocol[2]];
 
 		// ### trailing slashes problem
 		/**
@@ -106,6 +113,13 @@ const list = function (input: string) {
 		) {
 			continue;
 		}
+
+		// filter out URLs that doesn't have a vaild TLD
+		let tld = result[iidxes.url.TLD[0]] || result[iidxes.url.TLD[1]] || result[iidxes.url.TLD[2]];
+		if(tld && (!protocol) && (!result[iidxes.email.protocol]) && TLDsArray.indexOf(tld.toLowerCase()) === -1) {
+			continue;
+		}
+
 		if (result[iidxes.isURL]) {
 			const path =
 				(result[iidxes.url.path] || "") +
