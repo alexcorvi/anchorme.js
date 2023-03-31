@@ -75,7 +75,7 @@ const list = function (input: string) {
 		// ### HTML problem 1
 		/**
 				checking whether the token is already inside an HTML element by seeing if it's
-				preceded by an HTML attribute that would hold a url (e.g. scr, cite ...etc)
+				preceded by an HTML attribute that would hold a url (e.g. src, cite ...etc)
 			*/
 		if (
 			['""', "''", "()"].indexOf(
