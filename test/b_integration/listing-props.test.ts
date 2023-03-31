@@ -150,7 +150,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 	"127.0.0.1:3004?a=xyz": {
 		isURL: true,
 		protocol: undefined,
-		host: "127.0.0.1:3004",
+		host: "127.0.0.1",
 		port: "3004",
 		ipv4: "127.0.0.1",
 		ipv6: undefined,
@@ -162,7 +162,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 	"http://127.0.0.1:3004/a/b/c/d?q=1&a=2#title": {
 		isURL: true,
 		protocol: "http://",
-		host: "127.0.0.1:3004",
+		host: "127.0.0.1",
 		port: "3004",
 		ipv4: "127.0.0.1",
 		ipv6: undefined,
@@ -174,7 +174,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 	"127.0.0.1:3004/a/b/c/d#title": {
 		isURL: true,
 		protocol: undefined,
-		host: "127.0.0.1:3004",
+		host: "127.0.0.1",
 		port: "3004",
 		ipv4: "127.0.0.1",
 		ipv6: undefined,
@@ -210,7 +210,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 	"ka.wikipedia.org:3000/wiki/მთავარი_გვერდი?abc=12#bang": {
 		isURL: true,
 		protocol: undefined,
-		host: "ka.wikipedia.org:3000",
+		host: "ka.wikipedia.org",
 		port: "3000",
 		ipv4: undefined,
 		ipv6: undefined,
@@ -222,7 +222,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 	"127.0.0.1:3000/wiki/მთავარი_გვერდი?abc=12#bang": {
 		isURL: true,
 		protocol: undefined,
-		host: "127.0.0.1:3000",
+		host: "127.0.0.1",
 		port: "3000",
 		ipv4: "127.0.0.1",
 		ipv6: undefined,
@@ -234,7 +234,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 	"ftps://[2a00:1450:4025:401::67]:3000/wiki/მთავარი_გვერდი?abc=12#bang": {
 		isURL: true,
 		protocol: "ftps://",
-		host: "[2a00:1450:4025:401::67]:3000",
+		host: "[2a00:1450:4025:401::67]",
 		port: "3000",
 		ipv4: undefined,
 		ipv6: "2a00:1450:4025:401::67",
@@ -270,7 +270,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 	"a.org:3000/abc/ი_გგ": {
 		isURL: true,
 		protocol: undefined,
-		host: "a.org:3000",
+		host: "a.org",
 		port: "3000",
 		ipv4: undefined,
 		ipv6: undefined,
@@ -294,7 +294,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 	"a.org:3000/იგ": {
 		isURL: true,
 		protocol: undefined,
-		host: "a.org:3000",
+		host: "a.org",
 		port: "3000",
 		ipv4: undefined,
 		ipv6: undefined,
