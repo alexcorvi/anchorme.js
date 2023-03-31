@@ -1,10 +1,10 @@
 import { nonLatinAlphabetRanges } from "./dictionary";
 const email_address =
-	"([a-z0-9!#$%&'*+=?^_`{|}~-]+(\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
-const domainWithAnyTLD = `((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)`;
+	"([a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
+const domainWithAnyTLD = `(?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)`;
 const allowedInPath = `a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#`;
 const path = `(((\\/(([${allowedInPath}]+(\\/[${allowedInPath}]*)*))*?)?))?`;
-const ipv4 = `((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)`;
+const ipv4 = `((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))`;
 const ipv6 = `\\[(([a-f0-9:]+:+)+[a-f0-9]+)\\]`;
 const port = `(:(\\d{1,5}))?`;
 const protocol = `(https?:|ftps?:)\\/\\/`;
@@ -15,8 +15,8 @@ const nonLatinMatches = `(((${protocol})?(((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]
 
 export const email = `\\b(mailto:)?${email_address}@(${domainWithAnyTLD}|${ipv4})\\b`;
 export const url = `(${nonLatinMatches})|(\\b${fqdn}${path}\\b${additionalSlashes})`;
-export const file = `(file:\\/\\/\\/)([a-z]+:(\\/|\\\\)+)?([\\w.]+([\\/\\\\]?)+)+`;
 export const final = `\\b(${url})|(${email})|(${file})\\b`;
+export const file = `(file:\\/\\/\\/)(?:[a-z]+:(?:\\/|\\\\)+)?([\\w.]+(?:[\\/\\\\]?)+)+`;
 export const finalRegex = new RegExp(final, "gi");
 
 // for validation purposes
@@ -29,18 +29,18 @@ export const urlRegex = new RegExp(`^(${url})$`, "i");
 // the initial value of this object is precomputed.
 // https://github.com/alexcorvi/anchorme.js/blob/098843bc0d042601cff592c4f8c9f6d0424c09cd/src/regex.ts
 const iidxes = {
-	isURL: 0,
-	isEmail: 0,
 	isFile: 0,
 	file: {
 		fileName: 0,
 		protocol: 0,
 	},
+	isEmail: 0,
 	email: {
 		protocol: 0,
 		local: 0,
 		host: 0,
 	},
+	isURL: 0,
 	url: {
 		// three places where TLD can appear
 		// three places where protocol can appear
