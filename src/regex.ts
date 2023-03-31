@@ -11,12 +11,12 @@ const protocol = `(https?:|ftps?:)\\/\\/`;
 const confirmedByProtocol = `(${protocol})\\S+`;
 const additionalSlashes = `(([\\/]?))+`;
 const fqdn = `(((${protocol})?(${domainWithAnyTLD}|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))`;
-const nonLatinMatches = `(((${protocol})?(((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))((((\\/(([${allowedInPath}]+(\\/[${allowedInPath}${nonLatinAlphabetRanges}]*)*))*?)?))?\\b((([${allowedInPath}\\/${nonLatinAlphabetRanges}][a-z\\d\\-_~+=\\/${nonLatinAlphabetRanges}]+)))+)`;
+const nonLatinMatches = `(((${protocol})?((?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))((((\\/(([${allowedInPath}]+(\\/[${allowedInPath}${nonLatinAlphabetRanges}]*)*))*?)?))?\\b((([${allowedInPath}\\/${nonLatinAlphabetRanges}]([a-z\\d\\-_~+=\\/${nonLatinAlphabetRanges}]|\\b)+)*))+)`;
 
 export const email = `\\b(mailto:)?${email_address}@(${domainWithAnyTLD}|${ipv4})\\b`;
 export const url = `(${nonLatinMatches})|(\\b${fqdn}${path}\\b${additionalSlashes})`;
 export const file = `(file:\\/\\/\\/)(?:[a-z]+:(?:\\/|\\\\)+)?([\\w.]+(?:[\\/\\\\]?)+)+`;
-export const final = `(\\b)?(${url})|(${email})|(${file})(\\b)?`;
+export const final = `(\\b)?(${url})+|(${email})|(${file})(\\b)?`;
 export const finalRegex = new RegExp(final, "gi");
 
 // for validation purposes
@@ -43,9 +43,11 @@ const iidxes = {
 	isURL: 0,
 	url: {
 		// three places where TLD can appear
-		// three places where protocol can appear
 		TLD: [0,0,0],
+		// three places where protocol can appear
 		protocol: [0,0,0],
+		// three places where host can appear
+		host: [0,0,0],
 		ipv4: 0,
 		ipv6: 0,
 		ipv4Confirmation: 0,
@@ -69,14 +71,20 @@ const testers = [
 	`http://[2a00:1450:4025:401::67]/k/something`,
 	`a.org/abc/ი_გგ`,
 	`a.ta/p`,
-	`a.tb`,
-	`a@b.cd`
-].join(" ");
+	`a.a.wg`,
+	`a@b.cd`,
+	`http://[2a00:1450:4025:401::67]/s`,
+	`www.github.com/path`,
+	`google.co.`
+];
 
-let result: RegExpExecArray | null = null;
-let i = 0;
 
-while ((result = finalRegex.exec(testers)) !== null) {
+for (let i = 0; i < testers.length; i++) {
+	const element = testers[i];
+	const result = finalRegex.exec(element);
+	if(result === null) {
+		continue;
+	}
 	if (i === 0) {
 		iidxes.isFile = result.lastIndexOf(result[0]);
 		iidxes.file.fileName = result.indexOf("filename.pdf");
@@ -121,12 +129,21 @@ while ((result = finalRegex.exec(testers)) !== null) {
 		iidxes.url.TLD[0] = result.indexOf("ta")
 	}
 	if(i===8) {
-		iidxes.url.TLD[1] = result.indexOf("tb")
+		iidxes.url.TLD[1] = result.lastIndexOf("wg")
 	}
 	if(i===9) {
 		iidxes.url.TLD[2] = result.indexOf("cd")
 	}
-	i++;
+	if(i===10){
+		iidxes.url.host[0] = result.lastIndexOf("[2a00:1450:4025:401::67]");
+	}
+	if(i===11){
+		iidxes.url.host[1] = result.lastIndexOf("www.github.com");
+	}
+	if(i===12){
+		iidxes.url.host[2] = result.lastIndexOf("google.co");
+	}
+	finalRegex.lastIndex = 0;
 }
 
 // console.log(iidxes);
