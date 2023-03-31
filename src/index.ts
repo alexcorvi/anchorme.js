@@ -134,9 +134,7 @@ const list = function (input: string) {
 				isURL: true,
 				protocol: protocol,
 				port: result[iidxes.url.port],
-				ipv4: result[iidxes.url.ipv4Confirmation]
-					? result[iidxes.url.ipv4]
-					: undefined,
+				ipv4: result[iidxes.url.ipv4],
 				ipv6: result[iidxes.url.ipv6],
 				host: result[iidxes.url.host[0]] || result[iidxes.url.host[1]] || result[iidxes.url.host[2]],
 				confirmedByProtocol: !!protocol,

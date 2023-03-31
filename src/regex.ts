@@ -50,7 +50,6 @@ const iidxes = {
 		host: [0,0,0],
 		ipv4: 0,
 		ipv6: 0,
-		ipv4Confirmation: 0,
 		byProtocol: 0,
 		port: 0,
 		protocolWithDomain: 0,
@@ -115,8 +114,7 @@ for (let i = 0; i < testers.length; i++) {
 		iidxes.url.protocol[2] = result.lastIndexOf("http://");
 	}
 	if (i === 4) {
-		iidxes.url.ipv4 = result.indexOf("127.0.0.1");
-		iidxes.url.ipv4Confirmation = result.indexOf("0.");
+		iidxes.url.ipv4 = result.lastIndexOf("127.0.0.1");
 	}
 	if (i === 5) {
 		iidxes.url.ipv6 = result.indexOf("2a00:1450:4025:401::67");
