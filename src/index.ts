@@ -124,10 +124,6 @@ const list = function (input: string) {
 			const path =
 				(result[iidxes.url.path] || "") +
 					(result[iidxes.url.secondPartOfPath] || "") || undefined;
-			const protocol =
-				result[iidxes.url.protocol1] ||
-				result[iidxes.url.protocol2] ||
-				result[iidxes.url.protocol3];
 			found.push({
 				start,
 				end,
@@ -144,8 +140,8 @@ const list = function (input: string) {
 					: (result[iidxes.url.protocolWithDomain] || "").substr(
 							(protocol || "").length
 					  ),
-				confirmedByProtocol: !!result[iidxes.url.byProtocol],
 				path: result[iidxes.url.byProtocol] ? undefined : path,
+				confirmedByProtocol: !!protocol,
 				query: result[iidxes.url.query] || undefined,
 				fragment: result[iidxes.url.fragment] || undefined,
 				reason: "url",
