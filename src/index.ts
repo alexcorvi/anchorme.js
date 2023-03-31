@@ -135,13 +135,13 @@ const list = function (input: string) {
 					? result[iidxes.url.ipv4]
 					: undefined,
 				ipv6: result[iidxes.url.ipv6],
-				host: result[iidxes.url.byProtocol]
+				host: result[iidxes.url.protocol[1]]
 					? undefined
 					: (result[iidxes.url.protocolWithDomain] || "").substr(
 							(protocol || "").length
 					  ),
-				path: result[iidxes.url.byProtocol] ? undefined : path,
 				confirmedByProtocol: !!protocol,
+				path: result[iidxes.url.protocol[1]] ? undefined : path,
 				query: result[iidxes.url.query] || undefined,
 				fragment: result[iidxes.url.fragment] || undefined,
 				reason: "url",
