@@ -13,7 +13,7 @@ const insideParenthesis = `()|[]|""|''|<>|{}`
 	.split("|")
 	.map((x) => (string: string) => `${x[0]}${string}${x[1]}`);
 
-const surroundedWithPunctuation = `’':,!.«»?‘’“”&*`
+const surroundedWithPunctuation = `’':,!.«»?‘’“”*`
 	.split("")
 	.map((x) => (string: string) => `${x}${string}${x}`);
 
