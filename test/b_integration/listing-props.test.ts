@@ -432,6 +432,12 @@ describe("Listing props", () => {
 					const res = anchorme.list(url)[0];
 					const props = Object.keys((suite as any)[url]);
 					props.forEach((prop) => {
+						it(`URL matches: ${url}`, ()=>{
+							expect(res).not.toBe(undefined);
+						});
+						if(res === undefined) {
+							return;
+						}
 						it(`Testing prop: ${prop} / received "${
 							(res as any)[prop]
 						}" / expecting ${(suite as any)[url][prop]}`, () => {
