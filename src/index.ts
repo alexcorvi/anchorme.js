@@ -13,6 +13,7 @@ import {
 	checkParenthesis as parenthesisIsPartOfTheURL,
 	isInsideAnchorTag,
 	isInsideAttribute,
+	isInsideImgSrc,
 	maximumAttrLength,
 } from "./utils";
 
@@ -97,6 +98,14 @@ const list = function (input: string) {
 			continue;
 		}
 
+		// same thing like above for img src, and we're doing only those two since they are most common
+		if (
+			input.substring(0, start).indexOf("<img") > -1 &&
+			input.substring(end, input.length).indexOf(">") > -1 &&
+			isInsideImgSrc(string, input, end)
+		) {
+			continue;
+		}
 		if (result[iidxes.isURL]) {
 			const path =
 				(result[iidxes.url.path] || "") +

@@ -46,3 +46,23 @@ export function isInsideAnchorTag(
 	}
 	return false;
 }
+
+export function isInsideImgSrc(
+	target: string,
+	fullInput: string,
+	targetEnd: number
+) {
+	const escapedTarget = target.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+	const regex = new RegExp(
+		`(?=(<img))(?!([\\s\\S]*)(<\\/a>)(${escapedTarget}))[\\s\\S]*?(${escapedTarget})(?!"|')`,
+		"gi"
+	);
+	let result: RegExpExecArray | null = null;
+	while ((result = regex.exec(fullInput)) !== null) {
+		let end = result.index + result[0].length;
+		if (end === targetEnd) {
+			return true;
+		}
+	}
+	return false;
+}
