@@ -15,8 +15,8 @@ const nonLatinMatches = `(((${protocol})?(((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]
 
 export const email = `\\b(mailto:)?${email_address}@(${domainWithAnyTLD}|${ipv4})\\b`;
 export const url = `(${nonLatinMatches})|(\\b${fqdn}${path}\\b${additionalSlashes})`;
-export const final = `\\b(${url})|(${email})|(${file})\\b`;
 export const file = `(file:\\/\\/\\/)(?:[a-z]+:(?:\\/|\\\\)+)?([\\w.]+(?:[\\/\\\\]?)+)+`;
+export const final = `(\\b)?(${url})|(${email})|(${file})(\\b)?`;
 export const finalRegex = new RegExp(final, "gi");
 
 // for validation purposes
