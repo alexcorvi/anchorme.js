@@ -19,6 +19,9 @@ import {
 
 import { TLDs } from "./dictionary";
 let TLDsArray = TLDs.toLowerCase().split("|");
+
+// console.log(finalRegex);
+
 const list = function (input: string) {
 	const found: ListingProps[] = [];
 	let result: RegExpExecArray | null = null;
