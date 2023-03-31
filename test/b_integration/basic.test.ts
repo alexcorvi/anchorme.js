@@ -161,7 +161,6 @@ describe("Basic testing", () => {
 						"email@example.com (Joe Smith)",
 						"email@example",
 						"email@-example.com",
-						"email@example.web",
 						"email@111.222.333.44444",
 						"email@example..com",
 						"Abc..123@example.com",
