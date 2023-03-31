@@ -56,8 +56,7 @@ const iidxes = {
 		path: 0,
 		// sometimes path might be split into two parts
 		secondPartOfPath: 0,
-		query: 0,
-		fragment: 0,
+		queryAndFragment: 0,
 	},
 };
 
@@ -104,9 +103,8 @@ for (let i = 0; i < testers.length; i++) {
 			"http://sub.domain.co.uk:3000"
 		);
 		iidxes.url.port = result.indexOf("3000");
-		iidxes.url.path = result.indexOf("/p/a/t/h_(asd)/h");
-		iidxes.url.query = result.indexOf("q=abc123");
-		iidxes.url.fragment = result.indexOf("dfdf");
+		iidxes.url.path = result.indexOf("/p/a/t/h_(asd)/h?q=abc123#dfdf");
+		iidxes.url.queryAndFragment = result.indexOf("?q=abc123#dfdf");
 	}
 
 	if (i === 3) {
