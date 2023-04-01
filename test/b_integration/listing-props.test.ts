@@ -185,7 +185,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 		ipv4: undefined,
 		ipv6: undefined,
 		confirmedByProtocol: true,
-		path: undefined,
+		path: "/someting/",
 		query: undefined,
 		fragment: undefined,
 	},
@@ -249,7 +249,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 		query: undefined,
 		fragment: undefined,
 	},
-	"https://عرب.com/wiki/მთავარი_გვერდი": {
+	"https://عرب.com/wiki/მთავარიგვერდი": {
 		isURL: true,
 		protocol: "https://",
 		host: undefined,
@@ -257,7 +257,7 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 		ipv4: undefined,
 		ipv6: undefined,
 		confirmedByProtocol: true,
-		path: undefined,
+		path: '/wiki/მთავარიგვერდი',
 		query: undefined,
 		fragment: undefined,
 	},
