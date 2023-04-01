@@ -114,11 +114,10 @@ const list = function (input: string) {
 		}
 
 		if (result[iidxes.isURL]) {
-			const path = ((result[iidxes.url.path] || "").replace(/(\?.*)|(\#.*)/,''));
-			let queryAndFragment = (result[iidxes.url.queryAndFragment] || "");
-			queryAndFragment = /^(\#|\?)/.test(queryAndFragment) ? queryAndFragment : '';
-			const query = (queryAndFragment.replace(/(\#.*)/,'').substring(1));
-			const fragment = queryAndFragment.replace(/(\?.*#)|(#)|(\?.*)/,'');
+			const path = (string.match(/(?:\w|])((\/[^?#\s]+)+)/) || [])[1];
+			const query = (string.match(/(?:\?)([^#]+)\b/) || [])[1];
+			const fragment = (string.match(/(?:#)(.+)\b/) || [])[1];
+
 			found.push({
 				start,
 				end,
@@ -131,8 +130,8 @@ const list = function (input: string) {
 				host: result[iidxes.url.host[0]] || result[iidxes.url.host[1]] || result[iidxes.url.host[2]],
 				confirmedByProtocol: !!protocol,
 				path:  path || undefined,
-				query:  query || undefined,
-				fragment:  fragment || undefined,
+				query:  query,
+				fragment:  fragment,
 				reason: "url",
 			});
 		} else if (result[iidxes.isFile]) {
