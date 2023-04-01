@@ -1,22 +1,20 @@
 import { nonLatinAlphabetRanges } from "./dictionary";
 
-const email_address = "([a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
 const domainWithAnyTLD = `(?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)`;
 const allowedInPath = `a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#`;
-const path = `(((\\/(([${allowedInPath}]+(\\/[${allowedInPath}]*)*))*?)?))?`;
 const ipv4 = `((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))`;
 const ipv6 = `\\[(([a-f0-9:]+:+)+[a-f0-9]+)\\]`;
 const port = `(:(\\d{1,5}))?`;
 const protocol = `(https?:|ftps?:)\\/\\/`;
 const confirmedByProtocol = `(${protocol})\\S+`;
-const additionalSlashes = `(([\\/]?))+`;
-const fqdn = `(((${protocol})?(${domainWithAnyTLD}|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))`;
-const nonLatinMatches = `(((${protocol})?((?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))((?:\\/)?\\b(?:([${allowedInPath}\\/${nonLatinAlphabetRanges}](?:[a-z\\d\\-_~+=#&\\/${nonLatinAlphabetRanges}]|\\b)+)*)+)`;
 
-export const email = `\\b(mailto:)?${email_address}@(${domainWithAnyTLD}|${ipv4})\\b`;
-export const url = `(${nonLatinMatches})|(\\b${fqdn}${path}\\b${additionalSlashes})`;
+export const email = `\\b(mailto:)?([a-z0-9!#$%&'*+=?^_\`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_\`{|}~-]+)*)@(${domainWithAnyTLD}|${ipv4})\\b`;
+
+export const url = `((((${protocol})?((?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))((?:\\/)?\\b(?:([${allowedInPath}\\/${nonLatinAlphabetRanges}](?:[a-z\\d\\-_~+=#&\\/${nonLatinAlphabetRanges}]|\\b)+)*)+))|(\\b(((${protocol})?(${domainWithAnyTLD}|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))(((\\/(([${allowedInPath}]+(\\/[${allowedInPath}]*)*))*?)?))?\\b(([\\/]?))+)`;
+
+
 export const file = `(file:\\/\\/\\/)(?:[a-z]+:(?:\\/|\\\\)+)?([\\w.]+(?:[\\/\\\\]?)+)+`;
-export const final = `(\\b)?(${url})+|(${email})|(${file})(\\b)?`;
+export const final = `(\\b)((${url})+|(${email})|(${file}))(\\b)?`;
 export const finalRegex = new RegExp(final, "gi");
 
 // for validation purposes
@@ -54,8 +52,6 @@ const iidxes = {
 		port: 0,
 		protocolWithDomain: 0,
 		path: 0,
-		// sometimes path might be split into two parts
-		secondPartOfPath: 0,
 		queryAndFragment: 0,
 	},
 };
@@ -117,9 +113,6 @@ for (let i = 0; i < testers.length; i++) {
 	if (i === 5) {
 		iidxes.url.ipv6 = result.indexOf("2a00:1450:4025:401::67");
 		iidxes.url.protocol[1] = result.lastIndexOf("http://");
-	}
-	if (i === 6) {
-		iidxes.url.secondPartOfPath = result.indexOf("გგ");
 	}
 	if(i===7) {
 		iidxes.url.TLD[0] = result.indexOf("ta")
