@@ -36,17 +36,7 @@ const list = function (input: string) {
 		result[iidxes.url.protocol[1]] ||
 		result[iidxes.url.protocol[2]];
 
-		// ### trailing slashes problem
-		/**
-		 * This is a quick and dirty fix for a problem that could be probably fixed with
-		 * slight modification in the regex.
-		 * The problem is that the library doesn't count the trailing slashes as part
-		 * of the URL, unless there were multiple trailing slashes.
-		 */
-		if (input.charAt(end) === "/" && !result[iidxes.isEmail]) {
-			string = string + input.charAt(end);
-			end++;
-		}
+		
 
 		// ### Parenthesis problem
 		/**
