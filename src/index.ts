@@ -108,7 +108,7 @@ const list = function (input: string) {
 		}
 
 		// filter out URLs that doesn't have a vaild TLD
-		let tld = result[iidxes.url.TLD[0]] || result[iidxes.url.TLD[1]] || result[iidxes.url.TLD[2]];
+		let tld = result[iidxes.url.TLD[0]] || result[iidxes.url.TLD[1]];
 		if(tld && (!protocol) && (!result[iidxes.email.protocol]) && TLDsArray.indexOf(tld.toLowerCase()) === -1) {
 			continue;
 		}
