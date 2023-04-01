@@ -1,20 +1,22 @@
 import { nonLatinAlphabetRanges } from "./dictionary";
 
-const domainWithAnyTLD = `(?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)`;
-const allowedInPath = `a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#`;
-const ipv4 = `((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))`;
-const ipv6 = `\\[(([a-f0-9:]+:+)+[a-f0-9]+)\\]`;
+const emailAddress = "([\\w!#$%&'*+=?^`{|}~-]+(?:\\.[\\w!#$%&'*+=?^`{|}~-]+)*)";
+const domain = `(?:(?:(?:[a-z\\d]|[a-z\\d][a-z\\d-]*[a-z\\d]))\\.)+([a-z]{2,}|xn--[a-z\\d]{2,})(?=[^.]|\\b)`;
+const allowedInPath = `\\w\\-.~\\!$&*+,;=:@%'"\\[\\]()?#`;
+const path = `((?:\/|\\?)(?:([${allowedInPath}${nonLatinAlphabetRanges}\\/](?:[\\w\\-~+=#&\\/${nonLatinAlphabetRanges}]|\\b)+)*)+)`;
+const ipv4 = `((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?))`;
+const ipv6 = `\\[(([a-f\\d:]+:+)+[a-f\\d]+)\\]`;
 const port = `(:(\\d{1,5}))?`;
-const protocol = `(https?:|ftps?:)\\/\\/`;
-const confirmedByProtocol = `(${protocol})\\S+`;
-
-export const email = `\\b(mailto:)?([a-z0-9!#$%&'*+=?^_\`{|}~-]+(?:\\.[a-z0-9!#$%&'*+=?^_\`{|}~-]+)*)@(${domainWithAnyTLD}|${ipv4})\\b`;
-
-export const url = `((((${protocol})?((?:(?:(?:[a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))((?:\\/)?\\b(?:([${allowedInPath}\\/${nonLatinAlphabetRanges}](?:[a-z\\d\\-_~+=#&\\/${nonLatinAlphabetRanges}]|\\b)+)*)+))|(\\b(((${protocol})?(${domainWithAnyTLD}|${ipv4}|(${protocol})(${ipv6}|${domainWithAnyTLD}))(?!@\\w)${port})|(${confirmedByProtocol}))(((\\/(([${allowedInPath}]+(\\/[${allowedInPath}]*)*))*?)?))?\\b(([\\/]?))+)`;
+const protocol = `(ht{2}ps?:|ftps?:)\\/\\/`;
+const confirmedByProtocol = `(${protocol})\\S+\\b`;
+const fqdn = `(((${protocol})?(${domain}|${ipv4}|(${protocol})(${ipv6}))\\b${port})|(?:${confirmedByProtocol}))`;
 
 
+
+export const email = `\\b(mailto:)?${emailAddress}@(${domain}|${ipv4})\\b`;
+export const url = `(${fqdn})${path}?`;
 export const file = `(file:\\/\\/\\/)(?:[a-z]+:(?:\\/|\\\\)+)?([\\w.]+(?:[\\/\\\\]?)+)+`;
-export const final = `(\\b)((${url})+|(${email})|(${file}))(\\b)?`;
+export const final = `\\b((${email})|(${file})|(${url}))(\\b)?`;
 export const finalRegex = new RegExp(final, "gi");
 
 // for validation purposes
@@ -41,7 +43,7 @@ const iidxes = {
 	isURL: 0,
 	url: {
 		// three places where TLD can appear
-		TLD: [0,0,0],
+		TLD: [0,0],
 		// three places where protocol can appear
 		protocol: [0,0,0],
 		// three places where host can appear
@@ -63,9 +65,7 @@ const testers = [
 	`http://www.عربي.com`,
 	`http://127.0.0.1:3000/p/a/t_(asd)/h?q=abc123#dfdf`,
 	`http://[2a00:1450:4025:401::67]/k/something`,
-	`a.org/abc/ი_გგ`,
 	`a.ta/p`,
-	`a.a.wg`,
 	`a@b.cd`,
 	`http://[2a00:1450:4025:401::67]/s`,
 	`www.github.com/path`,
@@ -100,7 +100,7 @@ for (let i = 0; i < testers.length; i++) {
 		);
 		iidxes.url.port = result.indexOf("3000");
 		iidxes.url.path = result.indexOf("/p/a/t/h_(asd)/h?q=abc123#dfdf");
-		iidxes.url.queryAndFragment = result.indexOf("?q=abc123#dfdf");
+		iidxes.url.queryAndFragment = result.lastIndexOf("?q=abc123#dfdf");
 	}
 
 	if (i === 3) {
@@ -114,22 +114,19 @@ for (let i = 0; i < testers.length; i++) {
 		iidxes.url.ipv6 = result.indexOf("2a00:1450:4025:401::67");
 		iidxes.url.protocol[1] = result.lastIndexOf("http://");
 	}
-	if(i===7) {
+	if(i===6) {
 		iidxes.url.TLD[0] = result.indexOf("ta")
 	}
-	if(i===8) {
-		iidxes.url.TLD[1] = result.lastIndexOf("wg")
+	if(i===7) {
+		iidxes.url.TLD[1] = result.indexOf("cd")
 	}
-	if(i===9) {
-		iidxes.url.TLD[2] = result.indexOf("cd")
-	}
-	if(i===10){
+	if(i===8){
 		iidxes.url.host[0] = result.lastIndexOf("[2a00:1450:4025:401::67]");
 	}
-	if(i===11){
+	if(i===9){
 		iidxes.url.host[1] = result.lastIndexOf("www.github.com");
 	}
-	if(i===12){
+	if(i===10){
 		iidxes.url.host[2] = result.lastIndexOf("google.co");
 	}
 	finalRegex.lastIndex = 0;
