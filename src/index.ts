@@ -220,9 +220,7 @@ const anchorme = function (
 	return newStr ? newStr : input;
 };
 
-anchorme.list = function (input: string) {
-	return list(input);
-};
+anchorme.list = list
 
 anchorme.validate = {
 	ip: (input: string) => ipRegex.test(input),
