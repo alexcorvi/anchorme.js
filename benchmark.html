@@ -216,7 +216,12 @@
 					const str = document.getElementById("input").value;
 
 					const Ai = test(() => {
-						anchorme(str);
+						anchorme({
+							input: str,
+							options: {
+								skipHTML: false
+							}
+						});
 					});
 
 					const Bi = test(() => {
