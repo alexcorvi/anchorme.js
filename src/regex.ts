@@ -9,7 +9,7 @@ const ipv6 = `\\[(?:(?:[a-f\\d:]+:+)+[a-f\\d]+)\\]`;
 const port = `(:(\\d{1,5}))?`;
 const protocol = `(ht{2}ps?:|ftps?:)\\/\\/`;
 const confirmedByProtocol = `(${protocol})\\S+\\b`;
-const fqdn = `(((${protocol})?(${domain}|${ipv4}|(${protocol})(${ipv6}))\\b${port})|(?:${confirmedByProtocol}))`;
+const fqdn = `(((${protocol})?(${domain}|${ipv4})\\b${port})|(?:${confirmedByProtocol}))`;
 
 
 
