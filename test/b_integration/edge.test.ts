@@ -262,6 +262,28 @@ describe("Edge cases testing", () => {
 		});
 	});
 
+	describe("having an xn-- TLD on URL", () => {
+		const str = `a.b.xn--80aa7b6abc.xn--p1ai/path?query#fragment`;
+		polluting.forEach((p) => {
+			it(str + " (polluted)", () => {
+				expect(anchorme(p(str))).toBe(
+					p(`<a href="http://${str}">${str}</a>`)
+				);
+			});
+		});
+	});
+
+	describe("having an xn-- TLD on email", () => {
+		const str = `me.com@gmail.xn--80aa7b6abc.xn--p1ai`;
+		polluting.forEach((p) => {
+			it(str + " (polluted)", () => {
+				expect(anchorme(p(str))).toBe(
+					p(`<a href="mailto:${str}">${str}</a>`)
+				);
+			});
+		});
+	});
+
 	describe("Having the link already inside an anchor tag", () => {
 		const email = "mailto:alex@yahoo.com";
 		const url = "http://127.2.2.1/query";
