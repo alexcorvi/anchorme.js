@@ -57,6 +57,7 @@ export interface Options {
 			props: Partial<ListingProps> & { string: string }
 		) => string;
 	}[];
+	skipHTML?: boolean;
 	protocol: TransformationOption<string>;
 	truncate: TransformationOption<number>;
 	middleTruncation: TransformationOption<boolean>;

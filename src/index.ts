@@ -22,7 +22,7 @@ let TLDsArray = TLDs.toLowerCase().split("|");
 
 // console.log(finalRegex);
 
-const list = function (input: string) {
+const list = function (input: string, skipHTML:boolean=true) {
 	const found: ListingProps[] = [];
 	let result: RegExpExecArray | null = null;
 
@@ -65,52 +65,51 @@ const list = function (input: string) {
 			});
 		}
 
-		// ### HTML problem 1
-		/**
+		if(skipHTML) {
+			// ### HTML problem 1
+			/**
 				checking whether the token is already inside an HTML element by seeing if it's
 				preceded by an HTML attribute that would hold a url (e.g. src, cite ...etc)
 			*/
-		if (
-			['""', "''", "()"].indexOf(
-				input.charAt(start - 1) + input.charAt(end)
-			) !== -1
-		) {
 			if (
-				isInsideAttribute(
-					input.substring(start - maximumAttrLength - 15, start)
-				)
+				['""', "''", "()"].indexOf(
+					input.charAt(start - 1) + input.charAt(end)
+				) !== -1
 			) {
-				continue;
+				if (
+					isInsideAttribute(
+						input.substring(start - maximumAttrLength - 15, start)
+					)
+				) {
+					continue;
+				}
 			}
-		}
 
-		// ### HTML problem 2
-		/**
+			// ### HTML problem 2
+			/**
 				Checking whether the token is the content of an actual anchor
 				e.g. <a href="https://something.com">click to go to something.com and have fun</a>
 			*/
-
-		if (
-			input.substring(end, input.length).indexOf("</a>") > -1 &&
-			input.substring(0, start).indexOf("<a") > -1 &&
-			isInsideAnchorTag(string, input, end)
-		) {
-			continue;
-		}
-
-		// same thing like above for img src, and we're doing only those two since they are most common
-		if (
-			input.substring(0, start).indexOf("<img") > -1 &&
-			input.substring(end, input.length).indexOf(">") > -1 &&
-			isInsideImgSrc(string, input, end)
-		) {
-			continue;
-		}
+			if (
+				input.substring(end, input.length).indexOf("</a>") > -1 &&
+				input.substring(0, start).indexOf("<a") > -1 &&
+				isInsideAnchorTag(string, input, end)
+			) {
+				continue;
+			}
 
 		// filter out URLs that doesn't have a vaild TLD
 		let tld = result[iidxes.url.TLD[0]] || result[iidxes.url.TLD[1]];
 		if(tld && (!protocol) && (!result[iidxes.email.protocol]) && TLDsArray.indexOf(tld.toLowerCase()) === -1) {
 			continue;
+			// same thing like above for img src, and we're doing only those two since they are most common
+			if (
+				input.substring(0, start).indexOf("<img") > -1 &&
+				input.substring(end, input.length).indexOf(">") > -1 &&
+				isInsideImgSrc(string, input, end)
+			) {
+				continue;
+			}
 		}
 
 		if (result[iidxes.isURL]) {
