@@ -1,7 +1,7 @@
 import { nonLatinAlphabetRanges } from "./dictionary";
 
 const emailAddress = "([\\w!#$%&'*+=?^`{|}~-]+(?:\\.[\\w!#$%&'*+=?^`{|}~-]+)*)";
-const domain = `(?:(?:(?:[a-z\\d]|[a-z\\d][a-z\\d-]*[a-z\\d]))\\.)+([a-z]{2,}|xn--[a-z\\d]{2,})(?=[^.]|\\b)`;
+const domain = `(?:(?:(?:[a-z\\d]|[a-z\\d][a-z\\d-]*[a-z\\d]))\\.)+(xn--[a-z\\d]{2,}|[a-z]{2,})(?=[^.]|\\b)`;
 const allowedInPath = `\\w\\-.~\\!$&*+,;=:@%'"\\[\\]()?#`;
 const path = `((?:\/|\\?)(?:([${allowedInPath}${nonLatinAlphabetRanges}\\/](?:[\\w\\-~+=#&\\/${nonLatinAlphabetRanges}]|\\b)+)*)+)`;
 const ipv4 = `((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?))`;
