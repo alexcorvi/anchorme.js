@@ -116,9 +116,11 @@ const list = function (input: string, skipHTML:boolean=true) {
 		}
 
 		if (result[iidxes.isURL]) {
+			const host = result[iidxes.url.host[0]] || result[iidxes.url.host[1]] || result[iidxes.url.host[2]];
 			const path = (string.match(/(?:\w|])((\/[^?#\s]+)+)/) || [])[1];
 			const query = (string.match(/(?:\?)([^#]+)\b/) || [])[1];
 			const fragment = (string.match(/(?:#)(.+)\b/) || [])[1];
+			const ipv6 = host === undefined ? (string.match(/\/\/\[((?:(?:[a-f\d:]+:+)+[a-f\d]+))\]/) || [])[1] : undefined;
 
 			found.push({
 				start,
@@ -128,8 +130,8 @@ const list = function (input: string, skipHTML:boolean=true) {
 				protocol: protocol,
 				port: result[iidxes.url.port],
 				ipv4: result[iidxes.url.ipv4],
-				ipv6: result[iidxes.url.ipv6],
-				host: result[iidxes.url.host[0]] || result[iidxes.url.host[1]] || result[iidxes.url.host[2]],
+				ipv6: ipv6,
+				host: ipv6 ? '['+ipv6+']' : host,
 				confirmedByProtocol: !!protocol,
 				path:  path || undefined,
 				query:  query,
