@@ -195,7 +195,7 @@ const anchorme = function (
 		}
 	}
 
-	const found = list(input);
+	const found = list(input, (options || {}).skipHTML);
 	let newStr = "";
 
 	// the following code isn't very intuitive nor human readable
