@@ -5,7 +5,7 @@ const domain = `(?:(?:(?:[a-z\\d]|[a-z\\d][a-z\\d-]*[a-z\\d]))\\.)+([a-z]{2,}|xn
 const allowedInPath = `\\w\\-.~\\!$&*+,;=:@%'"\\[\\]()?#`;
 const path = `((?:\/|\\?)(?:([${allowedInPath}${nonLatinAlphabetRanges}\\/](?:[\\w\\-~+=#&\\/${nonLatinAlphabetRanges}]|\\b)+)*)+)`;
 const ipv4 = `((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?))`;
-const ipv6 = `\\[(([a-f\\d:]+:+)+[a-f\\d]+)\\]`;
+const ipv6 = `\\[(?:(?:[a-f\\d:]+:+)+[a-f\\d]+)\\]`;
 const port = `(:(\\d{1,5}))?`;
 const protocol = `(ht{2}ps?:|ftps?:)\\/\\/`;
 const confirmedByProtocol = `(${protocol})\\S+\\b`;
