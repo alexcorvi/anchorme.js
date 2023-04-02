@@ -140,28 +140,20 @@
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.iidxes = exports.urlRegex = exports.fileRegex = exports.emailRegex = exports.ipRegex = exports.finalRegex = exports.final = exports.file = exports.url = exports.email = void 0;
 
-	var email_address = "([a-z0-9!#$%&'*+=?^_`{|}~-]+(\\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*)";
-	"([a-z0-9]+(-+[a-z0-9]+)*\\.)+(".concat(dictionary.TLDs, ")");
-	var domainWithAnyTLD = "((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)";
-	var allowedInPath = "a-z\\d\\-._~\\!$&*+,;=:@%'\"\\[\\]()?#";
-	var path = "(((\\/(([".concat(allowedInPath, "]+(\\/[").concat(allowedInPath, "]*)*))*?)?))?");
-	var ipv4 = "((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-	var ipv6 = "\\[(([a-f0-9:]+:+)+[a-f0-9]+)\\]";
+	var emailAddress = "([\\w!#$%&'*+=?^`{|}~-]+(?:\\.[\\w!#$%&'*+=?^`{|}~-]+)*)";
+	var domain = "(?:(?:(?:[a-z\\d]|[a-z\\d][a-z\\d-]*[a-z\\d]))\\.)+(xn--[a-z\\d]{2,}|[a-z]{2,})(?=[^.]|\\b)";
+	var allowedInPath = "\\w\\-.~\\!$&*+,;=:@%'\"\\[\\]()?#";
+	var path = "((?:/|\\?)(?:([".concat(allowedInPath).concat(dictionary.nonLatinAlphabetRanges, "\\/](?:[\\w\\-~+=#&\\/").concat(dictionary.nonLatinAlphabetRanges, "]|\\b)+)*)+)");
+	var ipv4 = "((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?))";
+	var ipv6 = "\\[(?:(?:[a-f\\d:]+:+)+[a-f\\d]+)\\]";
 	var port = "(:(\\d{1,5}))?";
-	var protocol = "(https?:|ftps?:)\\/\\/";
-	var confirmedByProtocol = "(".concat(protocol, ")\\S+");
-	var additionalSlashes = "(([\\/]?))+";
-	var fqdn = "(((".concat(protocol, ")?(").concat(domainWithAnyTLD, "|").concat(ipv4, "|(").concat(protocol, ")(").concat(ipv6, "|").concat(domainWithAnyTLD, "))(?!@\\w)").concat(port, ")|(").concat(confirmedByProtocol, "))");
-	var nonLatinMatches = "(((".concat(protocol, ")?(((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|").concat(ipv4, "|(").concat(protocol, ")(").concat(ipv6, "|").concat(domainWithAnyTLD, "))(?!@\\w)").concat(port, ")|(").concat(confirmedByProtocol, "))((((\\/(([").concat(allowedInPath, "]+(\\/[").concat(allowedInPath).concat(dictionary.nonLatinAlphabetRanges, "]*)*))*?)?))?\\b((([").concat(allowedInPath, "\\/").concat(dictionary.nonLatinAlphabetRanges, "][a-z\\d\\-_~+=\\/").concat(dictionary.nonLatinAlphabetRanges, "]+)))+)");
-	exports.email = "\\b(mailto:)?".concat(email_address, "@(").concat(domainWithAnyTLD, "|").concat(ipv4, ")\\b");
-	exports.url = "(".concat(nonLatinMatches, ")|(\\b").concat(fqdn).concat(path, "\\b").concat(additionalSlashes, ")");
-	//TODO: remove other than nonLatinMatches since it is matching everything?
-	// check
-	exports.file = "(file:\\/\\/\\/)([a-z]+:(\\/|\\\\)+)?([\\w.]+([\\/\\\\]?)+)+";
-	exports.final = "\\b(".concat(exports.url, ")|(").concat(exports.email, ")|(").concat(exports.file, ")\\b");
-	/**
-	export const final = `\\b((((((https?:|ftps?:)\\/\\/)?(((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.])|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((https?:|ftps?:)\\/\\/)(\\[(([a-f0-9:]+:+)+[a-f0-9]+)\\]|((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)))(?!@\\w)(:(\\d{1,5}))?)|(((https?:|ftps?:)\\/\\/)\\S+))((((\\/(([a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#]+(\\/[a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#${nonLatinAlphabetRanges}]*)*))*?)?))?\\b((([a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#\\/${nonLatinAlphabetRanges}][a-z\\d\\-_~+=\\/${nonLatinAlphabetRanges}]+)))+))|(\\b((((https?:|ftps?:)\\/\\/)?(((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((https?:|ftps?:)\\/\\/)(\\[(([a-f0-9:]+:+)+[a-f0-9]+)\\]|((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)))(?!@\\w)(:(\\d{1,5}))?)|(((https?:|ftps?:)\\/\\/)\\S+))(((\\/(([a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#]+(\\/[a-z\\d\\-._~\\!$&*+,;=:@%'"\\[\\]()?#]*)*))*?)?))?\\b(([\\/]?))+))|(\\b(mailto:)?([a-z0-9!#$%&'*+=?^_\`{|}~-]+(\\.[a-z0-9!#$%&'*+=?^_\`{|}~-]+)*)@(((([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9]))\\.){1,}([a-z]{2,}|xn--[a-z0-9]{2,})(?=[^.]|\\b)|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\\b)|((file:\\/\\/\\/)([a-z]+:(\\/|\\\\)+)?([\\w.]+([\\/\\\\]?)+)+)\\b`;
-	*/
+	var protocol = "(ht{2}ps?:|ftps?:)\\/\\/";
+	var confirmedByProtocol = "(".concat(protocol, ")\\S+\\b");
+	var fqdn = "(((".concat(protocol, ")?(").concat(domain, "|").concat(ipv4, ")\\b").concat(port, ")|(?:").concat(confirmedByProtocol, "))");
+	exports.email = "\\b(mailto:)?".concat(emailAddress, "@(").concat(domain, "|").concat(ipv4, ")\\b");
+	exports.url = "(".concat(fqdn, ")").concat(path, "?");
+	exports.file = "(file:\\/\\/\\/)(?:[a-z]+:(?:\\/|\\\\)+)?([\\w.]+(?:[\\/\\\\]?)+)+";
+	exports.final = "\\b((".concat(exports.email, ")|(").concat(exports.file, ")|(").concat(exports.url, "))(\\b)?");
 	exports.finalRegex = new RegExp(exports.final, "gi");
 	// for validation purposes
 	exports.ipRegex = new RegExp("^(".concat(ipv4, "|").concat(ipv6, ")$"), "i");
@@ -172,34 +164,32 @@
 	// the initial value of this object is precomputed.
 	// https://github.com/alexcorvi/anchorme.js/blob/098843bc0d042601cff592c4f8c9f6d0424c09cd/src/regex.ts
 	var iidxes = {
-	    isURL: 0,
-	    isEmail: 0,
 	    isFile: 0,
 	    file: {
 	        fileName: 0,
 	        protocol: 0,
 	    },
+	    isEmail: 0,
 	    email: {
 	        protocol: 0,
 	        local: 0,
 	        host: 0,
 	    },
+	    isURL: 0,
 	    url: {
 	        // three places where TLD can appear
+	        TLD: [0, 0],
 	        // three places where protocol can appear
-	        TLD: [0, 0, 0],
 	        protocol: [0, 0, 0],
+	        // three places where host can appear
+	        host: [0, 0, 0],
 	        ipv4: 0,
 	        ipv6: 0,
-	        ipv4Confirmation: 0,
 	        byProtocol: 0,
 	        port: 0,
 	        protocolWithDomain: 0,
 	        path: 0,
-	        // sometimes path might be split into two parts
-	        secondPartOfPath: 0,
-	        query: 0,
-	        fragment: 0,
+	        queryAndFragment: 0,
 	    },
 	};
 	exports.iidxes = iidxes;
@@ -210,14 +200,18 @@
 	    "http://www.\u0639\u0631\u0628\u064A.com",
 	    "http://127.0.0.1:3000/p/a/t_(asd)/h?q=abc123#dfdf",
 	    "http://[2a00:1450:4025:401::67]/k/something",
-	    "a.org/abc/\u10D8_\u10D2\u10D2",
 	    "a.ta/p",
-	    "a.tb",
-	    "a@b.cd"
-	].join(" ");
-	var result = null;
-	var i = 0;
-	while ((result = exports.finalRegex.exec(testers)) !== null) {
+	    "a@b.cd",
+	    "http://[2a00:1450:4025:401::67]/s",
+	    "www.github.com/path",
+	    "google.co."
+	];
+	for (var i = 0; i < testers.length; i++) {
+	    var element = testers[i];
+	    var result = exports.finalRegex.exec(element);
+	    if (result === null) {
+	        continue;
+	    }
 	    if (i === 0) {
 	        iidxes.isFile = result.lastIndexOf(result[0]);
 	        iidxes.file.fileName = result.indexOf("filename.pdf");
@@ -234,35 +228,36 @@
 	        iidxes.url.protocol[0] = result.indexOf("http://");
 	        iidxes.url.protocolWithDomain = result.indexOf("http://sub.domain.co.uk:3000");
 	        iidxes.url.port = result.indexOf("3000");
-	        iidxes.url.path = result.indexOf("/p/a/t/h_(asd)/h");
-	        iidxes.url.query = result.indexOf("q=abc123");
-	        iidxes.url.fragment = result.indexOf("dfdf");
+	        iidxes.url.path = result.indexOf("/p/a/t/h_(asd)/h?q=abc123#dfdf");
+	        iidxes.url.queryAndFragment = result.lastIndexOf("?q=abc123#dfdf");
 	    }
 	    if (i === 3) {
 	        iidxes.url.byProtocol = result.lastIndexOf("http://www.عربي.com");
 	        iidxes.url.protocol[2] = result.lastIndexOf("http://");
 	    }
 	    if (i === 4) {
-	        iidxes.url.ipv4 = result.indexOf("127.0.0.1");
-	        iidxes.url.ipv4Confirmation = result.indexOf("0.");
+	        iidxes.url.ipv4 = result.lastIndexOf("127.0.0.1");
 	    }
 	    if (i === 5) {
 	        iidxes.url.ipv6 = result.indexOf("2a00:1450:4025:401::67");
 	        iidxes.url.protocol[1] = result.lastIndexOf("http://");
 	    }
 	    if (i === 6) {
-	        iidxes.url.secondPartOfPath = result.indexOf("გგ");
-	    }
-	    if (i === 7) {
 	        iidxes.url.TLD[0] = result.indexOf("ta");
 	    }
+	    if (i === 7) {
+	        iidxes.url.TLD[1] = result.indexOf("cd");
+	    }
 	    if (i === 8) {
-	        iidxes.url.TLD[1] = result.indexOf("tb");
+	        iidxes.url.host[0] = result.lastIndexOf("[2a00:1450:4025:401::67]");
 	    }
 	    if (i === 9) {
-	        iidxes.url.TLD[2] = result.indexOf("cd");
+	        iidxes.url.host[1] = result.lastIndexOf("www.github.com");
 	    }
-	    i++;
+	    if (i === 10) {
+	        iidxes.url.host[2] = result.lastIndexOf("google.co");
+	    }
+	    exports.finalRegex.lastIndex = 0;
 	}
 	console.log(iidxes);
 	});
@@ -340,9 +335,10 @@
 
 
 	var dictionary_2 = dictionary;
-	var TLDsArray = dictionary_2.TLDs.toLowerCase().split("|");
+	var TLDsRgex = new RegExp("^(".concat(dictionary_2.TLDs, ")$"), 'i');
 	console.log(regex.finalRegex);
-	var list = function (input) {
+	var list = function (input, skipHTML) {
+	    if (skipHTML === void 0) { skipHTML = true; }
 	    var found = [];
 	    var result = null;
 	    var _loop_1 = function () {
@@ -352,17 +348,6 @@
 	        var protocol = result[regex.iidxes.url.protocol[0]] ||
 	            result[regex.iidxes.url.protocol[1]] ||
 	            result[regex.iidxes.url.protocol[2]];
-	        // ### trailing slashes problem
-	        /**
-	         * This is a quick and dirty fix for a problem that could be probably fixed with
-	         * slight modification in the regex.
-	         * The problem is that the library doesn't count the trailing slashes as part
-	         * of the URL, unless there were multiple trailing slashes.
-	         */
-	        if (input.charAt(end) === "/") {
-	            string = string + input.charAt(end);
-	            end++;
-	        }
 	        // ### Parenthesis problem
 	        /**
 	                As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
@@ -382,40 +367,45 @@
 	                }
 	            });
 	        }
-	        // ### HTML problem 1
-	        /**
+	        // filter out URLs that doesn't have a vaild TLD
+	        var tld = result[regex.iidxes.url.TLD[0]] || result[regex.iidxes.url.TLD[1]];
+	        if (tld && (!protocol) && (!result[regex.iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
+	            return "continue";
+	        }
+	        if (skipHTML) {
+	            // ### HTML problem 1
+	            /**
 	                checking whether the token is already inside an HTML element by seeing if it's
 	                preceded by an HTML attribute that would hold a url (e.g. src, cite ...etc)
 	            */
-	        if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
-	            if ((0, utils.isInsideAttribute)(input.substring(start - utils.maximumAttrLength - 15, start))) {
-	                return "continue";
+	            if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
+	                if ((0, utils.isInsideAttribute)(input.substring(start - utils.maximumAttrLength - 15, start))) {
+	                    return "continue";
+	                }
 	            }
-	        }
-	        // ### HTML problem 2
-	        /**
+	            // ### HTML problem 2
+	            /**
 	                Checking whether the token is the content of an actual anchor
 	                e.g. <a href="https://something.com">click to go to something.com and have fun</a>
 	            */
-	        if (input.substring(end, input.length).indexOf("</a>") > -1 &&
-	            input.substring(0, start).indexOf("<a") > -1 &&
-	            (0, utils.isInsideAnchorTag)(string, input, end)) {
-	            return "continue";
-	        }
-	        // same thing like above for img src, and we're doing only those two since they are most common
-	        if (input.substring(0, start).indexOf("<img") > -1 &&
-	            input.substring(end, input.length).indexOf(">") > -1 &&
-	            (0, utils.isInsideImgSrc)(string, input, end)) {
-	            return "continue";
-	        }
-	        // filter out URLs that doesn't have a vaild TLD
-	        var tld = result[regex.iidxes.url.TLD[0]] || result[regex.iidxes.url.TLD[1]] || result[regex.iidxes.url.TLD[2]];
-	        if (tld && (!protocol) && (!result[regex.iidxes.email.protocol]) && TLDsArray.indexOf(tld.toLowerCase()) === -1) {
-	            return "continue";
+	            if (input.substring(end, input.length).indexOf("</a>") > -1 &&
+	                input.substring(0, start).indexOf("<a") > -1 &&
+	                (0, utils.isInsideAnchorTag)(string, input, end)) {
+	                return "continue";
+	            }
+	            // same thing like above for img src, and we're doing only those two since they are most common
+	            if (input.substring(0, start).indexOf("<img") > -1 &&
+	                input.substring(end, input.length).indexOf(">") > -1 &&
+	                (0, utils.isInsideImgSrc)(string, input, end)) {
+	                return "continue";
+	            }
 	        }
 	        if (result[regex.iidxes.isURL]) {
-	            var path = (result[regex.iidxes.url.path] || "") +
-	                (result[regex.iidxes.url.secondPartOfPath] || "") || undefined;
+	            var host = result[regex.iidxes.url.host[0]] || result[regex.iidxes.url.host[1]] || result[regex.iidxes.url.host[2]];
+	            var path = (string.match(/(?:\w|])((\/[^?#\s]+)+)/) || [])[1];
+	            var query = (string.match(/(?:\?)([^#]+)\b/) || [])[1];
+	            var fragment = (string.match(/(?:#)(.+)\b/) || [])[1];
+	            var ipv6 = host === undefined ? (string.match(/\/\/\[((?:(?:[a-f\d:]+:+)+[a-f\d]+))\]/) || [])[1] : undefined;
 	            found.push({
 	                start: start,
 	                end: end,
@@ -423,17 +413,13 @@
 	                isURL: true,
 	                protocol: protocol,
 	                port: result[regex.iidxes.url.port],
-	                ipv4: result[regex.iidxes.url.ipv4Confirmation]
-	                    ? result[regex.iidxes.url.ipv4]
-	                    : undefined,
-	                ipv6: result[regex.iidxes.url.ipv6],
-	                host: result[regex.iidxes.url.protocol[1]]
-	                    ? undefined
-	                    : (result[regex.iidxes.url.protocolWithDomain] || "").substr((protocol || "").length),
+	                ipv4: result[regex.iidxes.url.ipv4],
+	                ipv6: ipv6,
+	                host: ipv6 ? '[' + ipv6 + ']' : host,
 	                confirmedByProtocol: !!protocol,
-	                path: result[regex.iidxes.url.protocol[1]] ? undefined : path,
-	                query: result[regex.iidxes.url.query] || undefined,
-	                fragment: result[regex.iidxes.url.fragment] || undefined,
+	                path: path || undefined,
+	                query: query,
+	                fragment: fragment,
 	                reason: "url",
 	            });
 	        }
@@ -487,7 +473,7 @@
 	            input = input.replace(extension.test, extension.transform);
 	        }
 	    }
-	    var found = list(input);
+	    var found = list(input, (options || {}).skipHTML);
 	    var newStr = "";
 	    // the following code isn't very intuitive nor human readable
 	    // but faster than others
@@ -505,9 +491,7 @@
 	    }
 	    return newStr ? newStr : input;
 	};
-	anchorme.list = function (input) {
-	    return list(input);
-	};
+	anchorme.list = list;
 	anchorme.validate = {
 	    ip: function (input) { return regex.ipRegex.test(input); },
 	    email: function (input) { return regex.emailRegex.test(input); },

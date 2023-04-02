@@ -5,9 +5,10 @@ var transform_1 = require("./transform");
 var regex_1 = require("./regex");
 var utils_1 = require("./utils");
 var dictionary_2 = require("./dictionary");
-var TLDsArray = dictionary_2.TLDs.toLowerCase().split("|");
+var TLDsRgex = new RegExp("^(".concat(dictionary_2.TLDs, ")$"), 'i');
 console.log(regex_1.finalRegex);
-var list = function (input) {
+var list = function (input, skipHTML) {
+    if (skipHTML === void 0) { skipHTML = true; }
     var found = [];
     var result = null;
     var _loop_1 = function () {
@@ -17,17 +18,6 @@ var list = function (input) {
         var protocol = result[regex_1.iidxes.url.protocol[0]] ||
             result[regex_1.iidxes.url.protocol[1]] ||
             result[regex_1.iidxes.url.protocol[2]];
-        // ### trailing slashes problem
-        /**
-         * This is a quick and dirty fix for a problem that could be probably fixed with
-         * slight modification in the regex.
-         * The problem is that the library doesn't count the trailing slashes as part
-         * of the URL, unless there were multiple trailing slashes.
-         */
-        if (input.charAt(end) === "/") {
-            string = string + input.charAt(end);
-            end++;
-        }
         // ### Parenthesis problem
         /**
                 As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
@@ -47,40 +37,45 @@ var list = function (input) {
                 }
             });
         }
-        // ### HTML problem 1
-        /**
+        // filter out URLs that doesn't have a vaild TLD
+        var tld = result[regex_1.iidxes.url.TLD[0]] || result[regex_1.iidxes.url.TLD[1]];
+        if (tld && (!protocol) && (!result[regex_1.iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
+            return "continue";
+        }
+        if (skipHTML) {
+            // ### HTML problem 1
+            /**
                 checking whether the token is already inside an HTML element by seeing if it's
                 preceded by an HTML attribute that would hold a url (e.g. src, cite ...etc)
             */
-        if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
-            if ((0, utils_1.isInsideAttribute)(input.substring(start - utils_1.maximumAttrLength - 15, start))) {
-                return "continue";
+            if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
+                if ((0, utils_1.isInsideAttribute)(input.substring(start - utils_1.maximumAttrLength - 15, start))) {
+                    return "continue";
+                }
             }
-        }
-        // ### HTML problem 2
-        /**
+            // ### HTML problem 2
+            /**
                 Checking whether the token is the content of an actual anchor
                 e.g. <a href="https://something.com">click to go to something.com and have fun</a>
             */
-        if (input.substring(end, input.length).indexOf("</a>") > -1 &&
-            input.substring(0, start).indexOf("<a") > -1 &&
-            (0, utils_1.isInsideAnchorTag)(string, input, end)) {
-            return "continue";
-        }
-        // same thing like above for img src, and we're doing only those two since they are most common
-        if (input.substring(0, start).indexOf("<img") > -1 &&
-            input.substring(end, input.length).indexOf(">") > -1 &&
-            (0, utils_1.isInsideImgSrc)(string, input, end)) {
-            return "continue";
-        }
-        // filter out URLs that doesn't have a vaild TLD
-        var tld = result[regex_1.iidxes.url.TLD[0]] || result[regex_1.iidxes.url.TLD[1]] || result[regex_1.iidxes.url.TLD[2]];
-        if (tld && (!protocol) && (!result[regex_1.iidxes.email.protocol]) && TLDsArray.indexOf(tld.toLowerCase()) === -1) {
-            return "continue";
+            if (input.substring(end, input.length).indexOf("</a>") > -1 &&
+                input.substring(0, start).indexOf("<a") > -1 &&
+                (0, utils_1.isInsideAnchorTag)(string, input, end)) {
+                return "continue";
+            }
+            // same thing like above for img src, and we're doing only those two since they are most common
+            if (input.substring(0, start).indexOf("<img") > -1 &&
+                input.substring(end, input.length).indexOf(">") > -1 &&
+                (0, utils_1.isInsideImgSrc)(string, input, end)) {
+                return "continue";
+            }
         }
         if (result[regex_1.iidxes.isURL]) {
-            var path = (result[regex_1.iidxes.url.path] || "") +
-                (result[regex_1.iidxes.url.secondPartOfPath] || "") || undefined;
+            var host = result[regex_1.iidxes.url.host[0]] || result[regex_1.iidxes.url.host[1]] || result[regex_1.iidxes.url.host[2]];
+            var path = (string.match(/(?:\w|])((\/[^?#\s]+)+)/) || [])[1];
+            var query = (string.match(/(?:\?)([^#]+)\b/) || [])[1];
+            var fragment = (string.match(/(?:#)(.+)\b/) || [])[1];
+            var ipv6 = host === undefined ? (string.match(/\/\/\[((?:(?:[a-f\d:]+:+)+[a-f\d]+))\]/) || [])[1] : undefined;
             found.push({
                 start: start,
                 end: end,
@@ -88,17 +83,13 @@ var list = function (input) {
                 isURL: true,
                 protocol: protocol,
                 port: result[regex_1.iidxes.url.port],
-                ipv4: result[regex_1.iidxes.url.ipv4Confirmation]
-                    ? result[regex_1.iidxes.url.ipv4]
-                    : undefined,
-                ipv6: result[regex_1.iidxes.url.ipv6],
-                host: result[regex_1.iidxes.url.protocol[1]]
-                    ? undefined
-                    : (result[regex_1.iidxes.url.protocolWithDomain] || "").substr((protocol || "").length),
+                ipv4: result[regex_1.iidxes.url.ipv4],
+                ipv6: ipv6,
+                host: ipv6 ? '[' + ipv6 + ']' : host,
                 confirmedByProtocol: !!protocol,
-                path: result[regex_1.iidxes.url.protocol[1]] ? undefined : path,
-                query: result[regex_1.iidxes.url.query] || undefined,
-                fragment: result[regex_1.iidxes.url.fragment] || undefined,
+                path: path || undefined,
+                query: query,
+                fragment: fragment,
                 reason: "url",
             });
         }
@@ -152,7 +143,7 @@ var anchorme = function (arg) {
             input = input.replace(extension.test, extension.transform);
         }
     }
-    var found = list(input);
+    var found = list(input, (options || {}).skipHTML);
     var newStr = "";
     // the following code isn't very intuitive nor human readable
     // but faster than others
@@ -170,9 +161,7 @@ var anchorme = function (arg) {
     }
     return newStr ? newStr : input;
 };
-anchorme.list = function (input) {
-    return list(input);
-};
+anchorme.list = list;
 anchorme.validate = {
     ip: function (input) { return regex_1.ipRegex.test(input); },
     email: function (input) { return regex_1.emailRegex.test(input); },

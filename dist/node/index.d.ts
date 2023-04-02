@@ -10,7 +10,7 @@ declare const anchorme: {
             transform: (string: string) => string;
         }[] | undefined;
     }): string;
-    list(input: string): ListingProps[];
+    list: (input: string, skipHTML?: boolean) => ListingProps[];
     validate: {
         ip: (input: string) => boolean;
         email: (input: string) => boolean;
