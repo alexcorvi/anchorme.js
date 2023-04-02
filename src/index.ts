@@ -18,7 +18,7 @@ import {
 } from "./utils";
 
 import { TLDs } from "./dictionary";
-let TLDsArray = TLDs.toLowerCase().split("|");
+let TLDsRgex = new RegExp(`^(${TLDs})$`,'i');
 
 // console.log(finalRegex);
 
@@ -65,6 +65,13 @@ const list = function (input: string, skipHTML:boolean=true) {
 			});
 		}
 
+		// filter out URLs that doesn't have a vaild TLD
+		let tld = result[iidxes.url.TLD[0]] || result[iidxes.url.TLD[1]];
+		if(tld && (!protocol) && (!result[iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
+			continue;
+		}
+
+
 		if(skipHTML) {
 			// ### HTML problem 1
 			/**
@@ -98,10 +105,6 @@ const list = function (input: string, skipHTML:boolean=true) {
 				continue;
 			}
 
-		// filter out URLs that doesn't have a vaild TLD
-		let tld = result[iidxes.url.TLD[0]] || result[iidxes.url.TLD[1]];
-		if(tld && (!protocol) && (!result[iidxes.email.protocol]) && TLDsArray.indexOf(tld.toLowerCase()) === -1) {
-			continue;
 			// same thing like above for img src, and we're doing only those two since they are most common
 			if (
 				input.substring(0, start).indexOf("<img") > -1 &&
