@@ -229,7 +229,6 @@ const URLsTestingSuite: { [key: string]: Partial<ListingProps> } = {
 		isURL: true,
 		protocol: "ftps://",
 		host: "[2a00:1450:4025:401::67]",
-		port: "3000",
 		ipv4: undefined,
 		ipv6: "2a00:1450:4025:401::67",
 		confirmedByProtocol: true,
