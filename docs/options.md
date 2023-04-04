@@ -78,7 +78,7 @@ const resultB = anchorme({
 });
 ```
 
-**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/g1xpah9y/3/)**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/g1xpah9y/5/)**
 
 ---
 
@@ -135,7 +135,7 @@ const resultB = anchorme({
 });
 ```
 
-**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/6Lph7xke/1/)**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/6Lph7xke/3/)**
 
 ---
 
@@ -176,7 +176,7 @@ const resultB = anchorme({
 });
 ```
 
-**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/0r3c14gw/1/)**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/0r3c14gw/2/)**
 
 ---
 
@@ -219,7 +219,7 @@ const resultB = anchorme({
 });
 ```
 
-**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/86yz30Lg/2/)**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/86yz30Lg/3/)**
 
 ## Special transformation
 
@@ -263,4 +263,4 @@ const result = anchorme({
 });
 ```
 
-**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/jbucrys1/2/)**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/jbucrys1/4/)**

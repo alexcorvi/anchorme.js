@@ -24,4 +24,4 @@ anchorme({
 });
 ```
 
-**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/t32bxz6o/6/)**
+**[JSFiddle Demo](https://jsfiddle.net/alexcorvi/t32bxz6o/8/)**
