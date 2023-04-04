@@ -15,7 +15,7 @@ var fqdn = "(((".concat(protocol, ")?(").concat(domain, "|").concat(ipv4, ")(?=\
 exports.email = "\\b(mailto:)?".concat(emailAddress, "@(").concat(domain, "|").concat(ipv4, ")");
 exports.url = "(".concat(fqdn, ")").concat(path, "?");
 exports.file = "(file:\\/\\/\\/)(?:[a-z]+:(?:\\/|\\\\)+)?([\\w.]+(?:[\\/\\\\]?)+)+";
-exports.final = "(?<=\\b|_)((".concat(exports.email, ")|(").concat(exports.file, ")|(").concat(exports.url, "))(\\b)");
+exports.final = "(?<=\\b|_)((".concat(exports.email, ")|(").concat(exports.file, ")|(").concat(exports.url, "))(\\b)?");
 exports.finalRegex = new RegExp(exports.final, "gi");
 // for validation purposes
 exports.ipRegex = new RegExp("^(".concat(ipv4, "|").concat(ipv6, ")$"), "i");
