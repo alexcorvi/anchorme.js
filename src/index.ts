@@ -20,8 +20,6 @@ import {
 import { TLDs } from "./dictionary";
 let TLDsRgex = new RegExp(`^(${TLDs})$`,'i');
 
-// console.log(finalRegex);
-
 const list = function (input: string, skipHTML:boolean=true) {
 	const found: ListingProps[] = [];
 	let result: RegExpExecArray | null = null;
