@@ -33,17 +33,15 @@ const list = function (input: string, skipHTML:boolean=true) {
 		result[iidxes.url.protocol[1]] ||
 		result[iidxes.url.protocol[2]];
 
-		
-
 		// ### Parenthesis problem
 		/**
-				As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
-				and sometimes they are actually the last part, this makes the tokenization stops just
-				before them.
-				To fix this, we calculate how many parenthesis are open and how many are closed inside
-				the URL and based on the number we should be able to know whether the aforementioned
-				parenthesis character is part of the URL or not
-			*/
+			As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
+			and sometimes they are actually the last part, this makes the tokenization stops just
+			before them.
+			To fix this, we calculate how many parenthesis are open and how many are closed inside
+			the URL and based on the number we should be able to know whether the aforementioned
+			parenthesis character is part of the URL or not
+		*/
 		if (closingParenthesis.indexOf(input.charAt(end)) > -1) {
 			parenthesis.forEach((str) => {
 				const opening = str.charAt(0);
@@ -61,13 +59,6 @@ const list = function (input: string, skipHTML:boolean=true) {
 				}
 			});
 		}
-
-		// filter out URLs that doesn't have a vaild TLD
-		let tld = result[iidxes.url.TLD[0]] || result[iidxes.url.TLD[1]];
-		if(tld && (!protocol) && (!result[iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
-			continue;
-		}
-
 
 		if(skipHTML) {
 			// ### HTML problem 1
@@ -102,6 +93,12 @@ const list = function (input: string, skipHTML:boolean=true) {
 			) {
 				continue;
 			}
+		}
+
+		// filter out URLs that doesn't have a vaild TLD
+		let tld = result[iidxes.url.TLD[0]] || result[iidxes.url.TLD[1]];
+		if(tld && (!protocol) && (!result[iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
+			continue;
 		}
 
 		if (result[iidxes.isURL]) {
