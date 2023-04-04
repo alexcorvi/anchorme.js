@@ -117,7 +117,7 @@ const list = function (input: string, skipHTML:boolean=true) {
 
 		if (result[iidxes.isURL]) {
 			const host = result[iidxes.url.host[0]] || result[iidxes.url.host[1]] || result[iidxes.url.host[2]];
-			const path = (string.match(/(?:\w|])((\/[^?#\s]+)+)/) || [])[1];
+			const path = (string.match(/(?:[^\/:]|])((?:\/[^?#\s]+)+)/) || [])[1];
 			const query = (string.match(/(?:\?)([^#]+)\b/) || [])[1];
 			const fragment = (string.match(/(?:#)(.+)\b/) || [])[1];
 			const ipv6 = host === undefined ? (string.match(/\/\/\[((?:(?:[a-f\d:]+:+)+[a-f\d]+))\]/) || [])[1] : undefined;
