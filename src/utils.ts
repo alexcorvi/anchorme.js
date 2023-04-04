@@ -22,8 +22,8 @@ export const maximumAttrLength = htmlAttributes.sort(
 
 export function isInsideAttribute(prevFragment: string) {
 	return (
-		/\s[a-z0-9-]+=('|")$/i.test(prevFragment) ||
-		/: ?url\(('|")?$/i.test(prevFragment)
+		/\s[a-z0-9-]+=('|")$/i.test(prevFragment) || // for html elements standard attributes
+		/: ?url\(('|")?$/i.test(prevFragment) // for style attributes
 	);
 }
 
