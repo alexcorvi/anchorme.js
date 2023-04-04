@@ -13,7 +13,7 @@ const fqdn = `(((${protocol})?(${domain}|${ipv4})\\b${port})|(?:${confirmedByPro
 
 
 
-export const email = `\\b(mailto:)?${emailAddress}@(${domain}|${ipv4})\\b`;
+export const email = `\\b(mailto:)?${emailAddress}@(${domain}|${ipv4})`;
 export const url = `(${fqdn})${path}?`;
 export const file = `(file:\\/\\/\\/)(?:[a-z]+:(?:\\/|\\\\)+)?([\\w.]+(?:[\\/\\\\]?)+)+`;
 export const final = `\\b((${email})|(${file})|(${url}))(\\b)?`;
