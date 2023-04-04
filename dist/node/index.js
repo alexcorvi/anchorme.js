@@ -6,7 +6,6 @@ var regex_1 = require("./regex");
 var utils_1 = require("./utils");
 var dictionary_2 = require("./dictionary");
 var TLDsRgex = new RegExp("^(".concat(dictionary_2.TLDs, ")$"), 'i');
-console.log(regex_1.finalRegex);
 var list = function (input, skipHTML) {
     if (skipHTML === void 0) { skipHTML = true; }
     var found = [];
