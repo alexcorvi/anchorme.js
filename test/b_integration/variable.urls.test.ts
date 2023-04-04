@@ -512,7 +512,6 @@ describe("variable URLs", ()=>{
       return;
     }
     res.forEach((resItem, i) => {
-      console.log(resItem, i, savedResult[i], savedResult.length, res.length)
       const savedResultItem = savedResult[i];
       Object.keys(savedResultItem).forEach(key=>{
         it(`in ${savedResultItem.string} testing ${key}`, ()=>{
