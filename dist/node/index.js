@@ -72,7 +72,7 @@ var list = function (input, skipHTML) {
         }
         if (result[regex_1.iidxes.isURL]) {
             var host = result[regex_1.iidxes.url.host[0]] || result[regex_1.iidxes.url.host[1]] || result[regex_1.iidxes.url.host[2]];
-            var path = (string.match(/(?:\w|])((\/[^?#\s]+)+)/) || [])[1];
+            var path = (string.match(/(?:[^\/:]|])((?:\/[^?#\s]+)+)/) || [])[1];
             var query = (string.match(/(?:\?)([^#]+)\b/) || [])[1];
             var fragment = (string.match(/(?:#)(.+)\b/) || [])[1];
             var ipv6 = host === undefined ? (string.match(/\/\/\[((?:(?:[a-f\d:]+:+)+[a-f\d]+))\]/) || [])[1] : undefined;

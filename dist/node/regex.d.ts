@@ -25,12 +25,10 @@ declare const iidxes: {
         protocol: number[];
         host: number[];
         ipv4: number;
-        ipv6: number;
         byProtocol: number;
         port: number;
         protocolWithDomain: number;
         path: number;
-        queryAndFragment: number;
     };
 };
 export { iidxes };

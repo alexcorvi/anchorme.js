@@ -141,7 +141,7 @@
 	exports.iidxes = exports.urlRegex = exports.fileRegex = exports.emailRegex = exports.ipRegex = exports.finalRegex = exports.final = exports.file = exports.url = exports.email = void 0;
 
 	var emailAddress = "([\\w!#$%&'*+=?^`{|}~-]+(?:\\.[\\w!#$%&'*+=?^`{|}~-]+)*)";
-	var domain = "(?:(?:(?:[a-z\\d]|[a-z\\d][a-z\\d-]*[a-z\\d]))\\.)+(xn--[a-z\\d]{2,}|[a-z]{2,})(?=[^.]|\\b)";
+	var domain = "(?:(?:(?:[a-z\\d]|[a-z\\d][\\w\\-]*[a-z\\d]))\\.)+(xn--[a-z\\d]{2,}|[a-z]{2,})(?=[^.]|\\b)";
 	var allowedInPath = "\\w\\-.~\\!$&*+,;=:@%'\"\\[\\]()?#";
 	var path = "((?:/|\\?)(?:([".concat(allowedInPath).concat(dictionary.nonLatinAlphabetRanges, "\\/](?:[\\w\\-~+=#&\\/").concat(dictionary.nonLatinAlphabetRanges, "]|\\b)+)*)+)");
 	var ipv4 = "((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d\\d?))";
@@ -177,22 +177,24 @@
 	    },
 	    isURL: 0,
 	    url: {
-	        // three places where TLD can appear
+	        // two places where TLD can appear (URL, email)
 	        TLD: [0, 0],
-	        // three places where protocol can appear
-	        protocol: [0, 0, 0],
-	        // three places where host can appear
-	        host: [0, 0, 0],
+	        // two places where protocol can appear
+	        protocol: [0, 0],
+	        host: [0],
 	        ipv4: 0,
-	        ipv6: 0,
 	        byProtocol: 0,
 	        port: 0,
 	        protocolWithDomain: 0,
 	        path: 0,
-	        queryAndFragment: 0,
 	    },
 	};
 	exports.iidxes = iidxes;
+	/***
+	 * When Editing the regular expressions above the code below must be run
+	 * Before deployment and release the iidexes in console log must be copied to the object above
+	 *  --------------------------------
+	*/
 	var testers = [
 	    "file:///some/file/path/filename.pdf",
 	    "mailto:e+_mail.me@sub.domain.com",
@@ -202,10 +204,7 @@
 	    "http://[2a00:1450:4025:401::67]/k/something",
 	    "a.ta/p",
 	    "a@b.cd",
-	    "http://[2a00:1450:4025:401::67]/s",
-	    "www.github.com/path",
-	    "google.co."
-	];
+	    "www.github.com/path" ];
 	for (var i = 0; i < testers.length; i++) {
 	    var element = testers[i];
 	    var result = exports.finalRegex.exec(element);
@@ -229,17 +228,14 @@
 	        iidxes.url.protocolWithDomain = result.indexOf("http://sub.domain.co.uk:3000");
 	        iidxes.url.port = result.indexOf("3000");
 	        iidxes.url.path = result.indexOf("/p/a/t/h_(asd)/h?q=abc123#dfdf");
-	        iidxes.url.queryAndFragment = result.lastIndexOf("?q=abc123#dfdf");
 	    }
 	    if (i === 3) {
 	        iidxes.url.byProtocol = result.lastIndexOf("http://www.عربي.com");
-	        iidxes.url.protocol[2] = result.lastIndexOf("http://");
 	    }
 	    if (i === 4) {
 	        iidxes.url.ipv4 = result.lastIndexOf("127.0.0.1");
 	    }
 	    if (i === 5) {
-	        iidxes.url.ipv6 = result.indexOf("2a00:1450:4025:401::67");
 	        iidxes.url.protocol[1] = result.lastIndexOf("http://");
 	    }
 	    if (i === 6) {
@@ -249,17 +245,11 @@
 	        iidxes.url.TLD[1] = result.indexOf("cd");
 	    }
 	    if (i === 8) {
-	        iidxes.url.host[0] = result.lastIndexOf("[2a00:1450:4025:401::67]");
-	    }
-	    if (i === 9) {
-	        iidxes.url.host[1] = result.lastIndexOf("www.github.com");
-	    }
-	    if (i === 10) {
-	        iidxes.url.host[2] = result.lastIndexOf("google.co");
+	        iidxes.url.host[0] = result.lastIndexOf("www.github.com");
 	    }
 	    exports.finalRegex.lastIndex = 0;
 	}
-	console.log(iidxes);
+	console.log(JSON.stringify(iidxes));
 	});
 
 	unwrapExports(regex);
@@ -402,7 +392,7 @@
 	        }
 	        if (result[regex.iidxes.isURL]) {
 	            var host = result[regex.iidxes.url.host[0]] || result[regex.iidxes.url.host[1]] || result[regex.iidxes.url.host[2]];
-	            var path = (string.match(/(?:\w|])((\/[^?#\s]+)+)/) || [])[1];
+	            var path = (string.match(/(?:[^\/:]|])((?:\/[^?#\s]+)+)/) || [])[1];
 	            var query = (string.match(/(?:\?)([^#]+)\b/) || [])[1];
 	            var fragment = (string.match(/(?:#)(.+)\b/) || [])[1];
 	            var ipv6 = host === undefined ? (string.match(/\/\/\[((?:(?:[a-f\d:]+:+)+[a-f\d]+))\]/) || [])[1] : undefined;
