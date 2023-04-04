@@ -28,35 +28,14 @@ export const urlRegex = new RegExp(`^(${url})$`, "i");
 // identifying parts of the link
 // the initial value of this object is precomputed.
 // https://github.com/alexcorvi/anchorme.js/blob/098843bc0d042601cff592c4f8c9f6d0424c09cd/src/regex.ts
-const iidxes = {
-	isFile: 0,
-	file: {
-		fileName: 0,
-		protocol: 0,
-	},
-	isEmail: 0,
-	email: {
-		protocol: 0,
-		local: 0,
-		host: 0,
-	},
-	isURL: 0,
-	url: {
-		// three places where TLD can appear
-		TLD: [0,0],
-		// three places where protocol can appear
-		protocol: [0,0,0],
-		// three places where host can appear
-		host: [0,0,0],
-		ipv4: 0,
-		ipv6: 0,
-		byProtocol: 0,
-		port: 0,
-		protocolWithDomain: 0,
-		path: 0,
-		queryAndFragment: 0,
-	},
-};
+const iidxes = {"isFile":8,"file":{"fileName":10,"protocol":9},"isEmail":2,"email":{"protocol":3,"local":4,"host":5},"isURL":11,"url":{"TLD":[18,6],"protocol":[15,22],"host":[17],"ipv4":19,"byProtocol":13,"port":21,"protocolWithDomain":12,"path":24}};
+
+
+/***
+ * When Editing the regular expressions above the code below must be run
+ * Before deployment and release the iidexes in console log must be copied to the object above
+ *  --------------------------------
+
 
 const testers = [
 	`file:///some/file/path/filename.pdf`,
@@ -67,9 +46,7 @@ const testers = [
 	`http://[2a00:1450:4025:401::67]/k/something`,
 	`a.ta/p`,
 	`a@b.cd`,
-	`http://[2a00:1450:4025:401::67]/s`,
 	`www.github.com/path`,
-	`google.co.`
 ];
 
 
@@ -84,14 +61,12 @@ for (let i = 0; i < testers.length; i++) {
 		iidxes.file.fileName = result.indexOf("filename.pdf");
 		iidxes.file.protocol = result.indexOf("file:///");
 	}
-
 	if (i === 1) {
 		iidxes.isEmail = result.lastIndexOf(result[0]);
 		iidxes.email.protocol = result.indexOf("mailto:");
 		iidxes.email.local = result.indexOf("e+_mail.me");
 		iidxes.email.host = result.indexOf("sub.domain.com");
 	}
-
 	if (i === 2) {
 		iidxes.isURL = result.lastIndexOf(result[0]);
 		iidxes.url.protocol[0] = result.indexOf("http://");
@@ -100,18 +75,14 @@ for (let i = 0; i < testers.length; i++) {
 		);
 		iidxes.url.port = result.indexOf("3000");
 		iidxes.url.path = result.indexOf("/p/a/t/h_(asd)/h?q=abc123#dfdf");
-		iidxes.url.queryAndFragment = result.lastIndexOf("?q=abc123#dfdf");
 	}
-
 	if (i === 3) {
 		iidxes.url.byProtocol = result.lastIndexOf("http://www.عربي.com");
-		iidxes.url.protocol[2] = result.lastIndexOf("http://");
 	}
 	if (i === 4) {
 		iidxes.url.ipv4 = result.lastIndexOf("127.0.0.1");
 	}
 	if (i === 5) {
-		iidxes.url.ipv6 = result.indexOf("2a00:1450:4025:401::67");
 		iidxes.url.protocol[1] = result.lastIndexOf("http://");
 	}
 	if(i===6) {
@@ -121,17 +92,12 @@ for (let i = 0; i < testers.length; i++) {
 		iidxes.url.TLD[1] = result.indexOf("cd")
 	}
 	if(i===8){
-		iidxes.url.host[0] = result.lastIndexOf("[2a00:1450:4025:401::67]");
-	}
-	if(i===9){
-		iidxes.url.host[1] = result.lastIndexOf("www.github.com");
-	}
-	if(i===10){
-		iidxes.url.host[2] = result.lastIndexOf("google.co");
+		iidxes.url.host[0] = result.lastIndexOf("www.github.com");
 	}
 	finalRegex.lastIndex = 0;
 }
 
-// console.log(iidxes);
+console.log(JSON.stringify(iidxes));
+*/
 
 export { iidxes };
