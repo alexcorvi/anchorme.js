@@ -25,8 +25,9 @@ Tiny, fast, efficient, feature rich Javascript library to detect links / URLs / 
     -   Can detect parenthesis and quotation marks as part of the URL or as a surrounding to the URL.
     -   Easily extensible with your own code (e.g. for hashtags and mentions).
 -   **Fast**: Performance is one of the main things that were kept in mind while writing this library.
-    -   Processing H.G. Wells novel, the time machine, took only 100 milliseconds.
-    -   This library is also faster than other alternatives (linkify & autolinker). [Link to benchmark](https://alexcorvi.github.io/anchorme.js/benchmark.html)
+    -   It's incredibly fast since 99% of all the heavy lifting is based on a single optimized regular expression.
+    -   Processing H.G. Wells novel, the time machine, took only 2.2 milliseconds on my machine.
+    -   This library is also a lot faster than other alternatives (linkify & autolinker). [Link to benchmark](https://alexcorvi.github.io/anchorme.js/benchmark.html)
 -   **Light Weight**: Although it's a feature rich library with a full IANA list included, it's only **9KB** when minified and GZipped.
 
 ---
