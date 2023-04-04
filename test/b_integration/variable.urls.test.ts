@@ -76,7 +76,8 @@ const input = ['example.net',
 '_usts.co.uk_',
 '_usts.co.uk/path/to/resource#frag_ment_',
 '_user@usts.co.uk_',
-'lists.sr.ht/~sircmpwn/email-test-drive/<8433650D-8153-4DFC-B2CE-A73B78969083%40nixnetmail>?query=123#fragment'
+'lists.sr.ht/~sircmpwn/email-test-drive/<8433650D-8153-4DFC-B2CE-A73B78969083%40nixnetmail>?query=123#fragment',
+'<a href="https://a.com">click to go to a.com and have fun</a> a.com'
 ];
 
 const savedResult = [
@@ -471,6 +472,10 @@ const savedResult = [
       "host": "lists.sr.ht",
       "confirmedByProtocol": false,
       "path": "/~sircmpwn/email-test-drive/",
+    },
+    {
+      "string": "a.com",
+      "host": "a.com",
     }
 ];
 
