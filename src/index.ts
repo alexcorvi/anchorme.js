@@ -74,6 +74,7 @@ const list = function (input: string, skipHTML:boolean=true) {
 			/**
 				checking whether the token is already inside an HTML element by seeing if it's
 				preceded by an HTML attribute that would hold a url (e.g. src, cite ...etc)
+				e.g. <a href="ab.com">ab.com</a>
 			*/
 			if (
 				['""', "''", "()"].indexOf(
