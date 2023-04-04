@@ -180,7 +180,7 @@
 
 	var utils = createCommonjsModule(function (module, exports) {
 	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.isInsideImgSrc = exports.isInsideAnchorTag = exports.isInsideAttribute = exports.maximumAttrLength = exports.checkParenthesis = void 0;
+	exports.isInsideAnchorTag = exports.isInsideAttribute = exports.maximumAttrLength = exports.checkParenthesis = void 0;
 
 	function checkParenthesis(opening, closing, target, nextChar) {
 	    if (nextChar !== closing) {
@@ -194,8 +194,9 @@
 	exports.checkParenthesis = checkParenthesis;
 	exports.maximumAttrLength = dictionary.htmlAttributes.sort(function (a, b) { return b.length - a.length; })[0].length;
 	function isInsideAttribute(prevFragment) {
-	    return (/\s[a-z0-9-]+=('|")$/i.test(prevFragment) ||
-	        /: ?url\(('|")?$/i.test(prevFragment));
+	    return (/\s[a-z0-9-]+=('|")$/i.test(prevFragment) || // for html elements standard attributes
+	        /: ?url\(('|")?$/i.test(prevFragment) // for style attributes e.g. style="background:url(some.com/img.png)"
+	    );
 	}
 	exports.isInsideAttribute = isInsideAttribute;
 	function isInsideAnchorTag(target, fullInput, targetEnd) {
@@ -211,23 +212,9 @@
 	    return false;
 	}
 	exports.isInsideAnchorTag = isInsideAnchorTag;
-	function isInsideImgSrc(target, fullInput, targetEnd) {
-	    var escapedTarget = target.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-	    var regex = new RegExp("(?=(<img))(?!([\\s\\S]*)(<\\/a>)(".concat(escapedTarget, "))[\\s\\S]*?(").concat(escapedTarget, ")(?!\"|')"), "gi");
-	    var result = null;
-	    while ((result = regex.exec(fullInput)) !== null) {
-	        var end = result.index + result[0].length;
-	        if (end === targetEnd) {
-	            return true;
-	        }
-	    }
-	    return false;
-	}
-	exports.isInsideImgSrc = isInsideImgSrc;
 	});
 
 	unwrapExports(utils);
-	utils.isInsideImgSrc;
 	utils.isInsideAnchorTag;
 	utils.isInsideAttribute;
 	utils.maximumAttrLength;
@@ -254,13 +241,13 @@
 	            result[regex.iidxes.url.protocol[2]];
 	        // ### Parenthesis problem
 	        /**
-	                As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
-	                and sometimes they are actually the last part, this makes the tokenization stops just
-	                before them.
-	                To fix this, we calculate how many parenthesis are open and how many are closed inside
-	                the URL and based on the number we should be able to know whether the aforementioned
-	                parenthesis character is part of the URL or not
-	            */
+	            As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
+	            and sometimes they are actually the last part, this makes the tokenization stops just
+	            before them.
+	            To fix this, we calculate how many parenthesis are open and how many are closed inside
+	            the URL and based on the number we should be able to know whether the aforementioned
+	            parenthesis character is part of the URL or not
+	        */
 	        if (dictionary.closingParenthesis.indexOf(input.charAt(end)) > -1) {
 	            dictionary.parenthesis.forEach(function (str) {
 	                var opening = str.charAt(0);
@@ -271,16 +258,12 @@
 	                }
 	            });
 	        }
-	        // filter out URLs that doesn't have a vaild TLD
-	        var tld = result[regex.iidxes.url.TLD[0]] || result[regex.iidxes.url.TLD[1]];
-	        if (tld && (!protocol) && (!result[regex.iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
-	            return "continue";
-	        }
 	        if (skipHTML) {
 	            // ### HTML problem 1
 	            /**
 	                checking whether the token is already inside an HTML element by seeing if it's
 	                preceded by an HTML attribute that would hold a url (e.g. src, cite ...etc)
+	                e.g. <a href="ab.com">ab.com</a>
 	            */
 	            if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
 	                if ((0, utils.isInsideAttribute)(input.substring(start - utils.maximumAttrLength - 15, start))) {
@@ -297,12 +280,11 @@
 	                (0, utils.isInsideAnchorTag)(string, input, end)) {
 	                return "continue";
 	            }
-	            // same thing like above for img src, and we're doing only those two since they are most common
-	            if (input.substring(0, start).indexOf("<img") > -1 &&
-	                input.substring(end, input.length).indexOf(">") > -1 &&
-	                (0, utils.isInsideImgSrc)(string, input, end)) {
-	                return "continue";
-	            }
+	        }
+	        // filter out URLs that doesn't have a vaild TLD
+	        var tld = result[regex.iidxes.url.TLD[0]] || result[regex.iidxes.url.TLD[1]];
+	        if (tld && (!protocol) && (!result[regex.iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
+	            return "continue";
 	        }
 	        if (result[regex.iidxes.isURL]) {
 	            var host = result[regex.iidxes.url.host[0]] || result[regex.iidxes.url.host[1]] || result[regex.iidxes.url.host[2]];

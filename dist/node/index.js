@@ -19,13 +19,13 @@ var list = function (input, skipHTML) {
             result[regex_1.iidxes.url.protocol[2]];
         // ### Parenthesis problem
         /**
-                As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
-                and sometimes they are actually the last part, this makes the tokenization stops just
-                before them.
-                To fix this, we calculate how many parenthesis are open and how many are closed inside
-                the URL and based on the number we should be able to know whether the aforementioned
-                parenthesis character is part of the URL or not
-            */
+            As we're using the \b to tokenize the URL, sometimes the parenthesis are part of the URL
+            and sometimes they are actually the last part, this makes the tokenization stops just
+            before them.
+            To fix this, we calculate how many parenthesis are open and how many are closed inside
+            the URL and based on the number we should be able to know whether the aforementioned
+            parenthesis character is part of the URL or not
+        */
         if (dictionary_1.closingParenthesis.indexOf(input.charAt(end)) > -1) {
             dictionary_1.parenthesis.forEach(function (str) {
                 var opening = str.charAt(0);
@@ -36,16 +36,12 @@ var list = function (input, skipHTML) {
                 }
             });
         }
-        // filter out URLs that doesn't have a vaild TLD
-        var tld = result[regex_1.iidxes.url.TLD[0]] || result[regex_1.iidxes.url.TLD[1]];
-        if (tld && (!protocol) && (!result[regex_1.iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
-            return "continue";
-        }
         if (skipHTML) {
             // ### HTML problem 1
             /**
                 checking whether the token is already inside an HTML element by seeing if it's
                 preceded by an HTML attribute that would hold a url (e.g. src, cite ...etc)
+                e.g. <a href="ab.com">ab.com</a>
             */
             if (['""', "''", "()"].indexOf(input.charAt(start - 1) + input.charAt(end)) !== -1) {
                 if ((0, utils_1.isInsideAttribute)(input.substring(start - utils_1.maximumAttrLength - 15, start))) {
@@ -62,12 +58,11 @@ var list = function (input, skipHTML) {
                 (0, utils_1.isInsideAnchorTag)(string, input, end)) {
                 return "continue";
             }
-            // same thing like above for img src, and we're doing only those two since they are most common
-            if (input.substring(0, start).indexOf("<img") > -1 &&
-                input.substring(end, input.length).indexOf(">") > -1 &&
-                (0, utils_1.isInsideImgSrc)(string, input, end)) {
-                return "continue";
-            }
+        }
+        // filter out URLs that doesn't have a vaild TLD
+        var tld = result[regex_1.iidxes.url.TLD[0]] || result[regex_1.iidxes.url.TLD[1]];
+        if (tld && (!protocol) && (!result[regex_1.iidxes.email.protocol]) && (!tld.startsWith("xn--") && !TLDsRgex.test(tld))) {
+            return "continue";
         }
         if (result[regex_1.iidxes.isURL]) {
             var host = result[regex_1.iidxes.url.host[0]] || result[regex_1.iidxes.url.host[1]] || result[regex_1.iidxes.url.host[2]];

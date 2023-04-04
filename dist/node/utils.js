@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isInsideImgSrc = exports.isInsideAnchorTag = exports.isInsideAttribute = exports.maximumAttrLength = exports.checkParenthesis = void 0;
+exports.isInsideAnchorTag = exports.isInsideAttribute = exports.maximumAttrLength = exports.checkParenthesis = void 0;
 var dictionary_1 = require("./dictionary");
 function checkParenthesis(opening, closing, target, nextChar) {
     if (nextChar !== closing) {
@@ -14,8 +14,9 @@ function checkParenthesis(opening, closing, target, nextChar) {
 exports.checkParenthesis = checkParenthesis;
 exports.maximumAttrLength = dictionary_1.htmlAttributes.sort(function (a, b) { return b.length - a.length; })[0].length;
 function isInsideAttribute(prevFragment) {
-    return (/\s[a-z0-9-]+=('|")$/i.test(prevFragment) ||
-        /: ?url\(('|")?$/i.test(prevFragment));
+    return (/\s[a-z0-9-]+=('|")$/i.test(prevFragment) || // for html elements standard attributes
+        /: ?url\(('|")?$/i.test(prevFragment) // for style attributes e.g. style="background:url(some.com/img.png)"
+    );
 }
 exports.isInsideAttribute = isInsideAttribute;
 function isInsideAnchorTag(target, fullInput, targetEnd) {
@@ -31,16 +32,3 @@ function isInsideAnchorTag(target, fullInput, targetEnd) {
     return false;
 }
 exports.isInsideAnchorTag = isInsideAnchorTag;
-function isInsideImgSrc(target, fullInput, targetEnd) {
-    var escapedTarget = target.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-    var regex = new RegExp("(?=(<img))(?!([\\s\\S]*)(<\\/a>)(".concat(escapedTarget, "))[\\s\\S]*?(").concat(escapedTarget, ")(?!\"|')"), "gi");
-    var result = null;
-    while ((result = regex.exec(fullInput)) !== null) {
-        var end = result.index + result[0].length;
-        if (end === targetEnd) {
-            return true;
-        }
-    }
-    return false;
-}
-exports.isInsideImgSrc = isInsideImgSrc;
