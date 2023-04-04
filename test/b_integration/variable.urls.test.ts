@@ -71,7 +71,13 @@ const input = ['example.net',
 'example.com/path/to/resource?param=value#fragment',
 'example..com/path/to/resource?param=value#fragment',
 'example.com/path/to/resource?param=value&invalid==syntax#fragment',
-'example.com/path/to/resource?param=value#invalid==syntax'];
+'example.com/path/to/resource?param=value#invalid==syntax',
+'_usts.com_',
+'_usts.co.uk_',
+'_usts.co.uk/path/to/resource#frag_ment_',
+'_user@usts.co.uk_',
+'lists.sr.ht/~sircmpwn/email-test-drive/<8433650D-8153-4DFC-B2CE-A73B78969083%40nixnetmail>?query=123#fragment'
+];
 
 const savedResult = [
     {
@@ -440,7 +446,32 @@ const savedResult = [
       "confirmedByProtocol": false,
       "path": "/path/to/resource",
       "query": "param=value",
-      "fragment": "invalid==syntax"}
+      "fragment": "invalid==syntax"},
+    {
+      "string": "usts.com",
+      "host": "usts.com",
+      "confirmedByProtocol": false},
+    {
+      "string": "usts.co.uk",
+      "host": "usts.co.uk",
+      "confirmedByProtocol": false},
+    {
+      "string": "usts.co.uk/path/to/resource#frag_ment_",
+      "host": "usts.co.uk",
+      "path": "/path/to/resource",
+      "fragment": "frag_ment_",
+      "confirmedByProtocol": false},
+    {
+      "string": "_user@usts.co.uk",
+      "host": "usts.co.uk",
+      "isEmail": true
+    },
+    {
+      "string": "lists.sr.ht/~sircmpwn/email-test-drive/",
+      "host": "lists.sr.ht",
+      "confirmedByProtocol": false,
+      "path": "/~sircmpwn/email-test-drive/",
+    }
 ];
 
 const pollution = [
